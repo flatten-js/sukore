@@ -33,6 +33,7 @@ export default {
   .vary-image {
     width: 100%;
     height: 100%;
+    border-radius: inherit;
 
     &.fit-cover {
       object-fit: cover;
