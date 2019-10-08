@@ -20,7 +20,7 @@ export default {
       type: [String, null],
       default: null,
       validator(val) {
-        return ['05', '1'].includes(val)
+        return ['025', '05', '1'].includes(val)
       }
     }
   },
@@ -46,6 +46,10 @@ export default {
 
     &.weight-bold {
       font-weight: bold;
+    }
+
+    &.mr-025 {
+      margin: 0 .25rem 0 0;
     }
 
     &.mr-05 {

@@ -15,7 +15,7 @@
         inline-part(
           :part="follow"
           weight="bold"
-          mr="05"
+          mr="025"
           )
         inline-part(
           part="フォロー中"
@@ -25,7 +25,7 @@
         inline-part(
           :part="followers"
           weight="bold"
-          mr="05"
+          mr="025"
           )
         inline-part(
           part="フォロワー"
