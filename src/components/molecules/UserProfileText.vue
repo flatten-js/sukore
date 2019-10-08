@@ -1,7 +1,8 @@
 <template lang="pug">
   .user-profile-text
-    .user-name
-      block-heading(:text="name")
+    .user-author
+      .user-name
+        block-heading(:text="name")
       block-text(
         :text="screenName"
         brightness="2"
@@ -70,8 +71,12 @@ export default {
 </script>
 
 <style scoped>
-  .user-name, .user-descripstion {
+  .user-author, .user-descripstion {
     margin: 0 0 1rem 0;
+  }
+
+  .user-name {
+    margin: 0 0 .25rem;
   }
 
   .user-state {
