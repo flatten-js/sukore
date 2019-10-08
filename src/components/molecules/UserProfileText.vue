@@ -10,7 +10,7 @@
       block-text(
         :text="descripstion"
         )
-    .user-follow-status
+    .user-state
       .user-follow
         inline-part(
           :part="follow"
@@ -74,7 +74,7 @@ export default {
     margin: 0 0 1rem 0;
   }
 
-  .user-follow-status {
+  .user-state {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
