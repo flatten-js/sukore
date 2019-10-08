@@ -15,7 +15,7 @@ export default {
     attachment: {
       type: [String, null],
       default: null,
-      varidator(val) {
+      validator(val) {
         return ['fixed'].includes(val)
       }
     }

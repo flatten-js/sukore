@@ -8,7 +8,7 @@ export default {
     size: {
       type: String,
       default: 'medium',
-      varidator(val) {
+      validator(val) {
         return ['small', 'medium', 'large', 'xl', 'custom'].includes(val)
       }
     },

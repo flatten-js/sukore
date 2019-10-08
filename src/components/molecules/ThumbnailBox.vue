@@ -28,7 +28,7 @@ export default {
     column: {
       type: String,
       default: '2',
-      varidator(val) {
+      validator(val) {
         return ['2', '3'].includes(val)
       }
     }

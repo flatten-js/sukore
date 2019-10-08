@@ -15,7 +15,7 @@ export default {
     fit: {
       type: [String, null],
       default: null,
-      varidator(val) {
+      validator(val) {
         return ['cover', null].includes(val)
       }
     }
