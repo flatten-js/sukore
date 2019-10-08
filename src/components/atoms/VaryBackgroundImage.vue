@@ -1,6 +1,6 @@
 <template lang="pug">
   .vary-background-image(
-    :class="attachmentClassGeneration"
+    :class="attachmentClassGenerator"
     :style="{ backgroundImage: `url(${url})` }"
     )
 </template>
@@ -21,7 +21,7 @@ export default {
     }
   },
   computed: {
-    attachmentClassGeneration() {
+    attachmentClassGenerator() {
       const { attachment } = this
       return attachment ? `background-attachment-${attachment}` : null
     }

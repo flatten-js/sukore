@@ -1,5 +1,5 @@
 <template lang="pug">
-i.material-icons(:class="sizeClassGeneration") {{ name }}
+i.material-icons(:class="sizeClassGenerator") {{ name }}
 </template>
 
 <script>
@@ -18,7 +18,7 @@ export default {
     }
   },
   computed: {
-    sizeClassGeneration() {
+    sizeClassGenerator() {
       const { size } = this
       return `icon-${size}`
     }
