@@ -1,6 +1,6 @@
 <template lang="pug">
   .vary-background-image(
-    :class="attachmentClassGenerator"
+    :class="[attachmentClassGenerator, sizeClassGenerator]"
     :style="{ backgroundImage: `url(${url})` }"
     )
 </template>
@@ -18,12 +18,23 @@ export default {
       validator(val) {
         return ['fixed'].includes(val)
       }
+    },
+    size: {
+      type: String,
+      default: 'auto',
+      validator(val) {
+        return ['auto', 'cover', 'contain', 'custom'].includes(val)
+      }
     }
   },
   computed: {
     attachmentClassGenerator() {
       const { attachment } = this
       return attachment ? `background-attachment-${attachment}` : null
+    },
+    sizeClassGenerator() {
+      const { size } = this
+      return `background-size-${size}`
     }
   }
 }
@@ -36,6 +47,22 @@ export default {
 
     &.background-attachment-fixed {
       background-attachment: fixed;
+    }
+
+    &.background-size-auto {
+      background-size: auto;
+    }
+
+    &.background-size-cover {
+      background-size: cover;
+    }
+
+    &.background-size-contain {
+      background-size: contain;
+    }
+
+    &.background-size-custom {
+      background-size: inherit;
     }
   }
 </style>
