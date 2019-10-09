@@ -59,11 +59,11 @@ export default {
       required: true
     },
     follow: {
-      type: String,
+      type: [String, Number],
       required: true
     },
     followers: {
-      type: String,
+      type: [String, Number],
       required: true
     }
   }
