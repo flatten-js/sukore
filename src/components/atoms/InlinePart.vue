@@ -6,7 +6,7 @@
 export default {
   props: {
     part: {
-      type: String,
+      type: [String, Number],
       required: true
     },
     weight: {
