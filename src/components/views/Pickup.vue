@@ -1,26 +1,33 @@
 <template lang="pug">
   pickup-template
-    user-profile
-      template(v-slot:header-image)
-        header-image(url="https://pbs.twimg.com/profile_banners/1116639952593227776/1559138768/1500x500")
-      template(v-slot:user-icon)
-        user-icon(src="https://pbs.twimg.com/profile_images/1121787550094348290/GXS95HTF_400x400.png")
-      template(v-slot:user-profile-text)
-        user-profile-text(
-          name="黒兎|Kurot"
-          screenName="@kurokanin"
-          descripstion="黒兎 (くろと)/Kurot | イラストレーター [ http://kurokanin.net ] play アズレン FKG GFL GBF KingsRaid FGO epic7 |♡vtubers | お仕事募集中♡ご依頼はメールにてお願いします。kurotworks@gmail.com"
-          follow="609"
-          followers="3.5万"
+    template(v-slot:user-detail)
+      user-detail(v-if="user")
+        template(v-slot:header)
+          header-image(:url="user.headerImage")
+        template(v-slot:user-icon)
+          user-icon(:src="user.userIcon")
+        template(v-slot:user-profile-body)
+          user-profile-text(
+            :name="user.name"
+            :screenName="`@${user.screenName}`"
+            :descripstion="user.description"
+            :follow="user.follow"
+            :followers="user.followers"
+            )
+    template(v-slot:thumbnail-box)
+      thumbnail-box-grid
+        thumbnail-box(
+          v-for="media in mediaList"
+          :key="media.id"
+          :src="media.src"
           )
-    thumbnail-box-grid
-      thumbnail-box(src="https://pbs.twimg.com/media/D5FNScbUUAIwh_7?format=png&name=small")
-      thumbnail-box(src="https://pbs.twimg.com/media/EEbazt2U0AE8y37?format=jpg&name=small")
 </template>
 
 <script>
+import axios from 'axios'
+
 import PickupTemplate from '@/components/templates/PickupTemplate.vue'
-import UserProfile from '@/components/organisms/UserProfile.vue'
+import UserDetail from '@/components/organisms/UserDetail.vue'
 import HeaderImage from '@/components/molecules/HeaderImage.vue'
 import UserIcon from '@/components/molecules/UserIcon.vue'
 import UserProfileText from '@/components/molecules/UserProfileText.vue'
@@ -30,12 +37,49 @@ import ThumbnailBox from '@/components/molecules/ThumbnailBox.vue'
 export default {
   components: {
     PickupTemplate,
-    UserProfile,
+    UserDetail,
     HeaderImage,
     UserIcon,
     UserProfileText,
     ThumbnailBoxGrid,
     ThumbnailBox
+  },
+  data() {
+    return {
+      user: null,
+      mediaList: []
+    }
+  },
+  mounted() {
+    this.userTimelineSearch('kq89nju2')
+  },
+  methods: {
+    userTimelineSearch: function(screenName, count = 25, excludeReplies = true) {
+      const { mediaList } = this
+      axios.get(`http://localhost:3000/api/twitter/search?screen_name=${screenName}&count=${count}&excludeReplies=${excludeReplies}`)
+      .then(res => {
+        res.data.map(obj => {
+          if (!this.user) {
+            this.user = {
+              headerImage: obj.user.profile_banner_url,
+              userIcon: obj.user.profile_image_url_https.replace('normal', '400x400'),
+              name: obj.user.name,
+              screenName: obj.user.screen_name,
+              description: obj.user.description,
+              follow: obj.user.friends_count,
+              followers: obj.user.followers_count
+            }
+          }
+
+          obj.extended_entities.media.map(media => {
+            mediaList.push({
+              id: media.id,
+              src: media.media_url_https
+            })
+          })
+        })
+      })
+    }
   }
 }
 </script>
