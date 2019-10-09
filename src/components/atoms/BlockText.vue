@@ -1,5 +1,5 @@
 <template lang="pug">
-  .block-text(:class="[brightnessClassGenerator, sizeClassGenerator]") {{ text }}
+  .block-text(:class="propsClassGenerator") {{ text }}
 </template>
 
 <script>
@@ -25,13 +25,13 @@ export default {
     }
   },
   computed: {
-    brightnessClassGenerator() {
-      const { brightness } = this
-      return `brightness-${brightness}`
-    },
-    sizeClassGenerator() {
-      const { size } = this
-      return `size-${size}`
+    propsClassGenerator() {
+      const { brightness, size } = this
+
+      return {
+        [`brightness-${brightness}`]: brightness,
+        [`size-${size}`]: size
+      }
     }
   }
 }

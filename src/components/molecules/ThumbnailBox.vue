@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.thumbnail-box(:class="columnClassGenerator")
+  div.thumbnail-box(:class="propsClassGenerator")
     vary-image(
       :src="src"
       fit="cover"
@@ -34,9 +34,12 @@ export default {
     }
   },
   computed: {
-    columnClassGenerator() {
+    propsClassGenerator() {
       const { column } = this
-      return `column-${column}`
+
+      return {
+        [`column-${column}`]: column
+      }
     }
   }
 }

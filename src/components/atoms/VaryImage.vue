@@ -1,6 +1,6 @@
 <template lang="pug">
   img.vary-image(
-    :class="fitClassGenerator"
+    :class="propsClassGenerator"
     :src="src"
     )
 </template>
@@ -21,9 +21,12 @@ export default {
     }
   },
   computed: {
-    fitClassGenerator() {
+    propsClassGenerator() {
       const { fit } = this
-      return fit ? `fit-${fit}` : null
+
+      return {
+        [`fit-${fit}`]: fit
+      }
     }
   }
 }

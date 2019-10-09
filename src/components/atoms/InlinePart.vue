@@ -1,5 +1,5 @@
 <template lang="pug">
-  span.inline-part(:class="[weightClassGenerator, mrClassGenerator]") {{ part }}
+  span.inline-part(:class="propsClassGenerator") {{ part }}
 </template>
 
 <script>
@@ -25,13 +25,13 @@ export default {
     }
   },
   computed: {
-    weightClassGenerator() {
-      const { weight } = this
-      return `weight-${weight}`
-    },
-    mrClassGenerator() {
-      const { mr } = this
-      return `mr-${mr}`
+    propsClassGenerator() {
+      const { weight, mr } = this
+
+      return {
+        [`weight-${weight}`]: weight,
+        [`mr-${mr}`]: mr
+      }
     }
   }
 }
