@@ -1,7 +1,7 @@
 <template lang="pug">
   .vary-background-image(
     :class="propsClassGenerator"
-    :style="{ backgroundImage: `url(${url})` }"
+    :style="propsStyleGenerator"
     )
 </template>
 
@@ -34,6 +34,13 @@ export default {
       return {
         [`background-attachment-${attachment}`]: attachment,
         [`background-size-${size}`]: size
+      }
+    },
+    propsStyleGenerator() {
+      const { url } = this
+
+      return {
+        backgroundImage: url && `url(${url})`
       }
     }
   }
