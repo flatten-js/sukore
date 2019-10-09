@@ -1,19 +1,20 @@
 <template lang="pug">
-  .user-profile
-    .user-header-image
-      slot(name="header-image")
-    .user-profile-body
+  .user-detail
+    .user-header
+      slot(name="header")
+    .user-profile
       .user-profile-icon
         slot(name="user-icon")
-      slot(name="user-profile-text")
+      .user-profile-body
+        slot(name="user-profile-body")
 </template>
 
 <style scoped>
-  .user-header-image {
+  .user-header {
     background-color: rgb(26, 26, 26, .25);
   }
 
-  .user-profile-body {
+  .user-profile {
     padding: 0 1rem 1rem 1rem;
     border-bottom: 1px solid rgba(26, 26, 26, .1);
     box-sizing: border-box;
