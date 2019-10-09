@@ -9,6 +9,10 @@
 </template>
 
 <style scoped>
+  .user-header-image {
+    background-color: rgb(26, 26, 26, .25);
+  }
+
   .user-profile-body {
     padding: 0 1rem 1rem 1rem;
     border-bottom: 1px solid rgba(26, 26, 26, .1);
