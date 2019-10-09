@@ -8,10 +8,7 @@
 <script>
 export default {
   props: {
-    url: {
-      type: String,
-      required: true
-    },
+    url: [String, null],
     attachment: {
       type: [String, null],
       default: null,
