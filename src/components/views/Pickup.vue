@@ -1,26 +1,27 @@
 <template lang="pug">
   pickup-template
     template(v-slot:user-detail)
-      user-detail(v-if="user")
-        template(v-slot:header)
-          header-image(:url="user.headerImage")
-        template(v-slot:user-icon)
-          user-icon(:src="user.userIcon")
-        template(v-slot:user-profile-body)
-          user-profile-text(
-            :name="user.name"
-            :screenName="`@${user.screenName}`"
-            :descripstion="user.description"
-            :follow="user.follow"
-            :followers="user.followers"
-            )
+      template(v-if="user")
+        user-detail
+          template(v-slot:header)
+            header-image(:url="user.headerImage")
+          template(v-slot:user-icon)
+            user-icon(:src="user.userIcon")
+          template(v-slot:user-profile-body)
+            user-profile-text(
+              :name="user.name"
+              :screenName="`@${user.screenName}`"
+              :descripstion="user.description"
+              :follow="user.follow"
+              :followers="user.followers"
+              )
     template(v-slot:thumbnail-box)
       thumbnail-box-grid
-        thumbnail-box(
-          v-for="media in mediaList"
-          :key="media.id"
-          :src="media.src"
-          )
+        template(v-for="media in mediaList")
+          thumbnail-box(
+            :key="media.id"
+            :src="media.src"
+            )
 </template>
 
 <script>
