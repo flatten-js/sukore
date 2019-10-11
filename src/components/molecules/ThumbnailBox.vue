@@ -3,6 +3,7 @@
     vary-image(
       :src="src"
       fit="cover"
+      animation="fade-up"
       )
     .thumbnail-fav
       material-icons(

@@ -1,12 +1,17 @@
 <template lang="pug">
-  img.vary-image(
+  v-lazy-image.vary-image(
     :class="propsClassGenerator"
     :src="src"
     )
 </template>
 
 <script>
+import VLazyImage from 'v-lazy-image'
+
 export default {
+  components: {
+    VLazyImage
+  },
   props: {
     src: {
       type: String,
@@ -16,16 +21,24 @@ export default {
       type: [String, null],
       default: null,
       validator(val) {
-        return ['cover', null].includes(val)
+        return ['cover'].includes(val)
+      }
+    },
+    animation: {
+      type: [String, null],
+      default: null,
+      validator(val) {
+        return ['fade-up'].includes(val)
       }
     }
   },
   computed: {
     propsClassGenerator() {
-      const { fit } = this
+      const { fit, animation } = this
 
       return {
-        [`fit-${fit}`]: fit
+        [`fit-${fit}`]: fit,
+        [`animation-${animation}`]: animation
       }
     }
   }
@@ -40,6 +53,22 @@ export default {
 
     &.fit-cover {
       object-fit: cover;
+    }
+  }
+
+
+  .v-lazy-image {
+    &.animation-fade-up {
+      opacity: 0;
+      transform: translate3d(0, 1rem, 0);
+      transition: all ease-out .4s;
+    }
+  }
+
+  .v-lazy-image-loaded {
+    &.animation-fade-up {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
     }
   }
 </style>
