@@ -25,8 +25,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 import PickupTemplate from '@/components/templates/PickupTemplate.vue'
 import UserDetail from '@/components/organisms/UserDetail.vue'
 import HeaderImage from '@/components/molecules/HeaderImage.vue'
@@ -45,41 +43,20 @@ export default {
     ThumbnailBoxGrid,
     ThumbnailBox
   },
-  data() {
-    return {
-      user: null,
-      mediaList: []
-    }
-  },
   mounted() {
-    this.userTimelineSearch('kq89nju2')
+    this.userTimelineSearch('reoenl')
+  },
+  computed: {
+    user() {
+      return this.$store.state.user
+    },
+    mediaList() {
+      return this.$store.state.mediaList
+    }
   },
   methods: {
     userTimelineSearch: function(screenName, count = 25, excludeReplies = true) {
-      const { mediaList } = this
-      axios.get(`http://localhost:3000/api/twitter/search?screen_name=${screenName}&count=${count}&excludeReplies=${excludeReplies}`)
-      .then(res => {
-        res.data.map(obj => {
-          if (!this.user) {
-            this.user = {
-              headerImage: obj.user.profile_banner_url,
-              userIcon: obj.user.profile_image_url_https.replace('normal', '400x400'),
-              name: obj.user.name,
-              screenName: obj.user.screen_name,
-              description: obj.user.description,
-              follow: obj.user.friends_count,
-              followers: obj.user.followers_count
-            }
-          }
-
-          obj.extended_entities.media.map(media => {
-            mediaList.push({
-              id: media.id,
-              src: media.media_url_https
-            })
-          })
-        })
-      })
+      this.$store.dispatch('userTimelineSearch', { screenName, count, excludeReplies })
     }
   }
 }
