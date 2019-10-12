@@ -16,7 +16,6 @@
 
   .user-profile {
     padding: 0 1rem 1rem 1rem;
-    border-bottom: 1px solid rgba(26, 26, 26, .1);
     box-sizing: border-box;
   }
 
