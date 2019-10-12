@@ -47,14 +47,17 @@ export default {
 <style lang="scss" scoped>
   .tab-item {
     display: inline-block;
-    border-bottom: 2px solid rgba(26, 26, 26, 0);
 
     &.color-default {
       color: rgba(26, 26, 26, .5);
 
       & > .router-link-exact-active {
         color: rgba(26, 26, 26, 1);
-        border-bottom: 2px solid #1a1a1a;
+        border-bottom: 2px solid rgba(26, 26, 26, 1);
+      }
+
+      & > :not(.router-link-exact-active) {
+        border-bottom: 2px solid rgba(26, 26, 26, 0);
       }
     }
   }
