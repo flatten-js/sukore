@@ -15,6 +15,17 @@
               :follow="user.follow"
               :followers="user.followers"
               )
+    template(v-slot:nav-tabs)
+      template(v-if="user")
+        nav-tabs
+          tab-item(
+            to="/"
+            text="ツイート"
+            )
+          tab-item(
+            to="/a"
+            text="リツイート"
+            )
     template(v-slot:thumbnail-box)
       thumbnail-box-grid
         template(v-for="media in mediaList")
@@ -30,6 +41,8 @@ import UserDetail from '@/components/organisms/UserDetail.vue'
 import HeaderImage from '@/components/molecules/HeaderImage.vue'
 import UserIcon from '@/components/molecules/UserIcon.vue'
 import UserProfileText from '@/components/molecules/UserProfileText.vue'
+import NavTabs from '@/components/organisms/NavTabs.vue'
+import TabItem from '@/components/molecules/TabItem.vue'
 import ThumbnailBoxGrid from '@/components/organisms/ThumbnailBoxGrid.vue'
 import ThumbnailBox from '@/components/molecules/ThumbnailBox.vue'
 
@@ -40,6 +53,8 @@ export default {
     HeaderImage,
     UserIcon,
     UserProfileText,
+    NavTabs,
+    TabItem,
     ThumbnailBoxGrid,
     ThumbnailBox
   },
