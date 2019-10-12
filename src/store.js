@@ -17,6 +17,27 @@ export default new Vuex.Store({
       state.mediaList = payload.mediaList
     }
   },
+  getters: {
+    user: ({ user }) => {
+      if (!user) return
+      return user
+    },
+    tweetFilter: ({ mediaList }, { mediaListDuplicateNo }) => {
+      if (!mediaList) return
+      return mediaListDuplicateNo.filter(obj => !obj.retweeted_status)
+    },
+    retweetFilter: ({ mediaList }, { mediaListDuplicateNo }) => {
+      if (!mediaList) return
+      return mediaListDuplicateNo.filter(obj => obj.retweeted_status)
+    },
+    mediaListDuplicateNo: ({ mediaList }) => {
+      if (!mediaList) return
+
+      return mediaList.filter((media, index, self) => {
+        return self.findIndex(findMedia => findMedia.id === media.id) === index
+      })
+    }
+  },
   actions: {
     async userTimelineSearch({ commit }, { screenName, count, excludeReplies }) {
       const payload = {
@@ -42,7 +63,8 @@ export default new Vuex.Store({
           obj.extended_entities.media.map(media => {
             payload.mediaList.push({
               id: media.id,
-              src: media.media_url_https
+              src: media.media_url_https,
+              retweeted_status: obj.retweeted_status ? obj.retweeted_status.user.screen_name !== screenName : false
             })
           })
         })
