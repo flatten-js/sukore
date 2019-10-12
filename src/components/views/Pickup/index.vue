@@ -23,16 +23,11 @@
             text="ツイート"
             )
           tab-item(
-            to="/a"
+            to="/retweet"
             text="リツイート"
             )
     template(v-slot:thumbnail-box)
-      thumbnail-box-grid
-        template(v-for="media in mediaList")
-          thumbnail-box(
-            :key="media.id"
-            :src="media.src"
-            )
+      router-view
 </template>
 
 <script>
@@ -63,10 +58,7 @@ export default {
   },
   computed: {
     user() {
-      return this.$store.state.user
-    },
-    mediaList() {
-      return this.$store.state.mediaList
+      return this.$store.getters.user
     }
   },
   methods: {
