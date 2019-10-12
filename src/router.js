@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Pickup from '@/components/views/Pickup.vue'
 
 Vue.use(Router)
 
@@ -10,7 +9,17 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: Pickup
+      component: () => import('@/components/views/Pickup'),
+      children: [
+        {
+          path: '/',
+          component: () => import('@/components/views/Pickup/children/Tweet.vue')
+        },
+        {
+          path: '/retweet',
+          component: () => import('@/components/views/Pickup/children/Retweet.vue')
+        }
+      ]
     }
   ]
 })
