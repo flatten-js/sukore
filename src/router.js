@@ -12,11 +12,11 @@ export default new Router({
       component: () => import('@/components/views/Pickup'),
       children: [
         {
-          path: '/',
+          path: '',
           component: () => import('@/components/views/Pickup/children/Tweet.vue')
         },
         {
-          path: '/retweet',
+          path: 'retweet',
           component: () => import('@/components/views/Pickup/children/Retweet.vue')
         }
       ]
