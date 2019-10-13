@@ -18,14 +18,11 @@
     template(v-slot:nav-tabs)
       template(v-if="user")
         nav-tabs
-          tab-item(
-            to="/"
-            text="ツイート"
-            )
-          tab-item(
-            to="/retweet"
-            text="リツイート"
-            )
+          template(v-for="tab in navTabsData")
+            tab-item(
+              :to="tab.to"
+              :text="tab.text"
+              )
     template(v-slot:thumbnail-box)
       router-view
 </template>
@@ -52,6 +49,20 @@ export default {
     TabItem,
     ThumbnailBoxGrid,
     ThumbnailBox
+  },
+  data() {
+    return {
+      navTabsData: [
+        {
+          to: '/',
+          text: 'ツイート'
+        },
+        {
+          to: '/retweet',
+          text: 'リツイート'
+        }
+      ]
+    }
   },
   mounted() {
     this.userTimelineSearch('reoenl')
