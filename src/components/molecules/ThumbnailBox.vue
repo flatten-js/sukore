@@ -69,6 +69,6 @@ export default {
     color: rgba(255, 255, 255, .95);
     font-size: 1.8rem;
     line-height: 0;
-    text-shadow: 0 0 3px rgba(26, 26, 26, .2);
+    text-shadow: 0 2px 5px rgba(26, 26, 26, .26);
   }
 </style>
