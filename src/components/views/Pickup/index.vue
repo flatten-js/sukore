@@ -23,7 +23,7 @@
               :to="tab.to"
               :text="tab.text"
               )
-    template(v-slot:thumbnail-box)
+    template(v-slot:tabs-content)
       router-view
 </template>
 

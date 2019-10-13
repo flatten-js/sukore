@@ -4,6 +4,6 @@
       slot(name="user-detail")
     section.nav-tabs-section
       slot(name="nav-tabs")
-    section.thumbnail-box-section
-      slot(name="thumbnail-box")
+      .tabs-content
+        slot(name="tabs-content")
 </template>
