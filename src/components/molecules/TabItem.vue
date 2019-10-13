@@ -53,11 +53,11 @@ export default {
 
       & > .router-link-exact-active {
         color: rgba(26, 26, 26, 1);
-        border-bottom: 2px solid rgba(26, 26, 26, 1);
+        border-bottom: 3px solid rgba(26, 26, 26, 1);
       }
 
       & > :not(.router-link-exact-active) {
-        border-bottom: 2px solid rgba(26, 26, 26, 0);
+        border-bottom: 3px solid rgba(26, 26, 26, 0);
       }
     }
   }
