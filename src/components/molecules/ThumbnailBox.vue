@@ -1,9 +1,12 @@
 <template lang="pug">
-  div.thumbnail-box(:class="propsClassGenerator")
+  div.thumbnail-box(
+    ref="thumbnailBox"
+    :class="propsClassGenerator"
+    )
     vary-image(
       :src="src"
       fit="cover"
-      animation="fade-up"
+      @load="load"
       )
     .thumbnail-fav
       material-icons(
@@ -32,15 +35,31 @@ export default {
       validator(val) {
         return ['2', '3'].includes(val)
       }
+    },
+    animation: {
+      type: [String, null],
+      default: null,
+      validator(val) {
+        return ['fade-up'].includes(val)
+      }
     }
   },
   computed: {
     propsClassGenerator() {
-      const { column } = this
+      const { column, animation } = this
 
       return {
-        [`column-${column}`]: column
+        [`column-${column}`]: column,
+        [`animation-${animation}`]: animation
       }
+    }
+  },
+  methods: {
+    load: function() {
+      if (!this.animation) return
+
+      const { thumbnailBox } = this.$refs
+      thumbnailBox.classList.add('thumbnail-loaded')
     }
   }
 }
@@ -58,6 +77,19 @@ export default {
     &.column-3 {
       width: 33.33vw;
       height: 33.33vw;
+    }
+
+    &.animation-fade-up {
+      opacity: 0;
+      transform: translate3d(0, 1rem, 0);
+      transition: all ease-out .4s;
+    }
+  }
+
+  .thumbnail-loaded {
+    &.animation-fade-up {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
     }
   }
 

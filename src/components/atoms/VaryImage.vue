@@ -2,6 +2,7 @@
   v-lazy-image.vary-image(
     :class="propsClassGenerator"
     :src="src"
+    @load="load"
     )
 </template>
 
@@ -23,23 +24,20 @@ export default {
       validator(val) {
         return ['cover'].includes(val)
       }
-    },
-    animation: {
-      type: [String, null],
-      default: null,
-      validator(val) {
-        return ['fade-up'].includes(val)
-      }
     }
   },
   computed: {
     propsClassGenerator() {
-      const { fit, animation } = this
+      const { fit } = this
 
       return {
-        [`fit-${fit}`]: fit,
-        [`animation-${animation}`]: animation
+        [`fit-${fit}`]: fit
       }
+    }
+  },
+  methods: {
+    load: function() {
+      this.$emit('load')
     }
   }
 }
@@ -53,22 +51,6 @@ export default {
 
     &.fit-cover {
       object-fit: cover;
-    }
-  }
-
-
-  .v-lazy-image {
-    &.animation-fade-up {
-      opacity: 0;
-      transform: translate3d(0, 1rem, 0);
-      transition: all ease-out .4s;
-    }
-  }
-
-  .v-lazy-image-loaded {
-    &.animation-fade-up {
-      opacity: 1;
-      transform: translate3d(0, 0, 0);
     }
   }
 </style>

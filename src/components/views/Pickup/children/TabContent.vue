@@ -4,6 +4,7 @@
       thumbnail-box(
         :key="media.id"
         :src="media.src"
+        animation="fade-up"
         )
 </template>
 
