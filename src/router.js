@@ -13,11 +13,13 @@ export default new Router({
       children: [
         {
           path: '',
-          component: () => import('@/components/views/Pickup/children/Tweet.vue')
+          component: () => import('@/components/views/Pickup/children/TabContent.vue'),
+          props: { state: true }
         },
         {
           path: 'retweet',
-          component: () => import('@/components/views/Pickup/children/Retweet.vue')
+          component: () => import('@/components/views/Pickup/children/TabContent.vue'),
+          props: { state: false }
         }
       ]
     }

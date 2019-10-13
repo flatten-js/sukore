@@ -1,6 +1,6 @@
 <template lang="pug">
   thumbnail-box-grid
-    template(v-for="media in tweetMedia")
+    template(v-for="media in changeMediaWithState")
       thumbnail-box(
         :key="media.id"
         :src="media.src"
@@ -11,14 +11,27 @@
 import ThumbnailBoxGrid from '@/components/organisms/ThumbnailBoxGrid.vue'
 import ThumbnailBox from '@/components/molecules/ThumbnailBox.vue'
 
-export default  {
+export default {
   components: {
     ThumbnailBoxGrid,
     ThumbnailBox
   },
+  props: {
+    state: {
+      type: Boolean,
+      required: true
+    }
+  },
   computed: {
-    tweetMedia() {
+    tweetFilter() {
       return this.$store.getters.tweetFilter
+    },
+    retweetFilter() {
+      return this.$store.getters.retweetFilter
+    },
+    changeMediaWithState() {
+      const { state, tweetFilter, retweetFilter } = this
+      return state ? tweetFilter : retweetFilter
     }
   }
 }
