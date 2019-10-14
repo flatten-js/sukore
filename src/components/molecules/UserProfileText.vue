@@ -81,7 +81,9 @@ export default {
 
   .user-state {
     display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+  }
+
+  .user-follow {
+    margin: 0 1rem 0 0;
   }
 </style>
