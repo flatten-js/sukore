@@ -22,6 +22,13 @@ export default new Router({
           props: { state: false }
         }
       ]
+    },
+    {
+      path: '/:id',
+      component: () => import('@/components/views/PickupDetail'),
+      props: route => ({
+        id: route.params.id
+      })
     }
   ]
 })
