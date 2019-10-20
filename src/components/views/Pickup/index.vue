@@ -6,7 +6,10 @@
           template(v-slot:header)
             header-image(:url="user.headerImage")
           template(v-slot:user-icon)
-            user-icon(:src="user.userIcon")
+            user-icon(
+              :src="user.userIcon"
+              size="large"
+              )
           template(v-slot:user-profile-body)
             user-profile-text(
               :name="user.name"
