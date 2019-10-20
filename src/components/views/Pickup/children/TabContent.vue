@@ -3,6 +3,7 @@
     template(v-for="media in changeMediaWithState")
       thumbnail-box(
         :key="media.id"
+        :id="media.id"
         :src="media.src"
         animation="fade-up"
         )

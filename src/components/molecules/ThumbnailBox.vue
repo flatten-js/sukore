@@ -3,16 +3,17 @@
     ref="thumbnailBox"
     :class="propsClassGenerator"
     )
-    vary-image(
-      :src="src"
-      fit="cover"
-      @load="load"
-      )
-    .thumbnail-fav
-      material-icons(
-        name="favorite"
-        size="custom"
+    router-link.thumbnail-box-link(:to="id | pathConversion")
+      vary-image(
+        :src="src"
+        fit="cover"
+        @load="load"
         )
+      .thumbnail-fav
+        material-icons(
+          name="favorite"
+          size="custom"
+          )
 </template>
 
 <script>
@@ -25,6 +26,10 @@ export default {
     MaterialIcons
   },
   props: {
+    id: {
+      type: Number,
+      reqired: true
+    },
     src: {
       type: String,
       reqired: true
@@ -42,6 +47,11 @@ export default {
       validator(val) {
         return ['fade-up'].includes(val)
       }
+    }
+  },
+  filters: {
+    pathConversion(val) {
+      return `/${val}`
     }
   },
   computed: {
@@ -91,6 +101,11 @@ export default {
       opacity: 1;
       transform: translate3d(0, 0, 0);
     }
+  }
+
+  .thumbnail-box-link {
+    display: block;
+    height: 100%;
   }
 
   .thumbnail-fav {
