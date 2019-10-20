@@ -71,6 +71,8 @@ export default new Vuex.Store({
               name: obj.retweeted_status ? obj.retweeted_status.user.name : obj.user.name,
               screenName: obj.retweeted_status ? obj.retweeted_status.user.screen_name : obj.user.screen_name,
               src: media.media_url_https,
+              text: obj.retweeted_status ? obj.retweeted_status.text : obj.text,
+              created: obj.retweeted_status ? obj.retweeted_status.created_at : obj.created_at,
               retweeted_status: obj.retweeted_status ? obj.retweeted_status.user.screen_name !== screenName : false
             })
           })
