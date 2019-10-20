@@ -17,6 +17,8 @@
             text="Twitterを見る"
             size="small"
             )
+    template(v-slot:thumbnail-detail)
+      thumbnail-detail
 </template>
 
 <script>
@@ -27,6 +29,7 @@ import UserDetailBar from '@/components/organisms/UserDetailBar.vue'
 import UserIcon from '@/components/molecules/UserIcon.vue'
 import NoBreakText from '@/components/molecules/NoBreakText.vue'
 import OutsideLinkButton from '@/components/molecules/OutsideLinkButton.vue'
+import ThumbnailDetail from '@/components/organisms/ThumbnailDetail.vue'
 
 export default {
   components: {
@@ -34,7 +37,8 @@ export default {
     UserDetailBar,
     UserIcon,
     NoBreakText,
-    OutsideLinkButton
+    OutsideLinkButton,
+    ThumbnailDetail
   },
   props: {
     id: {
