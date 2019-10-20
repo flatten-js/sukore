@@ -16,20 +16,20 @@ export default {
       type: String,
       reqired: true
     },
-    color: {
+    size: {
       type: String,
-      default: 'black',
+      default: 'medium',
       validator(val) {
-        return ['black', 'white'].includes(val)
+        return ['medium', 'small', 'xs'].includes(val)
       }
     }
   },
   computed: {
     propsClassGenerator() {
-      const { color } = this
+      const { size } = this
 
       return {
-        [`color-${color}`]: color
+        [`size-${size}`]: size
       }
     }
   }
@@ -40,13 +40,19 @@ export default {
   .outside-link {
     display: inline-block;
     text-decoration: none;
+    color: inherit;
+    word-break: keep-all;
 
-    &.color-black {
-      color: #1a1a1a;
+    &.size-medium {
+      font-size: 1rem;
     }
 
-    &.color-white {
-      color: #fff;
+    &.size-small {
+      font-size: .875rem;
+    }
+
+    &.size-xs {
+      font-size: .75rem;
     }
   }
 </style>
