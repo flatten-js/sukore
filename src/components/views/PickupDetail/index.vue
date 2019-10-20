@@ -19,6 +19,11 @@
             )
     template(v-slot:thumbnail-detail)
       thumbnail-detail
+        thumbnail-figure(
+          :src="mediaFromId.src"
+          :text="mediaFromId.text"
+          :created="mediaFromId.created"
+          )
 </template>
 
 <script>
@@ -30,6 +35,7 @@ import UserIcon from '@/components/molecules/UserIcon.vue'
 import NoBreakText from '@/components/molecules/NoBreakText.vue'
 import OutsideLinkButton from '@/components/molecules/OutsideLinkButton.vue'
 import ThumbnailDetail from '@/components/organisms/ThumbnailDetail.vue'
+import ThumbnailFigure from '@/components/molecules/ThumbnailFigure.vue'
 
 export default {
   components: {
@@ -38,7 +44,8 @@ export default {
     UserIcon,
     NoBreakText,
     OutsideLinkButton,
-    ThumbnailDetail
+    ThumbnailDetail,
+    ThumbnailFigure
   },
   props: {
     id: {
