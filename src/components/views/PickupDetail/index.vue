@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import PickupDetailTemplate from '@/components/templates/PickupDetailTemplate.vue'
 import UserDetailBar from '@/components/organisms/UserDetailBar.vue'
 
@@ -12,6 +14,23 @@ export default {
   components: {
     PickupDetailTemplate,
     UserDetailBar
+  },
+  props: {
+    id: {
+      type: String,
+      reqired: true
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'mediaListDuplicateNo'
+    ]),
+    mediaFromId() {
+      const { mediaListDuplicateNo, id } = this
+      const index = mediaListDuplicateNo.findIndex(media => media.id == id)
+
+      return mediaListDuplicateNo[index]
+    }
   }
 }
 </script>
