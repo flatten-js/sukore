@@ -4,6 +4,12 @@
       user-detail-bar
         template(v-slot:user-icon)
           user-icon(:src="mediaFromId.icon")
+        template(v-slot:user-name)
+          no-break-text(
+            :text="mediaFromId.name"
+            size="small"
+            weight="bold"
+            )
 </template>
 
 <script>
@@ -12,12 +18,14 @@ import { mapGetters } from 'vuex'
 import PickupDetailTemplate from '@/components/templates/PickupDetailTemplate.vue'
 import UserDetailBar from '@/components/organisms/UserDetailBar.vue'
 import UserIcon from '@/components/molecules/UserIcon.vue'
+import NoBreakText from '@/components/molecules/NoBreakText.vue'
 
 export default {
   components: {
     PickupDetailTemplate,
     UserDetailBar,
-    UserIcon
+    UserIcon,
+    NoBreakText
   },
   props: {
     id: {
