@@ -10,6 +10,13 @@
             size="small"
             weight="bold"
             )
+        template(v-slot:user-twitter-link)
+          outside-link-button(
+            type="twitter"
+            :href="mediaFromId.screenName | twitterPathConversion"
+            text="Twitterを見る"
+            size="small"
+            )
 </template>
 
 <script>
@@ -19,18 +26,25 @@ import PickupDetailTemplate from '@/components/templates/PickupDetailTemplate.vu
 import UserDetailBar from '@/components/organisms/UserDetailBar.vue'
 import UserIcon from '@/components/molecules/UserIcon.vue'
 import NoBreakText from '@/components/molecules/NoBreakText.vue'
+import OutsideLinkButton from '@/components/molecules/OutsideLinkButton.vue'
 
 export default {
   components: {
     PickupDetailTemplate,
     UserDetailBar,
     UserIcon,
-    NoBreakText
+    NoBreakText,
+    OutsideLinkButton
   },
   props: {
     id: {
       type: String,
       reqired: true
+    }
+  },
+  filters: {
+    twitterPathConversion(val) {
+      return `https://twitter.com/${val}`
     }
   },
   computed: {
