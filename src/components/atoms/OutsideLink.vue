@@ -2,6 +2,7 @@
   a.outside-link(
     :class="propsClassGenerator"
     :href="href"
+    :target="target"
     ) {{ text }}
 </template>
 
@@ -15,6 +16,13 @@ export default {
     text: {
       type: String,
       reqired: true
+    },
+    target: {
+      type: String,
+      default: '_blank',
+      validator(val) {
+        return ['_blank'].includes(val)
+      }
     },
     size: {
       type: String,
