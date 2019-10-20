@@ -21,6 +21,7 @@
         inline-part(
           part="フォロー中"
           weight="normal"
+          brightness="2"
           )
       .user-followers
         inline-part(
@@ -31,6 +32,7 @@
         inline-part(
           part="フォロワー"
           weight="normal"
+          brightness="2"
           )
 </template>
 

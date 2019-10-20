@@ -22,15 +22,23 @@ export default {
       validator(val) {
         return ['025', '05', '1'].includes(val)
       }
-    }
+    },
+    brightness: {
+      type: String,
+      default: '1',
+      validator(val) {
+        return ['1', '2', '3', '4'].includes(val)
+      }
+    },
   },
   computed: {
     propsClassGenerator() {
-      const { weight, mr } = this
+      const { weight, mr, brightness } = this
 
       return {
         [`weight-${weight}`]: weight,
-        [`mr-${mr}`]: mr
+        [`mr-${mr}`]: mr,
+        [`brightness-${brightness}`]: brightness
       }
     }
   }
@@ -58,6 +66,22 @@ export default {
 
     &.mr-1 {
       margin: 0 1rem 0 0;
+    }
+
+    &.brightness-1 {
+      color: rgba(26, 26, 26, 1);
+    }
+
+    &.brightness-2 {
+      color: rgba(26, 26, 26, .75);
+    }
+
+    &.brightness-3 {
+      color: rgba(26, 26, 26, .5);
+    }
+
+    &.brightness-4 {
+      color: rgba(26, 26, 26, .25);
     }
   }
 </style>
