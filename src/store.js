@@ -63,6 +63,13 @@ export default new Vuex.Store({
           obj.extended_entities.media.map(media => {
             payload.mediaList.push({
               id: media.id,
+              icon: obj.retweeted_status ? (
+                obj.retweeted_status.user.profile_image_url_https.replace('normal', '400x400')
+              ) : (
+                obj.user.profile_image_url_https.replace('normal', '400x400')
+              ),
+              name: obj.retweeted_status ? obj.retweeted_status.user.name : obj.user.name,
+              screenName: obj.retweeted_status ? obj.retweeted_status.user.screen_name : obj.user.screen_name,
               src: media.media_url_https,
               retweeted_status: obj.retweeted_status ? obj.retweeted_status.user.screen_name !== screenName : false
             })
