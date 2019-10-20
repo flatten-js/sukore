@@ -22,15 +22,23 @@ export default {
       validator(val) {
         return ['medium', 'small', 'xs'].includes(val)
       }
+    },
+    weight: {
+      type: [String, null],
+      default: null,
+      validator(val) {
+        return ['bold'].includes(val)
+      }
     }
   },
   computed: {
     propsClassGenerator() {
-      const { brightness, size } = this
+      const { brightness, size, weight } = this
 
       return {
         [`brightness-${brightness}`]: brightness,
-        [`size-${size}`]: size
+        [`size-${size}`]: size,
+        [`weight-${weight}`]: weight
       }
     }
   }
@@ -67,6 +75,10 @@ export default {
 
     &.size-xs {
       font-size: .75rem;
+    }
+
+    &.weight-bold {
+      font-weight: bold;
     }
   }
 </style>
