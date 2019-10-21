@@ -9,6 +9,13 @@ export default {
       type: [String, Number],
       required: true
     },
+    color: {
+      type: String,
+      default: 'black',
+      validator(val) {
+        return ['black', 'white'].includes(val)
+      }
+    },
     weight: {
       type: [String, null],
       default: null,
@@ -33,12 +40,13 @@ export default {
   },
   computed: {
     propsClassGenerator() {
-      const { weight, mr, brightness } = this
+      const { color, weight, mr, brightness } = this
 
       return {
+        [`color-${color}`]: color,
         [`weight-${weight}`]: weight,
         [`mr-${mr}`]: mr,
-        [`brightness-${brightness}`]: brightness
+        [`brightness-${brightness}`]: brightness && color
       }
     }
   }
@@ -68,20 +76,28 @@ export default {
       margin: 0 1rem 0 0;
     }
 
-    &.brightness-1 {
-      color: rgba(26, 26, 26, 1);
+    &.color-black {
+      color: #1a1a1a;
+
+      &.brightness-1 {
+        color: rgba(26, 26, 26, 1);
+      }
+
+      &.brightness-2 {
+        color: rgba(26, 26, 26, .75);
+      }
+
+      &.brightness-3 {
+        color: rgba(26, 26, 26, .5);
+      }
+
+      &.brightness-4 {
+        color: rgba(26, 26, 26, .25);
+      }
     }
 
-    &.brightness-2 {
-      color: rgba(26, 26, 26, .75);
-    }
-
-    &.brightness-3 {
-      color: rgba(26, 26, 26, .5);
-    }
-
-    &.brightness-4 {
-      color: rgba(26, 26, 26, .25);
+    &.color-white {
+      color: #fff;
     }
   }
 </style>
