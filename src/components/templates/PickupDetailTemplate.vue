@@ -7,7 +7,7 @@
 </template>
 
 <style scoped>
-  .thumbnail-detail-section {
+  .user-detail-bar-section, .thumbnail-detail-section {
     border-bottom: 1px solid rgba(26, 26, 26, .2);
   }
 </style>
