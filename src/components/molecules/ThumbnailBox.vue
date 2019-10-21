@@ -9,6 +9,17 @@
         fit="cover"
         @load="load"
         )
+      template(v-if="size > 1")
+        .thumbnail-size-badge
+          .badge-icon
+            material-icons(
+              name="photo_library"
+              size="custom"
+              )
+          inline-part(
+            :part="size"
+            color="white"
+            )
       .thumbnail-fav
         material-icons(
           name="favorite"
@@ -18,11 +29,13 @@
 
 <script>
 import VaryImage from '@/components/atoms/VaryImage.vue'
+import InlinePart from '@/components/atoms/InlinePart.vue'
 import MaterialIcons from '@/components/atoms/MaterialIcons.vue'
 
 export default {
   components: {
     VaryImage,
+    InlinePart,
     MaterialIcons
   },
   props: {
@@ -32,6 +45,10 @@ export default {
     },
     src: {
       type: String,
+      reqired: true
+    },
+    size: {
+      type: Number,
       reqired: true
     },
     column: {
@@ -106,6 +123,24 @@ export default {
   .thumbnail-box-link {
     display: block;
     height: 100%;
+  }
+
+  .thumbnail-size-badge {
+    display: flex;
+    position: absolute;
+    padding: .25rem .5rem;
+    top: .5rem;
+    right: .5rem;
+    color: #fff;
+    border-radius: 25px;
+    background-color: rgba(26, 26, 26, .75);
+    align-items: center;
+    font-size: .75rem;
+  }
+
+  .badge-icon {
+    margin: 0 .25rem 0 0;
+    line-height: 0;
   }
 
   .thumbnail-fav {
