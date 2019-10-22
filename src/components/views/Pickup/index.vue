@@ -9,6 +9,7 @@
             user-icon(
               :src="user.userIcon"
               size="large"
+              border="default"
               )
           template(v-slot:user-profile-body)
             user-profile-text(
@@ -68,7 +69,7 @@ export default {
     }
   },
   mounted() {
-    this.userTimelineSearch('reoenl')
+    this.userTimelineSearch('40hara', 50)
   },
   computed: {
     user() {

@@ -24,14 +24,22 @@ export default {
       validator(val) {
         return ['medium', 'large'].includes(val)
       }
+    },
+    border: {
+      type: [String, null],
+      default: null,
+      validator(val) {
+        return ['default'].includes(val)
+      }
     }
   },
   computed: {
     propsClassGenerator() {
-      const { size } = this
+      const { size, border } = this
 
       return {
-        [`size-${size}`]: size
+        [`size-${size}`]: size,
+        [`border-${border}`]: border
       }
     }
   }
@@ -40,7 +48,6 @@ export default {
 
 <style lang="scss" scoped>
   .user-icon {
-    border: 3px solid #fff;
     border-radius: 50%;
     box-sizing: border-box;
 
@@ -52,6 +59,10 @@ export default {
     &.size-large {
       width: 70px;
       height: 70px;
+    }
+
+    &.border-default {
+      border: 3px solid #fff;
     }
   }
 </style>
