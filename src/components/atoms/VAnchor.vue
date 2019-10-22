@@ -1,5 +1,5 @@
 <template lang="pug">
-  a.outside-link(
+  a.v-anchor(
     :class="propsClassGenerator"
     :href="href"
     :target="target"
@@ -45,7 +45,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .outside-link {
+  .v-anchor {
     display: inline-block;
     text-decoration: none;
     color: inherit;

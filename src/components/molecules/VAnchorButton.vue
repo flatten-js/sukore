@@ -1,6 +1,6 @@
 <template lang="pug">
-  .outside-link-button(:class="propsClassGenerator")
-    outside-link(
+  .v-anchor-button(:class="propsClassGenerator")
+    v-anchor(
       :text="text"
       :href="href"
       :size="size"
@@ -8,11 +8,11 @@
 </template>
 
 <script>
-import OutsideLink from '@/components/atoms/OutsideLink.vue'
+import VAnchor from '@/components/atoms/VAnchor.vue'
 
 export default {
   components: {
-    OutsideLink
+    VAnchor
   },
   props: {
     text: {
@@ -45,7 +45,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .outside-link-button {
+  .v-anchor-button {
     padding: .35rem 1rem;
     border-radius: 25px;
 

@@ -11,7 +11,7 @@
             weight="bold"
             )
         template(v-slot:user-twitter-link)
-          outside-link-button(
+          v-anchor-button(
             type="twitter"
             :href="mediaFromId.screenName | twitterPathConversion"
             text="Twitterを見る"
@@ -33,7 +33,7 @@ import PickupDetailTemplate from '@/components/templates/PickupDetailTemplate.vu
 import UserDetailBar from '@/components/organisms/UserDetailBar.vue'
 import UserIcon from '@/components/molecules/UserIcon.vue'
 import NoBreakText from '@/components/molecules/NoBreakText.vue'
-import OutsideLinkButton from '@/components/molecules/OutsideLinkButton.vue'
+import VAnchorButton from '@/components/molecules/VAnchorButton.vue'
 import ThumbnailDetail from '@/components/organisms/ThumbnailDetail.vue'
 import ThumbnailFigure from '@/components/molecules/ThumbnailFigure.vue'
 
@@ -43,7 +43,7 @@ export default {
     UserDetailBar,
     UserIcon,
     NoBreakText,
-    OutsideLinkButton,
+    VAnchorButton,
     ThumbnailDetail,
     ThumbnailFigure
   },
