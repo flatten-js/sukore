@@ -24,11 +24,11 @@ export default new Vuex.Store({
     },
     tweetFilter: ({ mediaList }, { mediaListDuplicateNo }) => {
       if (!mediaList) return
-      return mediaListDuplicateNo.filter(obj => !obj.retweeted_status)
+      return mediaListDuplicateNo.filter(obj => !obj.retweetedStatus)
     },
     retweetFilter: ({ mediaList }, { mediaListDuplicateNo }) => {
       if (!mediaList) return
-      return mediaListDuplicateNo.filter(obj => obj.retweeted_status)
+      return mediaListDuplicateNo.filter(obj => obj.retweetedStatus)
     },
     mediaListDuplicateNo: ({ mediaList }) => {
       if (!mediaList) return
@@ -66,11 +66,11 @@ export default new Vuex.Store({
             id: obj.id,
             icon: obj.user.profile_image_url_https.replace('normal', '400x400'),
             name: obj.user.name,
-            screen_name: obj.user.screen_name,
+            screenName: obj.user.screen_name,
             src: obj.extended_entities.media.map(media => media.media_url_https),
             text: obj.text,
             created: obj.created_at,
-            retweeted_status: false,
+            retweetedStatus: false,
             size: obj.extended_entities.media.length
           }
 
@@ -79,9 +79,9 @@ export default new Vuex.Store({
               id: obj.retweeted_status.id,
               icon: obj.retweeted_status.user.profile_image_url_https.replace('normal', '400x400'),
               name: obj.retweeted_status.user.name,
-              screen_name: obj.retweeted_status.user.screen_name,
+              screenName: obj.retweeted_status.user.screen_name,
               text: obj.retweeted_status.text,
-              retweeted_status: obj.retweeted_status.user.screen_name !== screenName
+              retweetedStatus: obj.retweeted_status.user.screen_name !== screenName
             }
 
             mediaObjectTemplate = { ...mediaObjectTemplate, ...updateMediaObject }
