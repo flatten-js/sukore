@@ -60,22 +60,34 @@ export default new Vuex.Store({
             }
           }
 
-          obj.extended_entities.media.map(media => {
-            payload.mediaList.push({
-              id: media.id,
-              icon: obj.retweeted_status ? (
-                obj.retweeted_status.user.profile_image_url_https.replace('normal', '400x400')
-              ) : (
-                obj.user.profile_image_url_https.replace('normal', '400x400')
-              ),
-              name: obj.retweeted_status ? obj.retweeted_status.user.name : obj.user.name,
-              screenName: obj.retweeted_status ? obj.retweeted_status.user.screen_name : obj.user.screen_name,
-              src: media.media_url_https,
-              text: obj.retweeted_status ? obj.retweeted_status.text : obj.text,
-              created: obj.retweeted_status ? obj.retweeted_status.created_at : obj.created_at,
-              retweeted_status: obj.retweeted_status ? obj.retweeted_status.user.screen_name !== screenName : false
-            })
-          })
+          if (!obj.extended_entities) return
+
+          let mediaObjectTemplate = {
+            id: obj.id,
+            icon: obj.user.profile_image_url_https.replace('normal', '400x400'),
+            name: obj.user.name,
+            screen_name: obj.user.screen_name,
+            src: obj.extended_entities.media.map(media => media.media_url_https),
+            text: obj.text,
+            created: obj.created_at,
+            retweeted_status: false,
+            size: obj.extended_entities.media.length
+          }
+
+          if (obj.retweeted_status) {
+            const updateMediaObject = {
+              id: obj.retweeted_status.id,
+              icon: obj.retweeted_status.user.profile_image_url_https.replace('normal', '400x400'),
+              name: obj.retweeted_status.user.name,
+              screen_name: obj.retweeted_status.user.screen_name,
+              text: obj.retweeted_status.text,
+              retweeted_status: obj.retweeted_status.user.screen_name !== screenName
+            }
+
+            mediaObjectTemplate = { ...mediaObjectTemplate, ...updateMediaObject }
+          }
+
+          payload.mediaList.push(mediaObjectTemplate)
         })
 
         commit('getUser', payload)

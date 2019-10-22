@@ -20,7 +20,7 @@
     template(v-slot:thumbnail-detail)
       thumbnail-detail
         thumbnail-figure(
-          :src="mediaFromId.src"
+          :src="mediaFromId.src[0]"
           :text="mediaFromId.text"
           :created="mediaFromId.created"
           )
