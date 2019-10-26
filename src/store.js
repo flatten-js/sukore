@@ -6,12 +6,20 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user: null,
+    user: {
+      headerImage: '',
+      userIcon: '',
+      name: '',
+      screenName: '',
+      description: '',
+      follow: '',
+      followers: ''
+    },
     mediaList: null
   },
   mutations: {
     getUser(state, payload) {
-      state.user = payload.user
+      state.user = { ...state.user, ...payload.user }
     },
     getMediaList(state, payload) {
       state.mediaList = payload.mediaList
