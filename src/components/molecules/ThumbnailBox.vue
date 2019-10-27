@@ -62,7 +62,7 @@ export default {
       type: [String, null],
       default: null,
       validator(val) {
-        return ['fade-up'].includes(val)
+        return ['fade', 'fade-up'].includes(val)
       }
     }
   },
@@ -106,6 +106,11 @@ export default {
       height: 33.33vw;
     }
 
+    &.animation-fade {
+      opacity: 0;
+      transition: all ease-out .4s;
+    }
+
     &.animation-fade-up {
       opacity: 0;
       transform: translate3d(0, 1rem, 0);
@@ -114,6 +119,10 @@ export default {
   }
 
   .thumbnail-loaded {
+    &.animation-fade {
+      opacity: 1;
+    }
+
     &.animation-fade-up {
       opacity: 1;
       transform: translate3d(0, 0, 0);
