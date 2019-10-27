@@ -27,7 +27,6 @@ export default new Vuex.Store({
   },
   getters: {
     user: ({ user }) => {
-      if (!user) return
       return user
     },
     tweetFilter: ({ mediaList }, { mediaListDuplicateNo }) => {

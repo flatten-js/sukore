@@ -1,32 +1,30 @@
 <template lang="pug">
   pickup-template
     template(v-slot:user-detail)
-      template(v-if="user")
-        user-detail
-          template(v-slot:header)
-            header-image(:url="user.headerImage")
-          template(v-slot:user-icon)
-            user-icon(
-              :url="user.userIcon"
-              size="large"
-              border="default"
-              )
-          template(v-slot:user-profile-body)
-            user-profile-text(
-              :name="user.name"
-              :screenName="`@${user.screenName}`"
-              :descripstion="user.description"
-              :follow="user.follow"
-              :followers="user.followers"
-              )
+      user-detail
+        template(v-slot:header)
+          header-image(:url="user.headerImage")
+        template(v-slot:user-icon)
+          user-icon(
+            :url="user.userIcon"
+            size="large"
+            border="default"
+            )
+        template(v-slot:user-profile-body)
+          user-profile-text(
+            :name="user.name"
+            :screenName="`@${user.screenName}`"
+            :descripstion="user.description"
+            :follow="user.follow"
+            :followers="user.followers"
+            )
     template(v-slot:nav-tabs)
-      template(v-if="user")
-        nav-tabs
-          template(v-for="tab in navTabsData")
-            tab-item(
-              :to="tab.to"
-              :text="tab.text"
-              )
+      nav-tabs
+        template(v-for="tab in navTabsData")
+          tab-item(
+            :to="tab.to"
+            :text="tab.text"
+            )
     template(v-slot:tabs-content)
       router-view
 </template>
