@@ -3,7 +3,7 @@
     v-anchor(
       :text="text"
       :href="href"
-      :size="size"
+      :size="fontSize"
       )
 </template>
 
@@ -30,14 +30,22 @@ export default {
         return ['default', 'twitter'].includes(val)
       }
     },
-    size: String
+    fontSize: String,
+    size: {
+      type: String,
+      default: 'default',
+      validator(val) {
+        return ['default', 'large'].includes(val)
+      }
+    }
   },
   computed: {
     propsClassGenerator() {
-      const { type } = this
+      const { type, size } = this
 
       return {
-        [`type-${type}`]: type
+        [`type-${type}`]: type,
+        [`size-${size}`]: size
       }
     }
   }
@@ -46,7 +54,6 @@ export default {
 
 <style lang="scss" scoped>
   .v-anchor-button {
-    padding: .35rem 1rem;
     border-radius: 25px;
 
     &.type-default {
@@ -57,6 +64,14 @@ export default {
     &.type-twitter {
       background-color: #1DA1F2;
       color: white;
+    }
+
+    &.size-default {
+      padding: .35rem 1rem;
+    }
+
+    &.size-large {
+      padding: .35rem 2.5rem;
     }
   }
 </style>

@@ -15,7 +15,7 @@
             type="twitter"
             :href="mediaFromId.screenName | twitterPathConversion"
             text="Twitterを見る"
-            size="small"
+            fontSize="small"
             )
     template(v-slot:thumbnail-detail)
       thumbnail-detail
@@ -26,7 +26,8 @@
           template(v-if="mediaFromId.size > 1 && limit")
             v-anchor-button(
               text="すべて見る"
-              size="small"
+              fontSize="small"
+              size="large"
               @click.native="limit = !limit"
               )
         template(v-slot:caption)
