@@ -26,7 +26,8 @@
             :text="tab.text"
             )
     template(v-slot:tabs-content)
-      router-view
+      transition
+        router-view
 </template>
 
 <script>
@@ -81,3 +82,15 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .v-enter {
+    transform: translate3d(0, 1rem, 0);
+  }
+  .v-enter-to {
+    transform: translate3d(0, 0, 0);
+  }
+  .v-enter-active {
+    transition: all ease-out .4s;
+  }
+</style>
