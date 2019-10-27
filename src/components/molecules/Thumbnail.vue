@@ -22,6 +22,7 @@ export default {
 <style lang="scss" scoped>
   .thumbnail {
     width: 100%;
+    line-height: 0;
 
     .vary-image {
       height: auto;
