@@ -19,11 +19,21 @@
             )
     template(v-slot:thumbnail-detail)
       thumbnail-detail
-        thumbnail-figure(
-          :src="mediaFromId.src[0]"
-          :text="mediaFromId.text"
-          :created="mediaFromId.created"
-          )
+        template(v-slot:thumbnail)
+          template(v-for="src in thumbnailView")
+            thumbnail(:src="src")
+        template(v-slot:more)
+          template(v-if="mediaFromId.size > 1 && limit")
+            v-anchor-button(
+              text="すべて見る"
+              size="small"
+              @click.native="limit = !limit"
+              )
+        template(v-slot:caption)
+          thumbnail-caption(
+            :text="mediaFromId.text"
+            :created="mediaFromId.created"
+            )
 </template>
 
 <script>
@@ -35,7 +45,8 @@ import UserIcon from '@/components/molecules/UserIcon.vue'
 import NoBreakText from '@/components/molecules/NoBreakText.vue'
 import VAnchorButton from '@/components/molecules/VAnchorButton.vue'
 import ThumbnailDetail from '@/components/organisms/ThumbnailDetail.vue'
-import ThumbnailFigure from '@/components/molecules/ThumbnailFigure.vue'
+import Thumbnail from '@/components/molecules/Thumbnail.vue'
+import ThumbnailCaption from '@/components/molecules/ThumbnailCaption.vue'
 
 export default {
   components: {
@@ -45,12 +56,18 @@ export default {
     NoBreakText,
     VAnchorButton,
     ThumbnailDetail,
-    ThumbnailFigure
+    Thumbnail,
+    ThumbnailCaption
   },
   props: {
     id: {
       type: String,
       reqired: true
+    }
+  },
+  data() {
+    return {
+      limit: true
     }
   },
   filters: {
@@ -67,6 +84,13 @@ export default {
       const index = mediaListDuplicateNo.findIndex(media => media.id == id)
 
       return mediaListDuplicateNo[index]
+    },
+    thumbnailView() {
+      const { mediaFromId, limit } = this
+
+      return mediaFromId['src'].filter((src, index) => {
+        return limit ? !index : true
+      })
     }
   }
 }
