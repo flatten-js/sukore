@@ -1,20 +1,22 @@
 <template lang="pug">
   .user-icon(:class="propsClassGenerator")
-    vary-image(
-      :src="src"
-      fit="cover"
+    vary-background-image(
+      :url="url"
+      size="cover"
       )
 </template>
 
 <script>
 import VaryImage from '@/components/atoms/VaryImage.vue'
+import VaryBackgroundImage from '@/components/atoms/VaryBackgroundImage.vue'
 
 export default {
   components: {
-    VaryImage
+    VaryImage,
+    VaryBackgroundImage
   },
   props: {
-    src: {
+    url: {
       type: String,
       required: true
     },
@@ -50,6 +52,7 @@ export default {
   .user-icon {
     border-radius: 50%;
     box-sizing: border-box;
+    background-color: #dcdcdc;
 
     &.size-medium {
       width: 40px;

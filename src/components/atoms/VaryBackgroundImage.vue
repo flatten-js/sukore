@@ -48,6 +48,7 @@ export default {
   .vary-background-image {
     width: 100%;
     height: 100%;
+    border-radius: inherit;
 
     &.background-attachment-fixed {
       background-attachment: fixed;

@@ -7,7 +7,7 @@
             header-image(:url="user.headerImage")
           template(v-slot:user-icon)
             user-icon(
-              :src="user.userIcon"
+              :url="user.userIcon"
               size="large"
               border="default"
               )
@@ -69,7 +69,7 @@ export default {
     }
   },
   mounted() {
-    this.userTimelineSearch('40hara', 50)
+    this.userTimelineSearch('yoo_2711', 50)
   },
   computed: {
     user() {

@@ -3,7 +3,7 @@
     template(v-slot:user-detail-bar)
       user-detail-bar
         template(v-slot:user-icon)
-          user-icon(:src="mediaFromId.icon")
+          user-icon(:url="mediaFromId.icon")
         template(v-slot:user-name)
           no-break-text(
             :text="mediaFromId.name"

@@ -24,5 +24,6 @@ export default {
   .header-image {
     width: 100%;
     height: 125px;
+    background-color: #d1d1d1;
   }
 </style>
