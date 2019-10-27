@@ -2,6 +2,7 @@
   v-lazy-image.vary-image(
     :class="propsClassGenerator"
     :src="src"
+    src-placeholder="@/assets/images/placeholder.png"
     @load="load"
     )
 </template>
