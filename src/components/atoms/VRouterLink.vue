@@ -2,6 +2,7 @@
   router-link.v-router-link(
     :class="propsClassGenerator"
     :to="to"
+    :exact="exact"
     ) {{ text }}
 </template>
 
@@ -11,6 +12,10 @@ export default {
     to: {
       type: String,
       required: true
+    },
+    exact: {
+      type: Boolean,
+      default: false
     },
     text: {
       type: String,

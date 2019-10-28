@@ -5,6 +5,7 @@
       :text="text"
       size="small"
       p="1"
+      exact
       )
 </template>
 
@@ -51,12 +52,12 @@ export default {
     &.color-default {
       color: rgba(26, 26, 26, .5);
 
-      & > .router-link-exact-active {
+      & > .router-link-active {
         color: rgba(26, 26, 26, 1);
         border-bottom: 3px solid rgba(26, 26, 26, 1);
       }
 
-      & > :not(.router-link-exact-active) {
+      & > :not(.router-link-active) {
         border-bottom: 3px solid rgba(26, 26, 26, 0);
       }
     }
