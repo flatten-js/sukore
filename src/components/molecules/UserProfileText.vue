@@ -2,11 +2,16 @@
   .user-profile-text
     .user-author
       .user-name
-        block-heading(:text="name")
-      block-text(
-        :text="screenName"
-        brightness="2"
-        )
+        block-text(
+          :text="name"
+          size="large"
+          weight="bold"
+          )
+      .user-screen-name
+        block-text(
+          :text="screenName"
+          brightness="2"
+          )
     .user-descripstion
       block-text(
         :text="descripstion"
@@ -37,13 +42,11 @@
 </template>
 
 <script>
-import BlockHeading from '@/components/atoms/BlockHeading.vue'
 import BlockText from '@/components/atoms/BlockText.vue'
 import InlinePart from '@/components/atoms/InlinePart.vue'
 
 export default {
   components: {
-    BlockHeading,
     BlockText,
     InlinePart
   },
