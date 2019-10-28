@@ -20,7 +20,7 @@ export default {
       type: String,
       default: 'medium',
       validator(val) {
-        return ['medium', 'small', 'xs'].includes(val)
+        return ['xs', 'small', 'medium', 'large'].includes(val)
       }
     },
     weight: {
@@ -63,6 +63,10 @@ export default {
 
     &.brightness-4 {
       color: rgba(26, 26, 26, .25);
+    }
+
+    &.size-large {
+      font-size: 1.125rem;
     }
 
     &.size-medium {
