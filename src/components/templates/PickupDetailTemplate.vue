@@ -8,6 +8,6 @@
 
 <style scoped>
   .user-detail-bar-section, .thumbnail-detail-section {
-    border-bottom: 1px solid rgba(26, 26, 26, .2);
+    border-bottom: .5px solid rgba(26, 26, 26, .2);
   }
 </style>
