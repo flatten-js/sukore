@@ -27,7 +27,8 @@
             )
     template(v-slot:tabs-content)
       transition
-        router-view
+        keep-alive
+          router-view
 </template>
 
 <script>
