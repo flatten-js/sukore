@@ -1,5 +1,5 @@
 <template lang="pug">
-  .no-break-text
+  .single-line-text
     block-text(
       :text="text"
       :size="size"
@@ -15,10 +15,7 @@ export default {
     BlockText
   },
   props: {
-    text: {
-      type: String,
-      reqired: true
-    },
+    text: String,
     size: String,
     weight: String
   }
@@ -26,7 +23,7 @@ export default {
 </script>
 
 <style scoped>
-  .no-break-text > .block-text {
+  .single-line-text > .block-text {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;

@@ -5,7 +5,7 @@
         template(v-slot:user-icon)
           user-icon(:url="mediaFromId.icon")
         template(v-slot:user-name)
-          no-break-text(
+          single-line-text(
             :text="mediaFromId.name"
             size="small"
             weight="bold"
@@ -43,7 +43,7 @@ import { mapGetters } from 'vuex'
 import PickupDetailTemplate from '@/components/templates/PickupDetailTemplate.vue'
 import UserDetailBar from '@/components/organisms/UserDetailBar.vue'
 import UserIcon from '@/components/molecules/UserIcon.vue'
-import NoBreakText from '@/components/molecules/NoBreakText.vue'
+import SingleLineText from '@/components/molecules/SingleLineText.vue'
 import VAnchorButton from '@/components/molecules/VAnchorButton.vue'
 import ThumbnailDetail from '@/components/organisms/ThumbnailDetail.vue'
 import Thumbnail from '@/components/molecules/Thumbnail.vue'
@@ -54,7 +54,7 @@ export default {
     PickupDetailTemplate,
     UserDetailBar,
     UserIcon,
-    NoBreakText,
+    SingleLineText,
     VAnchorButton,
     ThumbnailDetail,
     Thumbnail,
