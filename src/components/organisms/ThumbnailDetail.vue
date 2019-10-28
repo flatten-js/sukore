@@ -8,7 +8,7 @@
       slot(name="caption")
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
   .thumbnail-detail {
     width: 100%;
     margin: 0;
@@ -16,6 +16,13 @@
 
   .thumbnail-area {
     position: relative;
+    background-color: #fafafa;
+
+    .thumbnail {
+      &:not(:nth-last-child(2)) {
+        margin: 0 0 1rem;
+      }
+    }
   }
 
   .thumbnail-more {
