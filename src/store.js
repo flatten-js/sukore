@@ -17,7 +17,7 @@ export default new Vuex.Store({
       follow: '',
       followers: ''
     },
-    mediaList: null,
+    mediaList: [],
     favorites: []
   },
   mutations: {
@@ -25,7 +25,7 @@ export default new Vuex.Store({
       state.user = { ...state.user, ...payload.user }
     },
     getMediaList(state, payload) {
-      state.mediaList = payload.mediaList
+      state.mediaList.push(...payload.mediaList)
     },
     getFavorite(state, payload) {
       state.favorites.push(...payload.favorites)
@@ -35,20 +35,16 @@ export default new Vuex.Store({
     user: ({ user }) => {
       return user
     },
-    tweetFilter: ({ mediaList }, { mediaListDuplicateNo }) => {
-      if (!mediaList) return
-      return mediaListDuplicateNo.filter(obj => !obj.retweetedStatus)
-    },
-    retweetFilter: ({ mediaList }, { mediaListDuplicateNo }) => {
-      if (!mediaList) return
-      return mediaListDuplicateNo.filter(obj => obj.retweetedStatus)
-    },
     mediaListDuplicateNo: ({ mediaList }) => {
-      if (!mediaList) return
-
       return mediaList.filter((media, index, self) => {
         return self.findIndex(findMedia => findMedia.id === media.id) === index
       })
+    },
+    tweetFilter: (state, { mediaListDuplicateNo }) => {
+      return mediaListDuplicateNo.filter(obj => !obj.retweetedStatus)
+    },
+    retweetFilter: (state, { mediaListDuplicateNo }) => {
+      return mediaListDuplicateNo.filter(obj => obj.retweetedStatus)
     },
     favorites: ({ favorites }) => {
       return favorites
