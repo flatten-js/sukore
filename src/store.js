@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import { apolloProvider } from '@/apollo'
+import { ALL_FAVORITE } from '@/constants/graphql/favorite'
 
 Vue.use(Vuex)
 
@@ -15,7 +17,8 @@ export default new Vuex.Store({
       follow: '',
       followers: ''
     },
-    mediaList: null
+    mediaList: null,
+    favorites: []
   },
   mutations: {
     getUser(state, payload) {
@@ -23,6 +26,9 @@ export default new Vuex.Store({
     },
     getMediaList(state, payload) {
       state.mediaList = payload.mediaList
+    },
+    getFavorite(state, payload) {
+      state.favorites.push(...payload.favorites)
     }
   },
   getters: {
@@ -43,6 +49,9 @@ export default new Vuex.Store({
       return mediaList.filter((media, index, self) => {
         return self.findIndex(findMedia => findMedia.id === media.id) === index
       })
+    },
+    favorites: ({ favorites }) => {
+      return favorites
     }
   },
   actions: {
@@ -99,6 +108,18 @@ export default new Vuex.Store({
 
         commit('getUser', payload)
         commit('getMediaList', payload)
+      })
+    },
+    allFavorite({ commit }) {
+      const payload = {
+        favorites: null
+      }
+
+      apolloProvider.defaultClient.query({
+        query: ALL_FAVORITE
+      }).then(res => {
+        payload.favorites = res.data.favorites
+        commit('getFavorite', payload)
       })
     }
   }
