@@ -6,6 +6,7 @@
         :id="media.id"
         :src="media.src[0]"
         :size="media.size"
+        :state="media.state"
         animation="fade"
         )
 </template>

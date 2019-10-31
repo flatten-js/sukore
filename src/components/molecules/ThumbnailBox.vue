@@ -20,7 +20,9 @@
             :part="size"
             color="white"
             )
-      .thumbnail-fav
+      .thumbnail-fav(
+        :class="{ favorite: state }"
+        )
         material-icons(
           name="favorite"
           size="custom"
@@ -40,7 +42,7 @@ export default {
   },
   props: {
     id: {
-      type: Number,
+      type: String,
       reqired: true
     },
     src: {
@@ -49,6 +51,10 @@ export default {
     },
     size: {
       type: Number,
+      reqired: true
+    },
+    state: {
+      type: Boolean,
       reqired: true
     },
     column: {
@@ -161,5 +167,9 @@ export default {
     font-size: 1.8rem;
     line-height: 0;
     text-shadow: 0 2px 5px rgba(26, 26, 26, .26);
+
+    &.favorite {
+      color: #FF4063;
+    }
   }
 </style>

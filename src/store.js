@@ -29,6 +29,12 @@ export default new Vuex.Store({
     },
     getFavorite(state, payload) {
       state.favorites.push(...payload.favorites)
+    },
+    updateFavorite({ favorites, mediaList }) {
+      favorites.forEach(fav => {
+        const index = mediaList.findIndex(media => media.id === fav.tid)
+        mediaList.splice(index, 1, { ...mediaList[index], state: true })
+      })
     }
   },
   getters: {
@@ -75,7 +81,7 @@ export default new Vuex.Store({
           if (!obj.extended_entities) return
 
           let mediaObjectTemplate = {
-            id: obj.id,
+            id: obj.id_str,
             icon: obj.user.profile_image_url_https.replace('normal', '400x400'),
             name: obj.user.name,
             screenName: obj.user.screen_name,
@@ -88,7 +94,7 @@ export default new Vuex.Store({
 
           if (obj.retweeted_status) {
             const updateMediaObject = {
-              id: obj.retweeted_status.id,
+              id: obj.retweeted_status.id_str,
               icon: obj.retweeted_status.user.profile_image_url_https.replace('normal', '400x400'),
               name: obj.retweeted_status.user.name,
               screenName: obj.retweeted_status.user.screen_name,
@@ -104,6 +110,7 @@ export default new Vuex.Store({
 
         commit('getUser', payload)
         commit('getMediaList', payload)
+        commit('updateFavorite')
       })
     },
     allFavorite({ commit }) {
