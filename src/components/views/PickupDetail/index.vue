@@ -78,13 +78,13 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'mediaListDuplicateNo'
+      'noMediaListDuplicate'
     ]),
     mediaFromId() {
-      const { mediaListDuplicateNo, id } = this
-      const index = mediaListDuplicateNo.findIndex(media => media.id == id)
+      const { noMediaListDuplicate, id } = this
+      const index = noMediaListDuplicate.findIndex(media => media.id == id)
 
-      return mediaListDuplicateNo[index]
+      return noMediaListDuplicate[index]
     },
     thumbnailView() {
       const { mediaFromId, limit } = this

@@ -35,16 +35,16 @@ export default new Vuex.Store({
     user: ({ user }) => {
       return user
     },
-    mediaListDuplicateNo: ({ mediaList }) => {
+    noMediaListDuplicate: ({ mediaList }) => {
       return mediaList.filter((media, index, self) => {
         return self.findIndex(findMedia => findMedia.id === media.id) === index
       })
     },
-    tweetFilter: (state, { mediaListDuplicateNo }) => {
-      return mediaListDuplicateNo.filter(obj => !obj.retweetedStatus)
+    tweetFilter: (state, { noMediaListDuplicate }) => {
+      return noMediaListDuplicate.filter(obj => !obj.retweetedStatus)
     },
-    retweetFilter: (state, { mediaListDuplicateNo }) => {
-      return mediaListDuplicateNo.filter(obj => obj.retweetedStatus)
+    retweetFilter: (state, { noMediaListDuplicate }) => {
+      return noMediaListDuplicate.filter(obj => obj.retweetedStatus)
     },
     favorites: ({ favorites }) => {
       return favorites
