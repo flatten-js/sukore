@@ -2,7 +2,11 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import { apolloProvider } from '@/apollo'
-import { ALL_FAVORITE } from '@/constants/graphql/favorite'
+import {
+  ALL_FAVORITE,
+  ADD_FAVORITE,
+  REMOVE_FAVORITE
+} from '@/constants/graphql/favorite'
 
 Vue.use(Vuex)
 
@@ -30,11 +34,15 @@ export default new Vuex.Store({
     getFavorite(state, payload) {
       state.favorites.push(...payload.favorites)
     },
-    updateFavorite({ favorites, mediaList }) {
+    initFavorite({ favorites, mediaList }) {
       favorites.forEach(fav => {
         const index = mediaList.findIndex(media => media.id === fav.tid)
         mediaList.splice(index, 1, { ...mediaList[index], state: true })
       })
+    },
+    updateFavorite({ mediaList }, payload) {
+      const index = mediaList.findIndex(media => media.id === payload.tid)
+      mediaList.splice(index, 1, { ...mediaList[index], state: !mediaList[index].state })
     }
   },
   getters: {
@@ -110,7 +118,7 @@ export default new Vuex.Store({
 
         commit('getUser', payload)
         commit('getMediaList', payload)
-        commit('updateFavorite')
+        commit('initFavorite')
       })
     },
     allFavorite({ commit }) {
@@ -123,6 +131,40 @@ export default new Vuex.Store({
       }).then(res => {
         payload.favorites = res.data.favorites
         commit('getFavorite', payload)
+      })
+    },
+    addFavorite({ commit }, tid) {
+      const payload = {
+        tid: tid
+      }
+
+      commit('updateFavorite', payload)
+
+      apolloProvider.defaultClient.mutate({
+        mutation: ADD_FAVORITE,
+        variables: {
+          tid: payload.tid
+        }
+      }).catch(err => {
+        console.log(err)
+        commit('updateFavorite', payload)
+      })
+    },
+    removeFavorite({ commit }, tid) {
+      const payload = {
+        tid: tid
+      }
+
+      commit('updateFavorite', payload)
+
+      apolloProvider.defaultClient.mutate({
+        mutation: REMOVE_FAVORITE,
+        variables: {
+          tid: payload.tid
+        }
+      }).catch(err => {
+        console.log(err)
+        commit('updateFavorite', payload)
       })
     }
   }
