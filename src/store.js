@@ -2,11 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import { apolloProvider } from '@/apollo'
-import {
-  ALL_FAVORITE,
-  ADD_FAVORITE,
-  REMOVE_FAVORITE
-} from '@/constants/graphql/favorite'
+import { FAVORITE } from '@/constants/graphql'
 
 Vue.use(Vuex)
 
@@ -130,7 +126,7 @@ export default new Vuex.Store({
       }
 
       apolloProvider.defaultClient.query({
-        query: ALL_FAVORITE
+        query: FAVORITE.ALL
       }).then(res => {
         payload.favorites = res.data.favorites
         commit('getFavorite', payload)
@@ -144,7 +140,7 @@ export default new Vuex.Store({
       commit('updateFavorite', payload)
 
       apolloProvider.defaultClient.mutate({
-        mutation: ADD_FAVORITE,
+        mutation: FAVORITE.ADD,
         variables: {
           tid: payload.tid
         }
@@ -161,7 +157,7 @@ export default new Vuex.Store({
       commit('updateFavorite', payload)
 
       apolloProvider.defaultClient.mutate({
-        mutation: REMOVE_FAVORITE,
+        mutation: FAVORITE.REMOVE,
         variables: {
           tid: payload.tid
         }
