@@ -7,3 +7,27 @@ export const ALL_FAVORITE = gql`
     }
   }
 `
+
+export const ADD_FAVORITE = gql`
+  mutation createFavorite (
+    $tid: String
+  ) {
+    createFavorite ( data: {
+      tid: $tid
+    }) {
+      id
+    }
+  }
+`
+
+export const REMOVE_FAVORITE = gql`
+  mutation deleteManyFavorites (
+    $tid: String
+  ) {
+    deleteManyFavorites ( where: {
+      tid: $tid
+    }) {
+      count
+    }
+  }
+`
