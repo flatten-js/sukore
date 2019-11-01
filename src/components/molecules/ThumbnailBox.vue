@@ -22,6 +22,7 @@
             )
       .thumbnail-fav(
         :class="{ favorite: state }"
+        @click.prevent="clickFavorite"
         )
         material-icons(
           name="favorite"
@@ -93,6 +94,9 @@ export default {
 
       const { thumbnailBox } = this.$refs
       thumbnailBox.classList.add('thumbnail-loaded')
+    },
+    clickFavorite: function() {
+      this.$emit('clickFavorite', this.$refs.thumbnailBox)
     }
   }
 }
