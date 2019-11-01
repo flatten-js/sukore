@@ -37,7 +37,10 @@ export default new Vuex.Store({
     initFavorite({ favorites, mediaList }) {
       favorites.forEach(fav => {
         const index = mediaList.findIndex(media => media.id === fav.tid)
-        mediaList.splice(index, 1, { ...mediaList[index], state: true })
+
+        if (index !== -1) {
+          mediaList.splice(index, 1, { ...mediaList[index], state: true })
+        }
       })
     },
     updateFavorite({ mediaList }, payload) {
