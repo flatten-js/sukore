@@ -96,7 +96,8 @@ export default new Vuex.Store({
             text: obj.text,
             created: obj.created_at,
             retweetedStatus: false,
-            size: obj.extended_entities.media.length
+            size: obj.extended_entities.media.length,
+            state: false
           }
 
           if (obj.retweeted_status) {
