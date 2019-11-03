@@ -64,7 +64,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    async userTimelineSearch({ commit }, { screenName, count, excludeReplies }) {
+    async userTimelineSearch({ state, commit }, { screenName, count, excludeReplies }) {
       const payload = {
         user: null,
         mediaList: []
@@ -116,8 +116,11 @@ export default new Vuex.Store({
           payload.mediaList.push(mediaObjectTemplate)
         })
 
-        commit('getUser', payload)
-        commit('getMediaList', payload)
+        if (!state.mediaList.length || state.user.screenName !== screenName) {
+          commit('getUser', payload)
+          commit('getMediaList', payload)
+        }
+
         commit('initFavorite')
       })
     },
