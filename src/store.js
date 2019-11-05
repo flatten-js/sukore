@@ -78,7 +78,7 @@ export default new Vuex.Store({
         }
       })
       .then(res => {
-        res.data.map(obj => {
+        res.data.forEach(obj => {
           if (!payload.user) {
             payload.user = {
               headerImage: obj.user.profile_banner_url,
