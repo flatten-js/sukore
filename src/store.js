@@ -70,7 +70,13 @@ export default new Vuex.Store({
         mediaList: []
       }
 
-      await axios.get(`http://localhost:3000/api/twitter/search?screen_name=${screenName}&count=${count}&excludeReplies=${excludeReplies}`)
+      await axios.get('http://localhost:3000/api/twitter/search', {
+        params: {
+          screen_name: screenName,
+          count: count,
+          exclude_replies: excludeReplies
+        }
+      })
       .then(res => {
         res.data.map(obj => {
           if (!payload.user) {
