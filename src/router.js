@@ -8,8 +8,11 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
+      path: '/:screenName',
       component: () => import('@/components/views/Pickup'),
+      props: route => ({
+        screenName: route.params.screenName
+      }),
       children: [
         {
           path: '',

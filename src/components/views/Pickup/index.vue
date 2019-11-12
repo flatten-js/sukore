@@ -54,26 +54,32 @@ export default {
     ThumbnailBoxGrid,
     ThumbnailBox
   },
-  data() {
-    return {
-      navTabsData: [
-        {
-          to: '/',
-          text: 'ツイート'
-        },
-        {
-          to: '/retweet',
-          text: 'リツイート'
-        }
-      ]
+  props: {
+    screenName: {
+      type: String,
+      required: true
     }
   },
   mounted() {
-    this.userTimelineSearch('yoo_2711', 50)
+    this.userTimelineSearch(this.screenName, 50)
   },
   computed: {
     user() {
       return this.$store.getters.user
+    },
+    navTabsData() {
+      const { screenName } = this
+
+      return [
+        {
+          to: `/${screenName}`,
+          text: 'ツイート'
+        },
+        {
+          to: `/${screenName}/retweet`,
+          text: 'リツイート'
+        }
+      ]
     }
   },
   methods: {
