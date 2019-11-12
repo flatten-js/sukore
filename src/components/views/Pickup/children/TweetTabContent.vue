@@ -6,6 +6,7 @@
         :key="media.id"
         :id="media.id"
         :src="media.src[0]"
+        :screenName="media.screenName"
         :size="media.size"
         :state="media.state"
         animation="fade"

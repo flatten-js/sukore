@@ -3,7 +3,7 @@
     ref="thumbnailBox"
     :class="propsClassGenerator"
     )
-    router-link.thumbnail-box-link(:to="id | pathConversion")
+    router-link.thumbnail-box-link(:to="id | pathConversion(screenName)")
       vary-image(
         :src="src"
         fit="cover"
@@ -50,6 +50,10 @@ export default {
       type: String,
       reqired: true
     },
+    screenName: {
+      type: String,
+      required: true
+    },
     size: {
       type: Number,
       reqired: true
@@ -74,8 +78,8 @@ export default {
     }
   },
   filters: {
-    pathConversion(val) {
-      return `/${val}`
+    pathConversion(val, screenName) {
+      return `/${screenName}/media/${val}`
     }
   },
   computed: {

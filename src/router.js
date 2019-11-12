@@ -25,7 +25,7 @@ export default new Router({
       ]
     },
     {
-      path: '/:id',
+      path: '/:pickupUser/media/:id',
       component: () => import('@/components/views/PickupDetail'),
       props: route => ({
         id: route.params.id
