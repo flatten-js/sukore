@@ -9,24 +9,24 @@ export default new Router({
   routes: [
     {
       path: '/:screenName',
-      component: () => import('@/components/views/Pickup'),
+      component: () => import('@/views/Pickup'),
       props: route => ({
         screenName: route.params.screenName
       }),
       children: [
         {
           path: '',
-          component: () => import('@/components/views/Pickup/children/TweetTabContent.vue')
+          component: () => import('@/views/Pickup/children/TweetTabContent.vue')
         },
         {
           path: 'retweet',
-          component: () => import('@/components/views/Pickup/children/RetweetTabContent.vue')
+          component: () => import('@/views/Pickup/children/RetweetTabContent.vue')
         }
       ]
     },
     {
       path: '/:pickupUser/media/:id',
-      component: () => import('@/components/views/PickupDetail'),
+      component: () => import('@/views/PickupDetail'),
       props: route => ({
         id: route.params.id
       })
