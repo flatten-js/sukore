@@ -1,4 +1,31 @@
+@font-face {
+  font-family: 'Noto Sans JP';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: local('Noto Sans Japanese Regular'), local('NotoSansJapanese-Regular'),
+       url('../fonts/noto-sans-jp-v24-latin_japanese-regular.woff2') format('woff2'), /* Super Modern Browsers */
+}
+
+@font-face {
+  font-family: 'Noto Sans JP';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: local('Noto Sans Japanese Bold'), local('NotoSansJapanese-Bold'),
+       url('../fonts/noto-sans-jp-v24-latin_japanese-700.woff2') format('woff2'), /* Super Modern Browsers */
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: local('Roboto'), local('Roboto-Regular'),
+       url('../fonts/roboto-v20-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+}
+
 :root {
-  font-family: 'roboto', 'noto-sans-cjk-jp', sans-serif;
+  font-family: 'Roboto', 'Noto Sans JP', sans-serif;
   font-weight: normal;
 }
