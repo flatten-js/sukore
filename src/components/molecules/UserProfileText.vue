@@ -9,7 +9,7 @@
           )
       .user-screen-name
         block-text(
-          :text="screenName"
+          :text="screenName | twitterScreenNameConversion"
           brightness="2"
           )
     .user-descripstion
@@ -17,7 +17,7 @@
         :text="descripstion"
         )
     .user-state
-      .user-follow
+      router-link.user-following(:to="screenName | pathConversion('following')")
         inline-part(
           :part="follow"
           weight="bold"
@@ -28,7 +28,7 @@
           weight="normal"
           brightness="2"
           )
-      .user-followers
+      router-link.user-followers(:to="screenName | pathConversion('followers')")
         inline-part(
           :part="followers"
           weight="bold"
@@ -71,11 +71,19 @@ export default {
       type: [String, Number],
       required: true
     }
+  },
+  filters: {
+    twitterScreenNameConversion(val) {
+      return `@${val}`
+    },
+    pathConversion(val, type) {
+      return `/${val}/${type}`
+    }
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .user-author, .user-descripstion {
     margin: 0 0 1rem 0;
   }
@@ -88,7 +96,16 @@ export default {
     display: flex;
   }
 
-  .user-follow {
+  .user-following, .user-followers {
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+
+    &:hover {
+      border-color: #1a1a1a;
+    }
+  }
+
+  .user-following {
     margin: 0 1rem 0 0;
   }
 </style>

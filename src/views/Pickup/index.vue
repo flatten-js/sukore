@@ -13,7 +13,7 @@
         template(v-slot:user-profile-body)
           user-profile-text(
             :name="user.name"
-            :screenName="`@${user.screenName}`"
+            :screenName="user.screenName"
             :descripstion="user.description"
             :follow="user.follow"
             :followers="user.followers"
