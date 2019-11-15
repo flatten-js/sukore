@@ -1,58 +1,54 @@
 <template lang="pug">
   pickup-template
-    template(v-slot:user-detail)
-      user-detail
-        template(v-slot:header)
-          header-image(:url="user.headerImage")
-        template(v-slot:user-icon)
-          user-icon(
-            :url="user.userIcon"
-            size="large"
-            border="default"
+    template(v-slot:user-details-catch)
+      user-details-catch
+        user-details(
+          :masthead="user.headerImage"
+          :icon="user.userIcon"
+          :name="user.name"
+          :screen-name="user.screenName"
+          :description="user.description"
+          :following="user.follow"
+          :followers="user.followers"
+          )
+    template(v-slot:thumbnail-box-area)
+      thumbnail-box-area
+        template(v-slot:navigation)
+          flex-tab-bar(
+            :tab-items="tabItemsInit"
             )
-        template(v-slot:user-profile-body)
-          user-profile-text(
-            :name="user.name"
-            :screenName="user.screenName"
-            :descripstion="user.description"
-            :follow="user.follow"
-            :followers="user.followers"
-            )
-    template(v-slot:nav-tabs)
-      nav-tabs
-        template(v-for="tab in navTabsData")
-          tab-item(
-            :to="tab.to"
-            :text="tab.text"
-            )
-    template(v-slot:tabs-content)
-      transition
-        keep-alive
-          router-view
+        template(v-slot:contents)
+          transition
+            keep-alive
+              router-view
 </template>
 
 <script>
 import PickupTemplate from '@/components/templates/PickupTemplate.vue'
-import UserDetail from '@/components/organisms/UserDetail.vue'
-import HeaderImage from '@/components/molecules/HeaderImage.vue'
-import UserIcon from '@/components/molecules/UserIcon.vue'
+import UserDetailsCatch from '@/components/organisms/UserDetailsCatch.vue'
+import UserDetails from '@/components/molecules/UserDetails.vue'
 import UserProfileText from '@/components/molecules/UserProfileText.vue'
 import NavTabs from '@/components/organisms/NavTabs.vue'
 import TabItem from '@/components/molecules/TabItem.vue'
 import ThumbnailBoxGrid from '@/components/organisms/ThumbnailBoxGrid.vue'
 import ThumbnailBox from '@/components/molecules/ThumbnailBox.vue'
+import SimpleTabItem from '@/components/molecules/SimpleTabItem.vue'
+import FlexTabBar from '@/components/molecules/FlexTabBar.vue'
+import ThumbnailBoxArea from '@/components/organisms/ThumbnailBoxArea.vue'
 
 export default {
   components: {
     PickupTemplate,
-    UserDetail,
-    HeaderImage,
-    UserIcon,
+    UserDetailsCatch,
+    UserDetails,
     UserProfileText,
     NavTabs,
     TabItem,
     ThumbnailBoxGrid,
-    ThumbnailBox
+    ThumbnailBox,
+    SimpleTabItem,
+    FlexTabBar,
+    ThumbnailBoxArea
   },
   props: {
     screenName: {
@@ -67,7 +63,7 @@ export default {
     user() {
       return this.$store.getters.user
     },
-    navTabsData() {
+    tabItemsInit() {
       const { screenName } = this
 
       return [
