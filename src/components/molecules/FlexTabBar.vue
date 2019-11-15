@@ -31,5 +31,6 @@ export default {
 <style scoped>
   .flex-tab-bar {
     display: flex;
+    background-color: #fff;
   }
 </style>

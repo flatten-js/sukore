@@ -10,6 +10,7 @@
   .thumbnail-box-area {
     &__navigation {
       border-bottom: .5px solid rgba(26, 26, 26, .2);
+      background-color: #fff;
     }
   }
 </style>
