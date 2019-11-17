@@ -9,7 +9,7 @@
 <style lang="scss" scoped>
   .thumbnail-box-area {
     &__navigation {
-      border-bottom: .5px solid rgba(26, 26, 26, .2);
+      border-bottom: 1px solid rgba(26, 26, 26, .2);
       background-color: #fff;
     }
   }
