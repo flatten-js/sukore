@@ -2,6 +2,7 @@
   a.anchor-button(
     :class="propsClassGenerator"
     :href="href"
+    :target="target"
     )
     | {{ text }}
 </template>
@@ -12,6 +13,13 @@ export default {
     href: {
       type: String,
       required: true
+    },
+    target: {
+      type: String,
+      default: '_blank',
+      validator(val) {
+        return ['_blank'].includes(val)
+      }
     },
     text: {
       type: String,
