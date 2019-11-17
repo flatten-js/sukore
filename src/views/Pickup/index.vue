@@ -27,26 +27,16 @@
 import PickupTemplate from '@/components/templates/PickupTemplate.vue'
 import UserDetailsCatch from '@/components/organisms/UserDetailsCatch.vue'
 import UserDetails from '@/components/molecules/UserDetails.vue'
-import UserProfileText from '@/components/molecules/UserProfileText.vue'
-import NavTabs from '@/components/organisms/NavTabs.vue'
-import TabItem from '@/components/molecules/TabItem.vue'
-import ThumbnailBoxGrid from '@/components/organisms/ThumbnailBoxGrid.vue'
-import ThumbnailBox from '@/components/molecules/ThumbnailBox.vue'
-import FlexTabBar from '@/components/molecules/FlexTabBar.vue'
 import ThumbnailBoxArea from '@/components/organisms/ThumbnailBoxArea.vue'
+import FlexTabBar from '@/components/molecules/FlexTabBar.vue'
 
 export default {
   components: {
     PickupTemplate,
     UserDetailsCatch,
     UserDetails,
-    UserProfileText,
-    NavTabs,
-    TabItem,
-    ThumbnailBoxGrid,
-    ThumbnailBox,
-    FlexTabBar,
-    ThumbnailBoxArea
+    ThumbnailBoxArea,
+    FlexTabBar
   },
   props: {
     screenName: {

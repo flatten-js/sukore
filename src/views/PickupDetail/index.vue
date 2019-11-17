@@ -21,29 +21,13 @@
 import { mapGetters } from 'vuex'
 
 import PickupDetailTemplate from '@/components/templates/PickupDetailTemplate.vue'
-import UserDetailBar from '@/components/organisms/UserDetailBar.vue'
-import UserIcon from '@/components/molecules/UserIcon.vue'
-import SingleLineText from '@/components/molecules/SingleLineText.vue'
-import VAnchorButton from '@/components/molecules/VAnchorButton.vue'
-import ThumbnailDetail from '@/components/organisms/ThumbnailDetail.vue'
-import Thumbnail from '@/components/molecules/Thumbnail.vue'
-import ThumbnailCaption from '@/components/molecules/ThumbnailCaption.vue'
-
 import ImageDetailsCard from '@/components/organisms/ImageDetailsCard.vue'
-
 import UserDetailsBar from '@/components/molecules/UserDetailsBar.vue'
 import OriginCard from '@/components/molecules/OriginCard.vue'
 
 export default {
   components: {
     PickupDetailTemplate,
-    UserDetailBar,
-    UserIcon,
-    SingleLineText,
-    VAnchorButton,
-    ThumbnailDetail,
-    Thumbnail,
-    ThumbnailCaption,
     ImageDetailsCard,
     UserDetailsBar,
     OriginCard
