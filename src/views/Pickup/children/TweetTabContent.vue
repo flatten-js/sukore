@@ -7,7 +7,7 @@
         :id="media.id"
         :src="media.src[0]"
         :screenName="media.screenName"
-        :size="media.size"
+        :image-count="media.size"
         :state="media.state"
         animation="fade"
         @clickFavorite="clickFavorite"
