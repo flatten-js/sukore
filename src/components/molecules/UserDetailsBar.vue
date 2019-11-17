@@ -14,6 +14,7 @@
     .user-details-bar__button
       anchor-button(
         :href="screenName | convertTwitterPath"
+        color="twitter"
         text="Twitterを見る"
         )
 </template>
