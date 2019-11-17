@@ -10,3 +10,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  #app {
+    min-height: 100vh;
+    background-color: #f7f7f7;
+  }
+</style>
