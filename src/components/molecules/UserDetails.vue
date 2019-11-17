@@ -4,7 +4,10 @@
       masthead(:url="masthead")
     .user-details__user-body.user-profile
       .user-profile__user-icon
-        feature-user-icon(:url="icon")
+        user-icon(
+          :url="icon"
+          border
+          )
       .user-profile__user-name
         multi-line-heading(:text="name")
       .user-profile__user-screen-name
@@ -34,7 +37,7 @@
 
 <script>
 import Masthead from '@/components/atoms/Masthead.vue'
-import FeatureUserIcon from '@/components/atoms/FeatureUserIcon.vue'
+import UserIcon from '@/components/atoms/UserIcon.vue'
 import MultiLineHeading from '@/components/atoms/MultiLineHeading.vue'
 import MultiLineText from '@/components/atoms/MultiLineText.vue'
 import SingleLineText from '@/components/atoms/SingleLineText.vue'
@@ -43,7 +46,7 @@ import Individuality from '@/components/atoms/Individuality.vue'
 export default {
   components: {
     Masthead,
-    FeatureUserIcon,
+    UserIcon,
     MultiLineHeading,
     MultiLineText,
     SingleLineText,
