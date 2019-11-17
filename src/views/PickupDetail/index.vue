@@ -1,38 +1,18 @@
 <template lang="pug">
   pickup-detail-template
-    template(v-slot:user-detail-bar)
-      user-detail-bar
-        template(v-slot:user-icon)
-          user-icon(:url="mediaFromId.icon")
-        template(v-slot:user-name)
-          single-line-text(
-            :text="mediaFromId.name"
-            size="small"
-            weight="bold"
+    template(v-slot:image-details-card)
+      image-details-card
+        template(v-slot:head)
+          user-details-bar(
+            :icon="mediaFromId.icon"
+            :name="mediaFromId.name"
+            :screen-name="mediaFromId.screenName"
             )
-        template(v-slot:user-twitter-link)
-          v-anchor-button(
-            type="twitter"
-            :href="mediaFromId.screenName | twitterPathConversion"
-            text="Twitterを見る"
-            fontSize="small"
-            )
-    template(v-slot:thumbnail-detail)
-      thumbnail-detail
-        template(v-slot:thumbnail)
-          template(v-for="src in thumbnailView")
-            thumbnail(:src="src")
-        template(v-slot:more)
-          template(v-if="mediaFromId.size > 1 && limit")
-            v-anchor-button(
-              text="すべて見る"
-              fontSize="small"
-              size="large"
-              @click.native="limit = !limit"
-              )
-        template(v-slot:caption)
-          thumbnail-caption(
-            :text="mediaFromId.text"
+        template(v-slot:body)
+          origin-card(
+            :src-list="mediaFromId.src"
+            :size="mediaFromId.size"
+            :comment="mediaFromId.text"
             :created="mediaFromId.created"
             )
 </template>
@@ -49,6 +29,11 @@ import ThumbnailDetail from '@/components/organisms/ThumbnailDetail.vue'
 import Thumbnail from '@/components/molecules/Thumbnail.vue'
 import ThumbnailCaption from '@/components/molecules/ThumbnailCaption.vue'
 
+import ImageDetailsCard from '@/components/organisms/ImageDetailsCard.vue'
+
+import UserDetailsBar from '@/components/molecules/UserDetailsBar.vue'
+import OriginCard from '@/components/molecules/OriginCard.vue'
+
 export default {
   components: {
     PickupDetailTemplate,
@@ -58,22 +43,15 @@ export default {
     VAnchorButton,
     ThumbnailDetail,
     Thumbnail,
-    ThumbnailCaption
+    ThumbnailCaption,
+    ImageDetailsCard,
+    UserDetailsBar,
+    OriginCard
   },
   props: {
     id: {
       type: String,
       reqired: true
-    }
-  },
-  data() {
-    return {
-      limit: true
-    }
-  },
-  filters: {
-    twitterPathConversion(val) {
-      return `https://twitter.com/${val}`
     }
   },
   computed: {
@@ -85,13 +63,6 @@ export default {
       const index = noMediaListDuplicate.findIndex(media => media.id == id)
 
       return noMediaListDuplicate[index]
-    },
-    thumbnailView() {
-      const { mediaFromId, limit } = this
-
-      return mediaFromId['src'].filter((src, index) => {
-        return limit ? !index : true
-      })
     }
   }
 }
