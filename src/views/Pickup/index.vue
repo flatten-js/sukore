@@ -32,7 +32,6 @@ import NavTabs from '@/components/organisms/NavTabs.vue'
 import TabItem from '@/components/molecules/TabItem.vue'
 import ThumbnailBoxGrid from '@/components/organisms/ThumbnailBoxGrid.vue'
 import ThumbnailBox from '@/components/molecules/ThumbnailBox.vue'
-import SimpleTabItem from '@/components/molecules/SimpleTabItem.vue'
 import FlexTabBar from '@/components/molecules/FlexTabBar.vue'
 import ThumbnailBoxArea from '@/components/organisms/ThumbnailBoxArea.vue'
 
@@ -46,7 +45,6 @@ export default {
     TabItem,
     ThumbnailBoxGrid,
     ThumbnailBox,
-    SimpleTabItem,
     FlexTabBar,
     ThumbnailBoxArea
   },
