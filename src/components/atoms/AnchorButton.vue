@@ -27,9 +27,16 @@ export default {
     },
     type: {
       type: String,
-      default: 'twitter',
+      default: 'standard',
       validator(val) {
-        return ['twitter'].includes(val)
+        return ['standard', 'more'].includes(val)
+      }
+    },
+    color: {
+      type: String,
+      default: 'default',
+      validator(val) {
+        return ['default', 'twitter'].includes(val)
       }
     },
     size: {
@@ -42,10 +49,11 @@ export default {
   },
   computed: {
     propsClassGenerator() {
-      const { type, size } = this
+      const { type, color, size } = this
 
       return {
         [`-type-${type}`]: type,
+        [`-color-${color}`]: color,
         [`-size-${size}`]: size
       }
     }
@@ -55,15 +63,28 @@ export default {
 
 <style lang="scss" scoped>
   .anchor-button {
+    display: inline-block;
     text-decoration: none;
     border-radius: 25px;
 
     &.-size-small {
       font-size: .875rem;
+    }
+
+    &.-type-standard {
       padding: .35rem 1rem;
     }
 
-    &.-type-twitter {
+    &.-type-more {
+      padding: .35rem 2rem;
+    }
+
+    &.-color-default {
+      background-color: #1a1a1a;
+      color: white;
+    }
+
+    &.-color-twitter {
       background-color: #1DA1F2;
       color: white;
     }
