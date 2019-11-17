@@ -50,10 +50,7 @@ export default {
     Individuality
   },
   props: {
-    masthead: {
-      type: String,
-      required: true
-    },
+    masthead: [String, null],
     icon: {
       type: String,
       required: true
@@ -93,7 +90,7 @@ export default {
 <style lang="scss" scoped>
   .user-details {
     background-color: #fff;
-    
+
     &__user-body {
       padding: 0 1rem 1rem 1rem;
       box-sizing: border-box;
