@@ -17,6 +17,13 @@ export default {
         return ['small', 'default'].includes(val)
       }
     },
+    weight: {
+      type: String,
+      default: 'normal',
+      validator(val) {
+        return ['normal', 'bold'].includes(val)
+      }
+    },
     brightness: {
       type: String,
       default: '1',
@@ -27,10 +34,11 @@ export default {
   },
   computed: {
     propsClassGenerator() {
-      const { size, brightness } = this
+      const { size, weight, brightness } = this
 
       return {
         [`-size-${size}`]: size,
+        [`-weight-${weight}`]: weight,
         [`-brightness-${brightness}`]: brightness
       }
     }
@@ -50,6 +58,14 @@ export default {
 
     &.-size-small {
       font-size: .875rem;
+    }
+
+    &.-weight-normal {
+      font-weight: normal;
+    }
+
+    &.-weight-bold {
+      font-weight: bold;
     }
 
     &.-brightness-1 {
