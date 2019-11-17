@@ -8,6 +8,8 @@
 
 <style lang="scss" scoped>
   .image-details-card {
+    background-color: #fff;
+    
     %common-style {
       border-bottom: 1px solid rgba(26, 26, 26, .2);
     }
