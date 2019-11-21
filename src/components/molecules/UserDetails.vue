@@ -9,7 +9,11 @@
           border
           )
       .user-profile__user-name
-        multi-line-heading(:text="name")
+        multi-line-text(
+          :text="name"
+          size="large"
+          weight="bold"
+          )
       .user-profile__user-screen-name
         single-line-text(:text="screenName | twitterScreenNameConversion")
       .user-profile__user-description
@@ -38,7 +42,6 @@
 <script>
 import Masthead from '@/components/atoms/Masthead.vue'
 import UserIcon from '@/components/atoms/UserIcon.vue'
-import MultiLineHeading from '@/components/atoms/MultiLineHeading.vue'
 import MultiLineText from '@/components/atoms/MultiLineText.vue'
 import SingleLineText from '@/components/atoms/SingleLineText.vue'
 import Individuality from '@/components/atoms/Individuality.vue'
@@ -47,7 +50,6 @@ export default {
   components: {
     Masthead,
     UserIcon,
-    MultiLineHeading,
     MultiLineText,
     SingleLineText,
     Individuality
