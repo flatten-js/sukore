@@ -15,12 +15,12 @@
           weight="bold"
           )
       .user-profile__user-screen-name
-        single-line-text(:text="screenName | twitterScreenNameConversion")
+        single-line-text(:text="screenName | convertTwitterScreenName")
       .user-profile__user-description
         multi-line-text(:text="description")
       .user-profile__user-foot.user-status
         router-link.user-status__user-following(
-          :to="screenName | userStatusPathConversion('following')"
+          :to="screenName | convertUserStatusPath('following')"
           )
           individuality(
             :text="following"
@@ -29,7 +29,7 @@
             )
           | フォロー中
         router-link.user-status__user-followers(
-          :to="screenName | userStatusPathConversion('followers')"
+          :to="screenName | convertUserStatusPath('followers')"
           )
           individuality(
             :text="followers"
@@ -82,11 +82,11 @@ export default {
     }
   },
   filters: {
-    twitterScreenNameConversion(val) {
-      return `@${val}`
+    convertTwitterScreenName(screenName) {
+      return `@${screenName}`
     },
-    userStatusPathConversion(val, status) {
-      return `/${val}/${status}`
+    convertUserStatusPath(screenName, status) {
+      return `/${screenName}/${status}`
     }
   }
 }
