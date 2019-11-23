@@ -8,6 +8,7 @@
           :name="user.name"
           :screen-name="user.screenName"
           :description="user.description"
+          :url-list="user.descriptionUrlList"
           :following="user.follow"
           :followers="user.followers"
           )

@@ -17,7 +17,9 @@
       .user-profile__user-screen-name
         single-line-text(:text="screenName | convertTwitterScreenName")
       .user-profile__user-description
-        multi-line-text(:text="description")
+        extract-text(
+          :text="description | convertCorrectUrl(urlList)"
+          )
       .user-profile__user-foot.user-status
         router-link.user-status__user-following(
           :to="screenName | convertUserStatusPath('following')"
@@ -45,6 +47,7 @@ import UserIcon from '@/components/atoms/UserIcon.vue'
 import MultiLineText from '@/components/atoms/MultiLineText.vue'
 import SingleLineText from '@/components/atoms/SingleLineText.vue'
 import Individuality from '@/components/atoms/Individuality.vue'
+import ExtractText from '@/components/atoms/ExtractText.vue'
 
 export default {
   components: {
@@ -52,7 +55,8 @@ export default {
     UserIcon,
     MultiLineText,
     SingleLineText,
-    Individuality
+    Individuality,
+    ExtractText
   },
   props: {
     masthead: [String, null],
@@ -72,6 +76,10 @@ export default {
       type: String,
       required: true
     },
+    urlList: {
+      type: Array,
+      default: () => []
+    },
     following: {
       type: [String, Number],
       required: true
@@ -87,6 +95,11 @@ export default {
     },
     convertUserStatusPath(screenName, status) {
       return `/${screenName}/${status}`
+    },
+    convertCorrectUrl(description, urlList) {
+      return urlList.reduce((acc, cur) => {
+        return acc.replace(cur.url, `${cur.expanded_url}::${cur.url}?amp=1::${cur.display_url}`)
+      }, description)
     }
   }
 }
