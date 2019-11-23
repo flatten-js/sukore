@@ -18,7 +18,7 @@
         single-line-text(:text="screenName | convertTwitterScreenName")
       .user-profile__user-description
         extract-text(
-          :text="description | convertCorrectUrl(urlList)"
+          :text="description | convertCustomUrlText(urlList)"
           )
       .user-profile__user-foot.user-status
         router-link.user-status__user-following(
@@ -96,7 +96,7 @@ export default {
     convertUserStatusPath(screenName, status) {
       return `/${screenName}/${status}`
     },
-    convertCorrectUrl(description, urlList) {
+    convertCustomUrlText(description, urlList) {
       return urlList.reduce((acc, cur) => {
         return acc.replace(cur.url, `${cur.expanded_url}::${cur.url}?amp=1::${cur.display_url}`)
       }, description)
