@@ -40,6 +40,8 @@ export default {
 
 <style lang="scss" scoped>
   .multi-line-text {
+    color: #1a1a1a;
+    
     &.-size-default {
       font-size: 1rem;
     }
