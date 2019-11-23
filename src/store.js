@@ -22,13 +22,13 @@ export default new Vuex.Store({
     favorites: []
   },
   mutations: {
-    getUser(state, payload) {
+    setUser(state, payload) {
       state.user = { ...state.user, ...payload.user }
     },
-    getMediaList(state, payload) {
+    setMediaList(state, payload) {
       state.mediaList.push(...payload.mediaList)
     },
-    getFavorite(state, payload) {
+    setFavorite(state, payload) {
       state.favorites.push(...payload.favorites)
     },
     initFavorite({ favorites, mediaList }) {
@@ -125,8 +125,8 @@ export default new Vuex.Store({
         })
 
         if (!state.mediaList.length || state.user.screenName !== screenName) {
-          commit('getUser', payload)
-          commit('getMediaList', payload)
+          commit('setUser', payload)
+          commit('setMediaList', payload)
         }
 
         commit('initFavorite')
@@ -141,7 +141,7 @@ export default new Vuex.Store({
         query: FAVORITE.ALL
       }).then(res => {
         payload.favorites = res.data.favorites
-        commit('getFavorite', payload)
+        commit('setFavorite', payload)
       })
     },
     addFavorite({ commit }, tid) {
