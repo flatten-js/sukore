@@ -15,7 +15,10 @@
           weight="bold"
           )
       .user-profile__screen-name
-        single-line-text(:text="screenName | convertTwitterScreenName")
+        single-line-text(
+          :text="screenName | convertTwitterScreenName"
+          brightness="2"
+          )
       .user-profile__description
         extract-text(
           :text="description | convertCustomUrlText(urlList)"
