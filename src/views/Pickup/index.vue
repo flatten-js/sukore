@@ -11,6 +11,7 @@
           :url-list="user.descriptionUrlList"
           :following="user.follow"
           :followers="user.followers"
+          :location="user.location"
           )
     template(v-slot:thumbnail-box-area)
       thumbnail-box-area
