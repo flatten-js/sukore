@@ -16,7 +16,8 @@ export default new Vuex.Store({
       description: '',
       descriptionUrlList: [],
       follow: '',
-      followers: ''
+      followers: '',
+      location: ''
     },
     mediaList: [],
     favorites: []
@@ -89,7 +90,8 @@ export default new Vuex.Store({
               description: obj.user.description,
               descriptionUrlList: obj.user.entities.description.urls,
               follow: obj.user.friends_count,
-              followers: obj.user.followers_count
+              followers: obj.user.followers_count,
+              location: obj.user.location
             }
           }
 
