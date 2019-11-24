@@ -117,6 +117,8 @@ export default {
       position: absolute;
       top: .5rem;
       right: .5rem;
+      border-radius: 25px;
+      box-shadow: 0 2px 5px rgba(26, 26, 26, 0.26);
     }
 
     &__fav {
