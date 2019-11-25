@@ -2,7 +2,7 @@
   figure.origin-card
     .origin-card__image
       template(v-for="src in viewAll")
-        width-standard-image(
+        vary-standard-image(
           :src="src"
           )
       .image-more
@@ -25,14 +25,14 @@
 </template>
 
 <script>
-import WidthStandardImage from '@/components/atoms/WidthStandardImage.vue'
+import VaryStandardImage from '@/components/atoms/VaryStandardImage.vue'
 import AnchorButton from '@/components/atoms/AnchorButton.vue'
 import MultiLineText from '@/components/atoms/MultiLineText.vue'
 import SingleLineText from '@/components/atoms/SingleLineText.vue'
 
 export default {
   components: {
-    WidthStandardImage,
+    VaryStandardImage,
     AnchorButton,
     MultiLineText,
     SingleLineText
@@ -81,7 +81,7 @@ export default {
       font-size: 0;
       background-color: #f7f7f7;
 
-      .width-standard-image {
+      .vary-standard-image {
         &:not(:nth-last-child(2)) {
           margin: 0 0 1rem;
         }
