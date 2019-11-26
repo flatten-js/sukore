@@ -11,8 +11,8 @@
       .user-profile__name
         multi-line-text(
           :text="name"
-          size="large"
-          weight="bold"
+          size="xl"
+          weight="xb"
           )
       .user-profile__screen-name
         single-line-text(
