@@ -14,14 +14,14 @@ export default {
       type: String,
       default: 'default',
       validator(val) {
-        return ['default', 'large'].includes(val)
+        return ['default', 'large', 'xl'].includes(val)
       }
     },
     weight: {
       type: String,
       default: 'normal',
       validator(val) {
-        return ['normal', 'bold'].includes(val)
+        return ['normal', 'bold', 'xb'].includes(val)
       }
     }
   },
@@ -41,7 +41,7 @@ export default {
 <style lang="scss" scoped>
   .multi-line-text {
     color: #1a1a1a;
-    
+
     &.-size-default {
       font-size: 1rem;
     }
@@ -50,12 +50,20 @@ export default {
       font-size: 1.125rem;
     }
 
+    &.-size-xl {
+      font-size: 1.25rem;
+    }
+
     &.-weight-normal {
       font-weight: normal;
     }
 
     &.-weight-bold {
       font-weight: bold;
+    }
+
+    &.-weight-xb {
+      font-weight: 900;
     }
   }
 </style>
