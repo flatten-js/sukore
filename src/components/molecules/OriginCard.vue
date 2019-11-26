@@ -15,7 +15,9 @@
             )
     figcaption.card-details
       .card-details__comment
-        multi-line-text(:text="comment")
+        extract-text(
+          :text="comment | convertLastUrlRemoval | convertCustomUrlText(urlList)"
+          )
       .card-details__createdAt
         single-line-text(
           :text="created"
@@ -29,18 +31,24 @@ import VaryStandardImage from '@/components/atoms/VaryStandardImage.vue'
 import AnchorButton from '@/components/atoms/AnchorButton.vue'
 import MultiLineText from '@/components/atoms/MultiLineText.vue'
 import SingleLineText from '@/components/atoms/SingleLineText.vue'
+import ExtractText from '@/components/atoms/ExtractText.vue'
 
 export default {
   components: {
     VaryStandardImage,
     AnchorButton,
     MultiLineText,
-    SingleLineText
+    SingleLineText,
+    ExtractText
   },
   props: {
     srcList: {
       type: Array,
       required: true
+    },
+    urlList: {
+      type: Array,
+      default: () => []
     },
     comment: {
       type: String,
@@ -67,6 +75,16 @@ export default {
       return srcList.filter((src, index) => {
         return limit ? !index : true
       })
+    }
+  },
+  filters: {
+    convertLastUrlRemoval(comment) {
+      return comment.replace(/\s(?:https?:\/\/[\w\/\$\?\.\+\-:%#&~=@]+)(?=$)/, '')
+    },
+    convertCustomUrlText(comment, urlList) {
+      return urlList.reduce((acc, cur) => {
+        return acc.replace(cur.url, `${cur.expanded_url}::${cur.url}?amp=1::${cur.display_url}`)
+      }, comment)
     }
   }
 }
