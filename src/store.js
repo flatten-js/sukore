@@ -103,6 +103,7 @@ export default new Vuex.Store({
             name: obj.user.name,
             screenName: obj.user.screen_name,
             src: obj.extended_entities.media.map(media => media.media_url_https),
+            urlList: obj.entities.urls,
             text: obj.text,
             created: obj.created_at,
             retweetedStatus: false,
