@@ -88,7 +88,7 @@ export default new Vuex.Store({
               name: obj.user.name,
               screenName: obj.user.screen_name,
               description: obj.user.description,
-              descriptionUrlList: obj.user.entities.description.urls,
+              urlList: obj.user.entities.description.urls,
               follow: obj.user.friends_count,
               followers: obj.user.followers_count,
               location: obj.user.location
