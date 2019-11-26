@@ -12,6 +12,7 @@
           origin-card(
             :src-list="mediaFromId.src"
             :size="mediaFromId.size"
+            :url-list="mediaFromId.urlList"
             :comment="mediaFromId.text"
             :created="mediaFromId.created"
             )
