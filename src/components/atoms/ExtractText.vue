@@ -57,7 +57,7 @@ export default {
 
 <style lang="scss" scoped>
   .extract-text {
-    white-space: pre-wrap;
+    white-space: pre-line;
     word-wrap: break-word;
 
     &__link {
