@@ -79,7 +79,7 @@ export default {
   },
   filters: {
     convertLastUrlRemoval(comment) {
-      return comment.replace(/\s(?:https?:\/\/[\w\/\$\?\.\+\-:%#&~=@]+)(?=$)/, '')
+      return comment.replace(/\s(?:https?:\/\/[\w/$?.+-:%#&~=@]+)(?=$)/, '')
     },
     convertCustomUrlText(comment, urlList) {
       return urlList.reduce((acc, cur) => {
