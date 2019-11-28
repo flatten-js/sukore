@@ -70,7 +70,10 @@ export default {
   },
   methods: {
     userPickupData(screenName, count, excludeReplies = true) {
-      this.$store.dispatch('userPickupData', {
+      const { dispatch } = this.$store
+
+      dispatch('userSearch', { screenName })
+      dispatch('userTimelineSearch', {
         screenName,
         count,
         excludeReplies

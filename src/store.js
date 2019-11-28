@@ -66,14 +66,6 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    userPickupData({ dispatch }, { screenName, count, excludeReplies }) {
-      dispatch('userSearch', { screenName })
-      dispatch('userTimelineSearch', {
-        screenName,
-        count,
-        excludeReplies
-      })
-    },
     async userSearch({ commit }, { screenName }) {
       const payload = {
         user: null
