@@ -47,7 +47,7 @@ export default {
     }
   },
   mounted() {
-    this.userPickupData(this.screenName, 50)
+    this.initUserPickupData(this.screenName, 50)
   },
   computed: {
     user() {
@@ -69,7 +69,7 @@ export default {
     }
   },
   methods: {
-    userPickupData(screenName, count, excludeReplies = true) {
+    initUserPickupData(screenName, count, excludeReplies = true) {
       const { dispatch } = this.$store
 
       dispatch('userSearch', { screenName })
