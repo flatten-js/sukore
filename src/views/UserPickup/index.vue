@@ -1,5 +1,5 @@
 <template lang="pug">
-  pickup-template
+  user-pickup-template
     template(v-slot:user-details-catch)
       user-details-catch
         user-details(
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import PickupTemplate from '@/components/templates/PickupTemplate.vue'
+import UserPickupTemplate from '@/components/templates/UserPickupTemplate.vue'
 import UserDetailsCatch from '@/components/organisms/UserDetailsCatch.vue'
 import UserDetails from '@/components/molecules/UserDetails.vue'
 import ThumbnailBoxArea from '@/components/organisms/ThumbnailBoxArea.vue'
@@ -34,7 +34,7 @@ import FlexTabBar from '@/components/molecules/FlexTabBar.vue'
 
 export default {
   components: {
-    PickupTemplate,
+    UserPickupTemplate,
     UserDetailsCatch,
     UserDetails,
     ThumbnailBoxArea,
