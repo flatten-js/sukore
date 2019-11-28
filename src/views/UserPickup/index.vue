@@ -85,13 +85,13 @@ export default {
 
 <style scoped>
   .v-enter {
-    transform: translate3d(0, 1rem, 0);
     opacity: 0;
   }
+
   .v-enter-to {
-    transform: translate3d(0, 0, 0);
     opacity: 1;
   }
+
   .v-enter-active {
     transition: all ease-out .4s;
   }
