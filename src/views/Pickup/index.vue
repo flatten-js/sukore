@@ -47,7 +47,7 @@ export default {
     }
   },
   mounted() {
-    this.userTimelineSearch(this.screenName, 50)
+    this.userPickupData(this.screenName, 50)
   },
   computed: {
     user() {
@@ -69,8 +69,12 @@ export default {
     }
   },
   methods: {
-    userTimelineSearch: function(screenName, count = 25, excludeReplies = true) {
-      this.$store.dispatch('userTimelineSearch', { screenName, count, excludeReplies })
+    userPickupData(screenName, count, excludeReplies = true) {
+      this.$store.dispatch('userPickupData', {
+        screenName,
+        count,
+        excludeReplies
+      })
     }
   }
 }

@@ -66,9 +66,44 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    userPickupData({ dispatch }, { screenName, count, excludeReplies }) {
+      dispatch('userSearch', { screenName })
+      dispatch('userTimelineSearch', {
+        screenName,
+        count,
+        excludeReplies
+      })
+    },
+    async userSearch({ commit }, { screenName }) {
+      const payload = {
+        user: null
+      }
+
+      await axios.get('http://localhost:3000/api/twitter/users/show', {
+        params: {
+          screen_name: screenName
+        }
+      })
+      .then(res => {
+        const user = res.data
+
+        payload.user = {
+          headerImage: user.profile_banner_url,
+          userIcon: user.profile_image_url_https.replace('normal', '400x400'),
+          name: user.name,
+          screenName: user.screen_name,
+          description: user.description,
+          urlList: user.entities.description.urls,
+          follow: user.friends_count,
+          followers: user.followers_count,
+          location: user.location
+        }
+
+        commit('setUser', payload)
+      })
+    },
     async userTimelineSearch({ state, commit }, { screenName, count, excludeReplies }) {
       const payload = {
-        user: null,
         mediaList: []
       }
 
@@ -81,20 +116,6 @@ export default new Vuex.Store({
       })
       .then(res => {
         res.data.forEach(obj => {
-          if (!payload.user) {
-            payload.user = {
-              headerImage: obj.user.profile_banner_url,
-              userIcon: obj.user.profile_image_url_https.replace('normal', '400x400'),
-              name: obj.user.name,
-              screenName: obj.user.screen_name,
-              description: obj.user.description,
-              urlList: obj.user.entities.description.urls,
-              follow: obj.user.friends_count,
-              followers: obj.user.followers_count,
-              location: obj.user.location
-            }
-          }
-
           if (!obj.extended_entities) return
 
           let mediaObjectTemplate = {
@@ -128,7 +149,6 @@ export default new Vuex.Store({
         })
 
         if (!state.mediaList.length || state.user.screenName !== screenName) {
-          commit('setUser', payload)
           commit('setMediaList', payload)
         }
 
