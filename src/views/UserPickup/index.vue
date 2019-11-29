@@ -1,6 +1,6 @@
 <template lang="pug">
   user-pickup-template
-    template(v-slot:user-details-catch)
+    template(#user-details-catch)
       user-details-catch
         user-details(
           :masthead="user.headerImage"
@@ -13,13 +13,13 @@
           :followers="user.followers"
           :location="user.location"
           )
-    template(v-slot:thumbnail-box-area)
+    template(#thumbnail-box-area)
       thumbnail-box-area
-        template(v-slot:navigation)
+        template(#navigation)
           flex-tab-bar(
             :tab-items="tabItemsInit"
             )
-        template(v-slot:contents)
+        template(#contents)
           transition
             keep-alive
               router-view

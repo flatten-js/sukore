@@ -1,14 +1,14 @@
 <template lang="pug">
   pickup-detail-template
-    template(v-slot:image-details-card)
+    template(#image-details-card)
       image-details-card
-        template(v-slot:head)
+        template(#head)
           user-details-bar(
             :icon="mediaFromId.icon"
             :name="mediaFromId.name"
             :screen-name="mediaFromId.screenName"
             )
-        template(v-slot:body)
+        template(#body)
           origin-card(
             :src-list="mediaFromId.src"
             :size="mediaFromId.size"
