@@ -15,7 +15,7 @@ export const FAVORITE = {
       createFavorite ( data: {
         tid: $tid
       }) {
-        id
+        tid
       }
     }
   `,
