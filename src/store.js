@@ -23,8 +23,8 @@ export default new Vuex.Store({
     setUser(state, payload) {
       state.user = { ...state.user, ...payload.user }
     },
-    setMediaList(state, payload) {
-      state.mediaList.push(...payload.mediaList)
+    updateMediaList({ mediaList }, payload) {
+      mediaList.splice(0, mediaList.length, ...payload.mediaList)
     },
     initMediaListState({ mediaList }, payload) {
       payload.favorites.forEach(fav => {
@@ -131,9 +131,7 @@ export default new Vuex.Store({
           payload.mediaList.push(mediaObjectTemplate)
         })
 
-        if (!state.mediaList.length || state.user.screenName !== screenName) {
-          commit('setMediaList', payload)
-        }
+        commit('updateMediaList', payload)
       })
     }
   }
