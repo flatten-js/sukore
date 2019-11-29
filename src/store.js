@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import { apolloProvider } from '@/apollo'
-import { FAVORITE } from '@/constants/graphql'
 
 Vue.use(Vuex)
 
@@ -19,8 +17,7 @@ export default new Vuex.Store({
       followers: '',
       location: ''
     },
-    mediaList: [],
-    favorites: []
+    mediaList: []
   },
   mutations: {
     setUser(state, payload) {
@@ -28,22 +25,6 @@ export default new Vuex.Store({
     },
     setMediaList(state, payload) {
       state.mediaList.push(...payload.mediaList)
-    },
-    setFavorite(state, payload) {
-      state.favorites.push(...payload.favorites)
-    },
-    initFavorite({ favorites, mediaList }) {
-      favorites.forEach(fav => {
-        const index = mediaList.findIndex(media => media.id === fav.tid)
-
-        if (index !== -1) {
-          mediaList.splice(index, 1, { ...mediaList[index], state: true })
-        }
-      })
-    },
-    updateFavorite({ mediaList }, payload) {
-      const index = mediaList.findIndex(media => media.id === payload.tid)
-      mediaList.splice(index, 1, { ...mediaList[index], state: !mediaList[index].state })
     }
   },
   getters: {
@@ -60,9 +41,6 @@ export default new Vuex.Store({
     },
     retweetFilter: (state, { noMediaListDuplicate }) => {
       return noMediaListDuplicate.filter(obj => obj.retweetedStatus)
-    },
-    favorites: ({ favorites }) => {
-      return favorites
     }
   },
   actions: {
@@ -143,54 +121,6 @@ export default new Vuex.Store({
         if (!state.mediaList.length || state.user.screenName !== screenName) {
           commit('setMediaList', payload)
         }
-
-        commit('initFavorite')
-      })
-    },
-    allFavorite({ commit }) {
-      const payload = {
-        favorites: null
-      }
-
-      apolloProvider.defaultClient.query({
-        query: FAVORITE.ALL
-      }).then(res => {
-        payload.favorites = res.data.favorites
-        commit('setFavorite', payload)
-      })
-    },
-    addFavorite({ commit }, tid) {
-      const payload = {
-        tid: tid
-      }
-
-      commit('updateFavorite', payload)
-
-      apolloProvider.defaultClient.mutate({
-        mutation: FAVORITE.ADD,
-        variables: {
-          tid: payload.tid
-        }
-      }).catch(err => {
-        console.log(err)
-        commit('updateFavorite', payload)
-      })
-    },
-    removeFavorite({ commit }, tid) {
-      const payload = {
-        tid: tid
-      }
-
-      commit('updateFavorite', payload)
-
-      apolloProvider.defaultClient.mutate({
-        mutation: FAVORITE.REMOVE,
-        variables: {
-          tid: payload.tid
-        }
-      }).catch(err => {
-        console.log(err)
-        commit('updateFavorite', payload)
       })
     }
   }

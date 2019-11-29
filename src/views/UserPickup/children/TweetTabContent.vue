@@ -34,9 +34,9 @@ export default {
       const media = this.tweetFilter[index]
 
       if (media.state) {
-        this.$store.dispatch('removeFavorite', media.id)
+
       } else {
-        this.$store.dispatch('addFavorite', media.id)
+
       }
     }
   }
