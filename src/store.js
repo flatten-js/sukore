@@ -25,6 +25,19 @@ export default new Vuex.Store({
     },
     setMediaList(state, payload) {
       state.mediaList.push(...payload.mediaList)
+    },
+    initMediaListState({ mediaList }, payload) {
+      payload.favorites.forEach(fav => {
+        const index = mediaList.findIndex(media => media.id === fav.tid)
+
+        if (index !== -1) {
+          mediaList.splice(index, 1, { ...mediaList[index], state: true })
+        }
+      })
+    },
+    updateMediaListState({ mediaList }, payload) {
+      const index = mediaList.findIndex(media => media.id === payload.tid)
+      mediaList.splice(index, 1, { ...mediaList[index], state: !mediaList[index].state })
     }
   },
   getters: {

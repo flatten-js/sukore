@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import { FAVORITE } from '@/constants/graphql'
+
 import UserPickupTemplate from '@/components/templates/UserPickupTemplate.vue'
 import UserDetailsCatch from '@/components/organisms/UserDetailsCatch.vue'
 import UserDetails from '@/components/molecules/UserDetails.vue'
@@ -46,8 +48,13 @@ export default {
       required: true
     }
   },
-  mounted() {
-    this.initUserPickupData(this.screenName, 50)
+  data() {
+    return {
+      favorites: []
+    }
+  },
+  apollo: {
+    favorites: FAVORITE.ALL
   },
   computed: {
     user() {
@@ -68,12 +75,14 @@ export default {
       ]
     }
   },
+  async mounted() {
+    await this.initUserPickupData(this.screenName, 50)
+    await this.$store.commit('initMediaListState', { favorites: this.favorites })
+  },
   methods: {
-    initUserPickupData(screenName, count, excludeReplies = true) {
-      const { dispatch } = this.$store
-
-      dispatch('userSearch', { screenName })
-      dispatch('userTimelineSearch', {
+    async initUserPickupData(screenName, count, excludeReplies = true) {
+      await this.$store.dispatch('userSearch', { screenName })
+      await this.$store.dispatch('userTimelineSearch', {
         screenName,
         count,
         excludeReplies

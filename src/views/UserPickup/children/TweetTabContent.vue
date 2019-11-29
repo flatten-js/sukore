@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import { FAVORITE } from '@/constants/graphql'
+
 import ThumbnailBoxGrid from '@/components/organisms/ThumbnailBoxGrid.vue'
 import ThumbnailBox from '@/components/molecules/ThumbnailBox.vue'
 
@@ -33,10 +35,55 @@ export default {
       const index = this.$refs.calleeThumbnailBox.findIndex(callee => callee.$el === caller)
       const media = this.tweetFilter[index]
 
+      this.$store.commit('updateMediaListState', { tid: media.id })
+
       if (media.state) {
-
+        this.$apollo.mutate({
+          mutation: FAVORITE.REMOVE,
+          variables: {
+            tid: media.id
+          },
+          update: (store, { data: { deleteManyFavorites } }) => {
+            const data = store.readQuery({ query: FAVORITE.ALL })
+            data.favorites = data.favorites.filter(fav => fav.tid !== media.id)
+            store.writeQuery({ query: FAVORITE.ALL, data })
+          },
+          optimisticResponse: {
+            __typename: 'Mutation',
+            deleteManyFavorites: {
+              __typename: 'Favorite',
+              count: 0
+            }
+          }
+        })
+        .catch(err => {
+          this.$store.commit('updateMediaListState', { tid: media.id })
+        })
       } else {
-
+        this.$apollo.mutate({
+          mutation: FAVORITE.ADD,
+          variables: {
+            tid: media.id
+          },
+          update: (store, { data: { createFavorite } }) => {
+            const data = store.readQuery({ query: FAVORITE.ALL })
+            data.favorites.push({
+              __typename: createFavorite.__typename,
+              tid: createFavorite.tid
+            })
+            store.writeQuery({ query: FAVORITE.ALL, data })
+          },
+          optimisticResponse: {
+            __typename: 'Mutation',
+            createFavorite: {
+              __typename: 'Favorite',
+              tid: media.id
+            }
+          }
+        })
+        .catch(err => {
+          this.$store.commit('updateMediaListState', { tid: media.id })
+        })
       }
     }
   }
