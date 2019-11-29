@@ -35,6 +35,11 @@ export default {
     ImageCountBadge,
     MaterialIcons
   },
+  filters: {
+    convertDetailsPath(id, screenName) {
+      return `/${screenName}/media/${id}`
+    }
+  },
   props: {
     id: {
       type: String,
@@ -62,11 +67,6 @@ export default {
       validator(val) {
         return ['fade'].includes(val)
       }
-    }
-  },
-  filters: {
-    convertDetailsPath(id, screenName) {
-      return `/${screenName}/media/${id}`
     }
   },
   computed: {

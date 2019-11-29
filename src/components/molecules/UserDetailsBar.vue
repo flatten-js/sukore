@@ -30,6 +30,11 @@ export default {
     SingleLineText,
     AnchorButton
   },
+  filters: {
+    convertTwitterPath(screenName) {
+      return `https://twitter.com/${screenName}`
+    }
+  },
   props: {
     icon: {
       type: String,
@@ -42,11 +47,6 @@ export default {
     screenName: {
       type: String,
       required: true
-    }
-  },
-  filters: {
-    convertTwitterPath(screenName) {
-      return `https://twitter.com/${screenName}`
     }
   }
 }

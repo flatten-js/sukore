@@ -41,6 +41,16 @@ export default {
     SingleLineText,
     ExtractText
   },
+  filters: {
+    convertLastUrlRemoval(comment) {
+      return comment.replace(/\s(?:https?:\/\/[\w/$?.+-:%#&~=@]+)(?=$)/, '')
+    },
+    convertCustomUrlText(comment, urlList) {
+      return urlList.reduce((acc, cur) => {
+        return acc.replace(cur.url, `${cur.expanded_url}::${cur.url}?amp=1::${cur.display_url}`)
+      }, comment)
+    }
+  },
   props: {
     srcList: {
       type: Array,
@@ -75,16 +85,6 @@ export default {
       return srcList.filter((src, index) => {
         return limit ? !index : true
       })
-    }
-  },
-  filters: {
-    convertLastUrlRemoval(comment) {
-      return comment.replace(/\s(?:https?:\/\/[\w/$?.+-:%#&~=@]+)(?=$)/, '')
-    },
-    convertCustomUrlText(comment, urlList) {
-      return urlList.reduce((acc, cur) => {
-        return acc.replace(cur.url, `${cur.expanded_url}::${cur.url}?amp=1::${cur.display_url}`)
-      }, comment)
     }
   }
 }

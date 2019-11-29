@@ -73,6 +73,19 @@ export default {
     MaterialIcons,
     InlineIconText
   },
+  filters: {
+    convertTwitterScreenName(screenName) {
+      return `@${screenName}`
+    },
+    convertUserStatusPath(screenName, status) {
+      return `/${screenName}/${status}`
+    },
+    convertCustomUrlText(description, urlList) {
+      return urlList.reduce((acc, cur) => {
+        return acc.replace(cur.url, `${cur.expanded_url}::${cur.url}?amp=1::${cur.display_url}`)
+      }, description)
+    }
+  },
   props: {
     masthead: [String, null],
     icon: {
@@ -106,19 +119,6 @@ export default {
     location: {
       type: String,
       required: true
-    }
-  },
-  filters: {
-    convertTwitterScreenName(screenName) {
-      return `@${screenName}`
-    },
-    convertUserStatusPath(screenName, status) {
-      return `/${screenName}/${status}`
-    },
-    convertCustomUrlText(description, urlList) {
-      return urlList.reduce((acc, cur) => {
-        return acc.replace(cur.url, `${cur.expanded_url}::${cur.url}?amp=1::${cur.display_url}`)
-      }, description)
     }
   }
 }
