@@ -1,6 +1,6 @@
 <template lang="pug">
-  .box-image
-    v-lazy-image.box-image__body(
+  .relative-box-image
+    v-lazy-image.relative-box-image__body(
       :class="propsClassGenerator"
       :src="src"
       @load="load"
@@ -45,7 +45,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .box-image {
+  .relative-box-image {
     position: relative;
 
     &::before {

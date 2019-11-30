@@ -7,7 +7,7 @@
       :to="id | convertDetailsPath(screenName)"
       )
       .thumbnail-box-link__thumbnail
-        box-image(
+        relative-box-image(
           :src="src"
           @loadingComplete="loadingComplete"
           )
@@ -25,13 +25,13 @@
 </template>
 
 <script>
-import BoxImage from '@/components/atoms/BoxImage.vue'
+import RelativeBoxImage from '@/components/atoms/RelativeBoxImage.vue'
 import ImageCountBadge from '@/components/atoms/ImageCountBadge.vue'
 import MaterialIcons from '@/components/atoms/MaterialIcons.vue'
 
 export default {
   components: {
-    BoxImage,
+    RelativeBoxImage,
     ImageCountBadge,
     MaterialIcons
   },
