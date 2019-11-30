@@ -61,6 +61,13 @@ export default {
       type: Boolean,
       required: true
     },
+    column: {
+      type: String,
+      default: '2',
+      validator(val) {
+        return ['2'].includes(val)
+      }
+    },
     animation: {
       type: [String, null],
       default: null,
@@ -71,9 +78,10 @@ export default {
   },
   computed: {
     propsClassGenerator() {
-      const { animation } = this
+      const { column, animation } = this
 
       return {
+        [`-column-${column}`]: column,
         [`-animation-${animation}`]: animation
       }
     }
@@ -95,6 +103,10 @@ export default {
 <style lang="scss" scoped>
   .thumbnail-box {
     position: relative;
+
+    &.-column-2 {
+      width: 50%;
+    }
 
     &.-animation-fade {
       opacity: 0;

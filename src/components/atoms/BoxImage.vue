@@ -1,9 +1,10 @@
 <template lang="pug">
-  v-lazy-image.box-image(
-    :class="propsClassGenerator"
-    :src="src"
-    @load="load"
-    )
+  .box-image
+    v-lazy-image.box-image__body(
+      :class="propsClassGenerator"
+      :src="src"
+      @load="load"
+      )
 </template>
 
 <script>
@@ -45,11 +46,21 @@ export default {
 
 <style lang="scss" scoped>
   .box-image {
-    object-fit: cover;
-    
-    &.-column-2 {
-      width: 50vw;
-      height: 50vw;
+    position: relative;
+
+    &::before {
+      content: "";
+      display: block;
+      padding: 100% 0 0;
+    }
+
+    &__body {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      object-fit: cover;
     }
   }
 </style>
