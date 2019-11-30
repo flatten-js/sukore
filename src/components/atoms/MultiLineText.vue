@@ -10,11 +10,18 @@ export default {
       type: String,
       required: true
     },
+    color: {
+      type: String,
+      default: 'black',
+      validator(val) {
+        return ['black', 'white'].includes(val)
+      }
+    },
     size: {
       type: String,
       default: 'default',
       validator(val) {
-        return ['default', 'large', 'xl'].includes(val)
+        return ['small', 'default', 'large', 'xl'].includes(val)
       }
     },
     weight: {
@@ -27,9 +34,10 @@ export default {
   },
   computed: {
     propsClassGenerator() {
-      const { size, weight } = this
+      const { color, size, weight } = this
 
       return {
+        [`-color-${color}`]: color,
         [`-size-${size}`]: size,
         [`-weight-${weight}`]: weight
       }
@@ -40,7 +48,17 @@ export default {
 
 <style lang="scss" scoped>
   .multi-line-text {
-    color: #1a1a1a;
+    &.-color-black {
+      color: #1a1a1a;
+    }
+
+    &.-color-white {
+      color: #fff;
+    }
+
+    &.-size-small {
+      font-size: .875rem;
+    }
 
     &.-size-default {
       font-size: 1rem;
