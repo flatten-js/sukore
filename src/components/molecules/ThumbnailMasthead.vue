@@ -21,7 +21,7 @@
             )
         .thumbnail-masthead-description__text
           multi-line-text(
-            :text="text"
+            :text="text | convertTextOmitted"
             color="white"
             size="small"
             )
@@ -47,6 +47,11 @@ export default {
     ImageCountBadge,
     MultiLineText,
     MaterialIcons
+  },
+  filters: {
+    convertTextOmitted(text, limit = 30) {
+      return `${text.slice(0, limit)}…`
+    }
   },
   props: {
     url: [String, null],
