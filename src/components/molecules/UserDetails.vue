@@ -36,7 +36,7 @@
           :to="screenName | convertUserStatusPath('following')"
           )
           individuality(
-            :text="following"
+            :text="following | convertCommaFormat"
             weight="bold"
             mr="025"
             )
@@ -45,7 +45,7 @@
           :to="screenName | convertUserStatusPath('followers')"
           )
           individuality(
-            :text="followers"
+            :text="followers | convertCommaFormat"
             weight="bold"
             mr="025"
             )
@@ -84,6 +84,9 @@ export default {
       return urlList.reduce((acc, cur) => {
         return acc.replace(cur.url, `${cur.expanded_url}::${cur.url}?amp=1::${cur.display_url}`)
       }, description)
+    },
+    convertCommaFormat(number) {
+      return number.toLocaleString()
     }
   },
   props: {
