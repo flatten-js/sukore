@@ -1,6 +1,5 @@
 <template lang="pug">
   .thumbnail-box(
-    ref="thumbnailBox"
     :class="propsClassGenerator"
     )
     router-link.thumbnail-box-link(
@@ -90,11 +89,10 @@ export default {
     loadingComplete() {
       if (!this.animation) return
 
-      const { thumbnailBox } = this.$refs
-      thumbnailBox.classList.add('-loading-complete')
+      this.$el.classList.add('-loading-complete')
     },
     clickFavorite() {
-      this.$emit('clickFavorite', this.$refs.thumbnailBox)
+      this.$emit('clickFavorite', this.id)
     }
   }
 }

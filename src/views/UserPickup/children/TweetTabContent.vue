@@ -2,7 +2,6 @@
   thumbnail-box-grid
     template(v-for="media in tweetFilter")
       thumbnail-box(
-        ref="calleeThumbnailBox"
         :key="media.id"
         :id="media.id"
         :src="media.src[0]"
@@ -15,6 +14,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { FAVORITE } from '@/constants/graphql'
 
 import ThumbnailBoxGrid from '@/components/organisms/ThumbnailBoxGrid.vue'
@@ -26,14 +26,14 @@ export default {
     ThumbnailBox
   },
   computed: {
-    tweetFilter() {
-      return this.$store.getters.tweetFilter
-    }
+    ...mapGetters([
+      'tweetFilter',
+      'noMediaListDuplicate'
+    ])
   },
   methods: {
-    clickFavorite(caller) {
-      const index = this.$refs.calleeThumbnailBox.findIndex(callee => callee.$el === caller)
-      const media = this.tweetFilter[index]
+    clickFavorite(id) {
+      const media = this.noMediaListDuplicate.find(media => media.id === id)
 
       this.$store.commit('updateMediaListState', { tid: media.id })
 

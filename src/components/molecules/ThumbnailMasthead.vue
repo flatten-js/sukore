@@ -1,7 +1,5 @@
 <template lang="pug">
-  .thumbnail-masthead(
-    ref="thumbnailMasthead"
-    )
+  .thumbnail-masthead
     .thumbnail-masthead__image
       masthead(
         type="thumbnail"
@@ -55,6 +53,10 @@ export default {
   },
   props: {
     url: [String, null],
+    id: {
+      type: String,
+      required: true
+    },
     query: {
       type: String,
       required: true
@@ -74,7 +76,7 @@ export default {
   },
   methods: {
     clickFavorite() {
-      this.$emit('clickFavorite', this.$refs.thumbnailMasthead)
+      this.$emit('clickFavorite', this.id)
     }
   }
 }
