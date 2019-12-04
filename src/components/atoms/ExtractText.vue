@@ -10,18 +10,31 @@ export default {
   render(h, { props }) {
     const REG = {
       KEYWORD: {
-        SCREEN_NAME: '@[\\w]+?',
+        HASHTAG: '#.+',
+        SCREEN_NAME: '@[\\w]+',
         URL: 'https?:\\/\\/[\\w\\/\\$\\?\\.\\+\\-:%#&~=@]+…?'
       },
       FRONT_REAR: '[^\\x01-\\x7e]|[\\x09-\\x0c\\x20\\x21\\x28\\x29\\x2b-\\x2f\\x3a\\x3b\\x3d\\x3f\\x5b-\\x5e\\x60\\x7b-\\x7e]'
     }
 
-    const combineRegExp = new RegExp(`(?<=^|${REG.FRONT_REAR})(${REG.KEYWORD.SCREEN_NAME}|${REG.KEYWORD.URL})(?=$|&|${REG.FRONT_REAR})`, 'g')
+    const combineRegExp = new RegExp(`(?<=^|${REG.FRONT_REAR})(${REG.KEYWORD.HASHTAG}|${REG.KEYWORD.SCREEN_NAME}|${REG.KEYWORD.URL})(?=$|&|${REG.FRONT_REAR})`, 'g')
 
     return (
       <div class="extract-text">
         {
           props.text.split(combineRegExp).map(word => {
+            if (word.match(new RegExp(`^${REG.KEYWORD.HASHTAG}`))) {
+              const encoded = encodeURIComponent(word)
+
+              return (
+                <router-link
+                  class="extract-text__link"
+                  to={ `/search/${encoded}` }
+                  exact>
+                  { word }
+                </router-link>
+              )
+            }
             if (word.match(new RegExp(`^${REG.KEYWORD.SCREEN_NAME}`))) {
               return (
                 <router-link
