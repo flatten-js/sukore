@@ -10,8 +10,8 @@ export default {
   render(h, { props }) {
     const REG = {
       KEYWORD: {
-        HASHTAG: '#.+',
-        SCREEN_NAME: '@[\\w]+',
+        HASHTAG: '#.+?',
+        SCREEN_NAME: '@[\\w]+?',
         URL: 'https?:\\/\\/[\\w\\/\\$\\?\\.\\+\\-:%#&~=@]+…?'
       },
       FRONT_REAR: '[^\\x01-\\x7e]|[\\x09-\\x0c\\x20\\x21\\x28\\x29\\x2b-\\x2f\\x3a\\x3b\\x3d\\x3f\\x5b-\\x5e\\x60\\x7b-\\x7e]'
