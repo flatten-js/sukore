@@ -17,11 +17,18 @@ export default new Vuex.Store({
       followers: '',
       location: ''
     },
-    mediaList: []
+    mediaList: [],
+    currentId: ''
   },
   mutations: {
     setUser(state, payload) {
       state.user = { ...state.user, ...payload.user }
+    },
+    updateCurrentId(state, payload) {
+      state.currentId = payload.currentId
+    },
+    addMediaList({ mediaList }, payload) {
+      mediaList.push(...payload.mediaList)
     },
     updateMediaList({ mediaList }, payload) {
       mediaList.splice(0, mediaList.length, ...payload.mediaList)
@@ -43,6 +50,9 @@ export default new Vuex.Store({
   getters: {
     user: ({ user }) => {
       return user
+    },
+    currentId: ({ currentId }) => {
+      return currentId
     },
     noMediaListDuplicate: ({ mediaList }) => {
       return mediaList.filter((media, index, self) => {
@@ -85,7 +95,7 @@ export default new Vuex.Store({
         commit('setUser', payload)
       })
     },
-    async userTimelineSearch({ state, commit }, { screenName, count, excludeReplies }) {
+    async userTimelineSearch({ commit }, { screenName, count, excludeReplies }) {
       const payload = {
         mediaList: []
       }
@@ -134,9 +144,10 @@ export default new Vuex.Store({
         commit('updateMediaList', payload)
       })
     },
-    async tweetsSearch({ state, commit }, { query, resultType, count, maxId }) {
+    async tweetsSearch({ state, commit }, { type = 'update', query, resultType, count, maxId }) {
       const payload = {
-        mediaList: []
+        mediaList: [],
+        currentId: ''
       }
 
       await axios.get('http://localhost:3000/api/twitter/search/tweets', {
@@ -178,9 +189,20 @@ export default new Vuex.Store({
           }
 
           payload.mediaList.push(mediaObjectTemplate)
+          payload.currentId = mediaObjectTemplate.id
         })
 
-        commit('updateMediaList', payload)
+        const typeSwitch = {
+          add() {
+            commit('addMediaList', payload)
+          },
+          update() {
+            commit('updateMediaList', payload)
+          }
+        }
+
+        typeSwitch[type]()
+        commit('updateCurrentId', payload)
       })
     }
   }

@@ -63,7 +63,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'noMediaListDuplicate'
+      'noMediaListDuplicate',
+      'currentId'
     ]),
     searchResult() {
       const [masthead, ...body] = this.noMediaListDuplicate
@@ -75,16 +76,36 @@ export default {
     }
   },
   async mounted() {
-    await this.tweetsSearch(this.query, 'popular', 100)
-    await this.$store.commit('initMediaListState', { favorites: this.favorites })
+    this.$el.addEventListener('scroll', this.swaipToRefresh)
+
+    await this.$store.dispatch('tweetsSearch', {
+      query: this.query,
+      resultType: 'popular',
+      count: 100
+    })
+    await this.$store.commit('initMediaListState', {
+      favorites: this.favorites
+    })
   },
   methods: {
-    async tweetsSearch(query, resultType, count) {
-      await this.$store.dispatch('tweetsSearch', {
-        query,
-        resultType,
-        count
-      })
+    async swaipToRefresh() {
+      const el = this.$el,
+            elHeight = el.scrollHeight,
+            windowHeight = el.clientHeight,
+            scrollY = el.scrollTop
+
+      if (elHeight === Math.round(windowHeight + scrollY)) {
+        await this.$store.dispatch('tweetsSearch', {
+          type: 'add',
+          query: this.query,
+          resultType: 'popular',
+          count: 200,
+          maxId: this.currentId
+        })
+        await this.$store.commit('initMediaListState', {
+          favorites: this.favorites
+        })
+      }
     },
     clickFavorite(id) {
       const media = this.noMediaListDuplicate.find(media => media.id === id)
