@@ -133,6 +133,55 @@ export default new Vuex.Store({
 
         commit('updateMediaList', payload)
       })
+    },
+    async tweetsSearch({ state, commit }, { query, resultType, count, maxId }) {
+      const payload = {
+        mediaList: []
+      }
+
+      await axios.get('http://localhost:3000/api/twitter/search/tweets', {
+        params: {
+          q: query,
+          count,
+          max_id: maxId
+        }
+      })
+      .then(res => {
+        res.data.statuses.forEach(obj => {
+          if (!obj.extended_entities) return
+
+          let mediaObjectTemplate = {
+            id: obj.id_str,
+            icon: obj.user.profile_image_url_https.replace('normal', '400x400'),
+            name: obj.user.name,
+            screenName: obj.user.screen_name,
+            src: obj.extended_entities.media.map(media => media.media_url_https),
+            urlList: obj.entities.urls,
+            text: obj.text,
+            created: obj.created_at,
+            retweetedStatus: false,
+            size: obj.extended_entities.media.length,
+            state: false
+          }
+
+          if (obj.retweeted_status) {
+            const updateMediaObject = {
+              id: obj.retweeted_status.id_str,
+              icon: obj.retweeted_status.user.profile_image_url_https.replace('normal', '400x400'),
+              name: obj.retweeted_status.user.name,
+              screenName: obj.retweeted_status.user.screen_name,
+              text: obj.retweeted_status.text,
+              retweetedStatus: obj.retweeted_status.user.screen_name !== state.user.screenName
+            }
+
+            mediaObjectTemplate = { ...mediaObjectTemplate, ...updateMediaObject }
+          }
+
+          payload.mediaList.push(mediaObjectTemplate)
+        })
+
+        commit('updateMediaList', payload)
+      })
     }
   }
 })
