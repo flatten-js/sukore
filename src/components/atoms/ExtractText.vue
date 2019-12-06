@@ -46,7 +46,7 @@ export default {
               )
             }
             if (word.match(new RegExp(`^${REG.KEYWORD.URL}`))) {
-              const [ title, href, display, ...none ] = word.split('::')
+              const [ title, href, display ] = word.split('::')
 
               return (
                 <a
