@@ -80,7 +80,6 @@ export default {
 
     await this.$store.dispatch('tweetsSearch', {
       query: this.query,
-      resultType: 'popular',
       count: 100
     })
     await this.$store.commit('initMediaListState', {
@@ -98,7 +97,6 @@ export default {
         await this.$store.dispatch('tweetsSearch', {
           type: 'add',
           query: this.query,
-          resultType: 'popular',
           count: 200,
           maxId: this.currentId
         })
@@ -118,7 +116,7 @@ export default {
           variables: {
             tid: media.id
           },
-          update: (store, { data: { deleteManyFavorites } }) => {
+          update: (store) => {
             const data = store.readQuery({ query: FAVORITE.ALL })
             data.favorites = data.favorites.filter(fav => fav.tid !== media.id)
             store.writeQuery({ query: FAVORITE.ALL, data })

@@ -144,7 +144,7 @@ export default new Vuex.Store({
         commit('updateMediaList', payload)
       })
     },
-    async tweetsSearch({ state, commit }, { type = 'update', query, resultType, count, maxId }) {
+    async tweetsSearch({ state, commit }, { type = 'update', query, count, maxId }) {
       const payload = {
         mediaList: [],
         currentId: ''

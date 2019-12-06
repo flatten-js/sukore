@@ -43,7 +43,7 @@ export default {
           variables: {
             tid: media.id
           },
-          update: (store, { data: { deleteManyFavorites } }) => {
+          update: (store) => {
             const data = store.readQuery({ query: FAVORITE.ALL })
             data.favorites = data.favorites.filter(fav => fav.tid !== media.id)
             store.writeQuery({ query: FAVORITE.ALL, data })
