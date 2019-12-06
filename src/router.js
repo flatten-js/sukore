@@ -47,7 +47,7 @@ export default new Router({
     },
     {
       path: '/search/:query',
-      component: () => import('@/views/search'),
+      component: () => import('@/views/Search'),
       props: route => ({
         query: route.params.query
       })
