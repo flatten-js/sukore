@@ -75,6 +75,14 @@ export default {
       ]
     }
   },
+  watch: {
+    async '$route'(to, from) {
+      if (to.params.screenName === from.params.screenName) return
+
+      await this.initUserPickupData(to.params.screenName, 50)
+      await this.$store.commit('initMediaListState', { favorites: this.favorites })
+    }
+  },
   async mounted() {
     await this.initUserPickupData(this.screenName, 50)
     await this.$store.commit('initMediaListState', { favorites: this.favorites })
