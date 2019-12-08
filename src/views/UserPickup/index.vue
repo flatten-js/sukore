@@ -17,7 +17,7 @@
       thumbnail-box-area
         template(#navigation)
           flex-tab-bar(
-            :tab-items="tabItemsInit"
+            :tab-items="initTabItems"
             )
         template(#contents)
           transition
@@ -60,7 +60,7 @@ export default {
     user() {
       return this.$store.getters.user
     },
-    tabItemsInit() {
+    initTabItems() {
       const { screenName } = this
 
       return [
