@@ -76,16 +76,15 @@ export default {
     }
   },
   watch: {
-    async '$route'(to, from) {
-      if (to.params.screenName === from.params.screenName) return
+    '$route.params.screenName': {
+      handler: async function(newScreenName, oldScreenName) {
+        if (newScreenName === oldScreenName) return
 
-      await this.initUserPickupData(to.params.screenName, 50)
-      await this.$store.commit('initMediaListState', { favorites: this.favorites })
+        await this.initUserPickupData(newScreenName, 50)
+        await this.$store.commit('initMediaListState', { favorites: this.favorites })
+      },
+      immediate: true
     }
-  },
-  async mounted() {
-    await this.initUserPickupData(this.screenName, 50)
-    await this.$store.commit('initMediaListState', { favorites: this.favorites })
   },
   methods: {
     async initUserPickupData(screenName, count, excludeReplies = true) {
