@@ -16,11 +16,17 @@ export default new Router({
       children: [
         {
           path: '',
-          component: () => import('@/views/UserPickup/children/TweetTabContent.vue')
+          component: () => import('@/views/UserPickup/children/TabContent.vue'),
+          props: () => ({
+            type: 'tweet'
+          })
         },
         {
           path: 'retweet',
-          component: () => import('@/views/UserPickup/children/RetweetTabContent.vue')
+          component: () => import('@/views/UserPickup/children/TabContent.vue'),
+          props: () => ({
+            type: 'retweet'
+          })
         }
       ]
     },

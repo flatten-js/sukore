@@ -2,8 +2,8 @@
   section.thumbnail-box-area
     .thumbnail-box-area__navigation
       slot(name="navigation")
-    .thumbnail-box-area__contents
-      slot(name="contents")
+    .thumbnail-box-area__content
+      slot(name="content")
 </template>
 
 <style lang="scss" scoped>

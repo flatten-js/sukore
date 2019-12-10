@@ -19,7 +19,7 @@
           flex-tab-bar(
             :tab-items="initTabItems"
             )
-        template(#contents)
+        template(#content)
           transition
             keep-alive
               router-view
