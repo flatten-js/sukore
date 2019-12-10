@@ -80,7 +80,7 @@ export default {
       handler: async function(newScreenName, oldScreenName) {
         if (newScreenName === oldScreenName) return
 
-        await this.initUserPickupData(newScreenName, 50)
+        await this.initUserPickupData(newScreenName, 200)
         await this.$store.commit('initMediaListState', { favorites: this.favorites })
       },
       immediate: true
