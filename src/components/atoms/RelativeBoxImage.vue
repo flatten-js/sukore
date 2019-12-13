@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import * as Vibrant from 'node-vibrant'
+import ColorThief from 'colorthief'
 
 export default {
   filters: {
@@ -33,12 +33,16 @@ export default {
   },
   methods: {
     setDominant({ $el }) {
-      const vibrant = new Vibrant(this.src)
-      vibrant.getPalette()
-      .then(({ Vibrant }) => {
-        const dominant = Vibrant.rgb
+      const colorThief = new ColorThief()
+      const image = new Image(100, 100)
+      image.crossOrigin = 'Anonymous'
+
+      image.addEventListener('load', () => {
+        const dominant = colorThief.getColor(image)
         $el.style.backgroundColor = `rgb(${dominant})`
       })
+
+      image.src = this.src
     }
   }
 }
