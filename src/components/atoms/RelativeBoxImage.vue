@@ -1,9 +1,10 @@
 <template lang="pug">
   lazy-component.relative-box-image(
+    v-lazy-container="initVLazyContainer"
     @show="setDominant"
     )
     img.relative-box-image__body(
-      :src="src | convertReduceSize"
+      :data-src="src | convertReduceSize"
       )
 </template>
 
@@ -20,6 +21,14 @@ export default {
     src: {
       type: String,
       required: true
+    }
+  },
+  data() {
+    return {
+      initVLazyContainer: {
+        selector: 'img',
+        loading: '/img/loading_placeholder.png'
+      }
     }
   },
   methods: {
