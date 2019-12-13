@@ -1,18 +1,13 @@
 <template lang="pug">
-  .relative-box-image
-    v-lazy-image.relative-box-image__body(
+  lazy-component.relative-box-image
+    img.relative-box-image__body(
       :class="propsClassGenerator"
       :src="src"
       )
 </template>
 
 <script>
-import VLazyImage from 'v-lazy-image'
-
 export default {
-  components: {
-    VLazyImage
-  },
   props: {
     src: {
       type: String,
