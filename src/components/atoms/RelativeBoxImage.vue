@@ -4,6 +4,7 @@
     @show="setDominant"
     )
     img.relative-box-image__body(
+      :class="propsClassGenerator"
       :data-src="src | convertReduceSize"
       )
 </template>
@@ -21,6 +22,13 @@ export default {
     src: {
       type: String,
       required: true
+    },
+    animation: {
+      type: String,
+      default: null,
+      validator(val) {
+        return ['fade'].includes(val)
+      }
     }
   },
   data() {
@@ -28,6 +36,15 @@ export default {
       initVLazyContainer: {
         selector: 'img',
         loading: '/img/loading_placeholder.png'
+      }
+    }
+  },
+  computed: {
+    propsClassGenerator() {
+      const { animation } = this
+
+      return {
+        [`-animation-${animation}`]: animation
       }
     }
   },
@@ -65,6 +82,17 @@ export default {
       top: 0;
       left: 0;
       object-fit: cover;
+
+      &.-animation-fade {
+        opacity: 0;
+        transition: all ease-out .25s;
+      }
+
+      &[lazy=loaded] {
+        &.-animation-fade {
+          opacity: 1;
+        }
+      }
     }
   }
 </style>

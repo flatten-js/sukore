@@ -6,7 +6,10 @@
       :to="id | convertDetailsPath(screenName)"
       )
       .thumbnail-box-link__thumbnail
-        relative-box-image(:src="src")
+        relative-box-image(
+          :src="src"
+          animation="fade"
+          )
       .thumbnail-box-link__badge
         template(v-if="imageCount > 1")
             image-count-badge(:number="imageCount")
