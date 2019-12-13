@@ -3,7 +3,7 @@
     @show="setDominant"
     )
     img.relative-box-image__body(
-      :src="src"
+      :src="src | convertReduceSize"
       )
 </template>
 
@@ -11,6 +11,11 @@
 import * as Vibrant from 'node-vibrant'
 
 export default {
+  filters: {
+    convertReduceSize(src) {
+      return `${src}?format=jpg&name=small`
+    }
+  },
   props: {
     src: {
       type: String,
