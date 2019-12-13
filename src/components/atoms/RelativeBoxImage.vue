@@ -1,7 +1,6 @@
 <template lang="pug">
   lazy-component.relative-box-image
     img.relative-box-image__body(
-      :class="propsClassGenerator"
       :src="src"
       )
 </template>
@@ -12,22 +11,6 @@ export default {
     src: {
       type: String,
       required: true
-    },
-    column: {
-      type: String,
-      default: '2',
-      validator(val) {
-        return ['2'].includes(val)
-      }
-    }
-  },
-  computed: {
-    propsClassGenerator() {
-      const { column } = this
-
-      return {
-        [`-column-${column}`]: column
-      }
     }
   }
 }
