@@ -8,7 +8,6 @@
         :screenName="media.screenName"
         :image-count="media.size"
         :state="media.state"
-        animation="fade"
         @clickFavorite="clickFavorite"
         )
 </template>
