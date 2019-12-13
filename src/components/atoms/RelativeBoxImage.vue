@@ -1,16 +1,30 @@
 <template lang="pug">
-  lazy-component.relative-box-image
+  lazy-component.relative-box-image(
+    @show="setDominant"
+    )
     img.relative-box-image__body(
       :src="src"
       )
 </template>
 
 <script>
+import * as Vibrant from 'node-vibrant'
+
 export default {
   props: {
     src: {
       type: String,
       required: true
+    }
+  },
+  methods: {
+    setDominant({ $el }) {
+      const vibrant = new Vibrant(this.src)
+      vibrant.getPalette()
+      .then(({ Vibrant }) => {
+        const dominant = Vibrant.rgb
+        $el.style.backgroundColor = `rgb(${dominant})`
+      })
     }
   }
 }
