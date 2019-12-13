@@ -1,17 +1,12 @@
 <template lang="pug">
-  v-lazy-image.vary-standard-image(
+  img.vary-standard-image(
     :class="propsClassGenerator"
     :src="src"
     )
 </template>
 
 <script>
-import VLazyImage from 'v-lazy-image'
-
 export default {
-  components: {
-    VLazyImage
-  },
   props: {
     src: {
       type: String,
