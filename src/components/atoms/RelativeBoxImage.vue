@@ -3,7 +3,6 @@
     v-lazy-image.relative-box-image__body(
       :class="propsClassGenerator"
       :src="src"
-      @load="load"
       )
 </template>
 
@@ -34,11 +33,6 @@ export default {
       return {
         [`-column-${column}`]: column
       }
-    }
-  },
-  methods: {
-    load() {
-      this.$emit('loadingComplete')
     }
   }
 }

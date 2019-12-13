@@ -6,10 +6,7 @@
       :to="id | convertDetailsPath(screenName)"
       )
       .thumbnail-box-link__thumbnail
-        relative-box-image(
-          :src="src"
-          @loadingComplete="loadingComplete"
-          )
+        relative-box-image(:src="src")
       .thumbnail-box-link__badge
         template(v-if="imageCount > 1")
             image-count-badge(:number="imageCount")
@@ -66,31 +63,18 @@ export default {
       validator(val) {
         return ['2'].includes(val)
       }
-    },
-    animation: {
-      type: [String, null],
-      default: null,
-      validator(val) {
-        return ['fade'].includes(val)
-      }
     }
   },
   computed: {
     propsClassGenerator() {
-      const { column, animation } = this
+      const { column } = this
 
       return {
-        [`-column-${column}`]: column,
-        [`-animation-${animation}`]: animation
+        [`-column-${column}`]: column
       }
     }
   },
   methods: {
-    loadingComplete() {
-      if (!this.animation) return
-
-      this.$el.classList.add('-loading-complete')
-    },
     clickFavorite() {
       this.$emit('clickFavorite', this.id)
     }
