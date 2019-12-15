@@ -12,6 +12,7 @@
           :following="user.follow"
           :followers="user.followers"
           :location="user.location"
+          :link="user.link"
           )
     template(#thumbnail-box-area)
       thumbnail-box-area

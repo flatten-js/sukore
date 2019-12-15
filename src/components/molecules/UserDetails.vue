@@ -28,8 +28,17 @@
         template(v-if="location")
           span.user-profile-remarks__location
             inline-icon-text(
-              :text="location"
               name="map-pin"
+              :text="location"
+              size="small"
+              brightness="2"
+              )
+        template(v-if="link")
+          span.user-profile-remarks__link
+            inline-icon-text(
+              type="link"
+              name="link"
+              :href="link | convertCustomUrlText(urlObject.url)"
               size="small"
               brightness="2"
               )
@@ -80,10 +89,10 @@ export default {
     convertUserStatusPath(screenName, status) {
       return `/${screenName}/${status}`
     },
-    convertCustomUrlText(description, urlList) {
-      return urlList.reduce((acc, cur) => {
+    convertCustomUrlText(text, urls) {
+      return urls.reduce((acc, cur) => {
         return acc.replace(cur.url, `${cur.expanded_url}::${cur.url}?amp=1::${cur.display_url}`)
-      }, description)
+      }, text)
     },
     convertCommaFormat(number) {
       return number.toLocaleString()
@@ -120,6 +129,10 @@ export default {
       required: true
     },
     location: {
+      type: String,
+      required: true
+    },
+    link: {
       type: String,
       required: true
     }

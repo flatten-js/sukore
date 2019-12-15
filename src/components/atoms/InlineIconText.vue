@@ -2,8 +2,16 @@
   span.inline-icon-text(:class="propsClassGenerator")
     svg.inline-icon-text__icon
       use(:xlink:href="name | convertSymbolPath")
-    span
-      | {{ text }}
+    template(v-if="type === 'link'")
+      a.inline-icon-text__link(
+        :title="link.title"
+        :href="link.href"
+        target="_blank"
+        )
+        | {{ link.display }}
+    template(v-else)
+      span
+        | {{ text }}
 </template>
 
 <script>
@@ -14,11 +22,10 @@ export default {
     }
   },
   props: {
+    type: String,
+    href: String,
+    text: String,
     name: {
-      type: String,
-      required: true
-    },
-    text: {
       type: String,
       required: true
     },
@@ -45,6 +52,15 @@ export default {
         [`-size-${size}`]: size,
         [`-brightness-${brightness}`]: brightness
       }
+    },
+    link() {
+      const [title, href, display] = this.href.split('::')
+
+      return {
+        title,
+        href,
+        display
+      }
     }
   }
 }
@@ -53,6 +69,8 @@ export default {
 <style lang="scss" scoped>
   .inline-icon-text {
     $this: #{&};
+    margin-right: .5rem;
+    white-space: nowrap;
 
     @mixin size-template($size: 1rem) {
       font-size: $size;
@@ -83,6 +101,11 @@ export default {
       margin-right: .25rem;
       fill: currentColor;
       vertical-align: text-top;
+    }
+
+    &__link {
+      color: #1b95e0;
+      text-decoration: none;
     }
   }
 </style>

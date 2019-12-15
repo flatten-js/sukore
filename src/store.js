@@ -18,7 +18,8 @@ export default new Vuex.Store({
       },
       follow: '',
       followers: '',
-      location: ''
+      location: '',
+      link: ''
     },
     mediaList: [],
     currentId: ''
@@ -95,7 +96,8 @@ export default new Vuex.Store({
           }, {}),
           follow: user.friends_count,
           followers: user.followers_count,
-          location: user.location
+          location: user.location,
+          link: user.url
         }
 
         commit('setUser', payload)
