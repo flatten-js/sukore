@@ -1,7 +1,7 @@
 <template lang="pug">
   .image-count-badge
-    .image-count-badge__icon
-      i.material-icons photo_library
+    svg.image-count-badge__icon
+      use(xlink:href="/img/icons/symbol-defs.svg#icon-collections")
     .image-count-badge__text
       | {{ number }}
 </template>
@@ -28,12 +28,10 @@ export default {
     color: #fff;
 
     &__icon {
+      width: .75rem;
+      height: .75rem;
       margin: 0 .25rem 0 0;
-      line-height: 0;
+      fill: currentColor;
     }
-  }
-
-  .material-icons {
-    font-size: inherit;
   }
 </style>

@@ -27,9 +27,9 @@
         :class="{ '-favorite': state }"
         @click.prevent="clickFavorite"
         )
-        material-icons(
+        space-expand-icon(
           name="favorite"
-          size="custom"
+          shadow
           )
 </template>
 
@@ -37,14 +37,14 @@
 import Masthead from '@/components/atoms/Masthead.vue'
 import ImageCountBadge from '@/components/atoms/ImageCountBadge.vue'
 import MultiLineText from '@/components/atoms/MultiLineText.vue'
-import MaterialIcons from '@/components/atoms/MaterialIcons.vue'
+import SpaceExpandIcon from '@/components/atoms/SpaceExpandIcon.vue'
 
 export default {
   components: {
     Masthead,
     ImageCountBadge,
     MultiLineText,
-    MaterialIcons
+    SpaceExpandIcon
   },
   filters: {
     convertTextOmitted(text, limit = 30) {
@@ -117,13 +117,9 @@ export default {
     box-sizing: border-box;
 
     &__fav {
-      padding: .5rem;
       bottom: 1rem;
       right: 1rem;
       color: rgba(255, 255, 255, .95);
-      font-size: 1.8rem;
-      line-height: 0;
-      text-shadow: 0 2px 5px rgba(26, 26, 26, .26);
 
       &.-favorite {
         color: #FF4063;

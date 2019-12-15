@@ -12,27 +12,27 @@
           )
       .thumbnail-box-link__badge
         template(v-if="imageCount > 1")
-            image-count-badge(:number="imageCount")
+          image-count-badge(:number="imageCount")
       .thumbnail-box-link__fav(
         :class="{ '-favorite': state }"
         @click.prevent="clickFavorite"
         )
-        material-icons(
+        space-expand-icon(
           name="favorite"
-          size="custom"
+          shadow
           )
 </template>
 
 <script>
 import RelativeBoxImage from '@/components/atoms/RelativeBoxImage.vue'
 import ImageCountBadge from '@/components/atoms/ImageCountBadge.vue'
-import MaterialIcons from '@/components/atoms/MaterialIcons.vue'
+import SpaceExpandIcon from '@/components/atoms/SpaceExpandIcon.vue'
 
 export default {
   components: {
     RelativeBoxImage,
     ImageCountBadge,
-    MaterialIcons
+    SpaceExpandIcon
   },
   filters: {
     convertDetailsPath(id, screenName) {
@@ -120,13 +120,9 @@ export default {
 
     &__fav {
       position: absolute;
-      padding: .5rem;
       bottom: 0;
       right: 0;
-      color: rgba(255, 255, 255, .95);
-      font-size: 1.8rem;
-      line-height: 0;
-      text-shadow: 0 2px 5px rgba(26, 26, 26, .26);
+      color: rgba(255, 255, 255, .9);
 
       &.-favorite {
         color: #FF4063;

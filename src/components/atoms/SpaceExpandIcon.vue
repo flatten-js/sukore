@@ -46,8 +46,8 @@ export default {
     fill: currentColor;
 
     &.-size-default {
-      width: 28px;
-      height: 28px;
+      width: 1.8rem;
+      height: 1.8rem;
     }
 
     &.-shadow {

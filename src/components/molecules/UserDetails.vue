@@ -61,7 +61,6 @@ import MultiLineText from '@/components/atoms/MultiLineText.vue'
 import SingleLineText from '@/components/atoms/SingleLineText.vue'
 import Individuality from '@/components/atoms/Individuality.vue'
 import ExtractText from '@/components/atoms/ExtractText.vue'
-import MaterialIcons from '@/components/atoms/MaterialIcons.vue'
 import InlineIconText from '@/components/atoms/InlineIconText.vue'
 
 export default {
@@ -72,7 +71,6 @@ export default {
     SingleLineText,
     Individuality,
     ExtractText,
-    MaterialIcons,
     InlineIconText
   },
   filters: {
