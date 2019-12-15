@@ -47,9 +47,6 @@ export default {
 
 <style lang="scss" scoped>
   .inline-icon-text {
-    display: inline-flex;
-    align-items: center;
-
     &.-size-default {
       font-size: 1rem;
     }
@@ -65,6 +62,7 @@ export default {
     &__icon {
       margin-right: .25rem;
       font-size: inherit;
+      vertical-align: top;
     }
   }
 </style>
