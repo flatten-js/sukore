@@ -17,6 +17,7 @@
       .user-profile__screen-name
         single-line-text(
           :text="screenName | convertTwitterScreenName"
+          size="small"
           brightness="2"
           )
       .user-profile__description
