@@ -15,7 +15,7 @@ import ColorThief from 'colorthief'
 export default {
   filters: {
     convertReduceSize(src) {
-      return `${src}?format=jpg&name=small`
+      return `${src}?format=jpg&name=thumb`
     }
   },
   props: {
@@ -51,7 +51,7 @@ export default {
   methods: {
     setDominant({ $el }) {
       const colorThief = new ColorThief()
-      const image = new Image(100, 100)
+      const image = new Image(150, 150)
       image.crossOrigin = 'Anonymous'
 
       image.addEventListener('load', () => {
