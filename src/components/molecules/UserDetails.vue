@@ -29,6 +29,7 @@
             inline-icon-text(
               :text="location"
               name="map-pin"
+              size="small"
               brightness="2"
               )
       .user-profile__status.user-profile-status

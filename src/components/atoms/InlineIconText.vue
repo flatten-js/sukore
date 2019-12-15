@@ -26,7 +26,7 @@ export default {
       type: String,
       default: 'default',
       validator(val) {
-        return ['default'].includes(val)
+        return ['small', 'default'].includes(val)
       }
     },
     brightness: {
@@ -54,14 +54,21 @@ export default {
   .inline-icon-text {
     $this: #{&};
 
-    &.-size-default {
-      $size: .9rem;
+    @mixin size-template($size: 1rem) {
       font-size: $size;
 
       #{$this}__icon {
         width: $size;
         height: $size;
       }
+    }
+
+    &.-size-small {
+      @include size-template(.875rem);
+    }
+
+    &.-size-default {
+      @include size-template;
     }
 
     &.-brightness-1 {
