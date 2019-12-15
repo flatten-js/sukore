@@ -28,7 +28,7 @@
           span.user-profile-remarks__location
             inline-icon-text(
               :text="location"
-              name="room"
+              name="map-pin"
               brightness="2"
               )
       .user-profile__status.user-profile-status

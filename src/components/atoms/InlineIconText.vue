@@ -1,13 +1,18 @@
 <template lang="pug">
   span.inline-icon-text(:class="propsClassGenerator")
-    i.inline-icon-text__icon.material-icons
-      | {{ name }}
+    svg.inline-icon-text__icon
+      use(:xlink:href="name | convertSymbolPath")
     span
       | {{ text }}
 </template>
 
 <script>
 export default {
+  filters: {
+    convertSymbolPath(name) {
+      return `/img/icons/symbol-defs.svg#icon-${name}`
+    }
+  },
   props: {
     name: {
       type: String,
@@ -47,8 +52,16 @@ export default {
 
 <style lang="scss" scoped>
   .inline-icon-text {
+    $this: #{&};
+
     &.-size-default {
-      font-size: 1rem;
+      $size: .9rem;
+      font-size: $size;
+
+      #{$this}__icon {
+        width: $size;
+        height: $size;
+      }
     }
 
     &.-brightness-1 {
@@ -61,8 +74,8 @@ export default {
 
     &__icon {
       margin-right: .25rem;
-      font-size: inherit;
-      vertical-align: top;
+      fill: currentColor;
+      vertical-align: text-top;
     }
   }
 </style>
