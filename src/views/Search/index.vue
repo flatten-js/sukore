@@ -17,14 +17,12 @@
         thumbnail-box-grid
           template(v-for="media in searchResult.body")
             thumbnail-box(
-              ref="calleeThumbnailBox"
               :key="media.id"
               :id="media.id"
               :src="media.src[0]"
               :screenName="media.screenName"
               :image-count="media.size"
               :state="media.state"
-              animation="fade"
               @clickFavorite="clickFavorite"
               )
 </template>
