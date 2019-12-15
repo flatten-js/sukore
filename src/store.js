@@ -12,7 +12,10 @@ export default new Vuex.Store({
       name: '',
       screenName: '',
       description: '',
-      descriptionUrlList: [],
+      urlObject: {
+        url: [],
+        description: []
+      },
       follow: '',
       followers: '',
       location: ''
@@ -86,7 +89,10 @@ export default new Vuex.Store({
           name: user.name,
           screenName: user.screen_name,
           description: user.description,
-          urlList: user.entities.description.urls,
+          urlObject: Object.keys(user.entities).reduce((acc, cur) => {
+            acc[cur] = user.entities[cur].urls
+            return acc
+          }, {}),
           follow: user.friends_count,
           followers: user.followers_count,
           location: user.location

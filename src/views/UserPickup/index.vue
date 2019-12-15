@@ -8,7 +8,7 @@
           :name="user.name"
           :screen-name="user.screenName"
           :description="user.description"
-          :url-list="user.urlList"
+          :url-object="user.urlObject"
           :following="user.follow"
           :followers="user.followers"
           :location="user.location"

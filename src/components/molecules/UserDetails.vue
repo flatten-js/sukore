@@ -22,7 +22,7 @@
           )
       .user-profile__description
         extract-text(
-          :text="description | convertCustomUrlText(urlList)"
+          :text="description | convertCustomUrlText(urlObject.description)"
           )
       .user-profile__remarks.user-profile-remarks
         template(v-if="location")
@@ -107,9 +107,9 @@ export default {
       type: String,
       required: true
     },
-    urlList: {
-      type: Array,
-      default: () => []
+    urlObject: {
+      type: Object,
+      default: () => {}
     },
     following: {
       type: [String, Number],
