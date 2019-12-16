@@ -38,7 +38,7 @@
             inline-icon-text(
               type="link"
               name="link"
-              :href="link | convertCustomUrlText(urlObject.url)"
+              :url-text="link | convertCustomUrlText(urlObject.url)"
               size="small"
               brightness="2"
               )

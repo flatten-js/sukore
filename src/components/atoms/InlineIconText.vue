@@ -23,7 +23,7 @@ export default {
   },
   props: {
     type: String,
-    href: String,
+    urlText: String,
     text: String,
     name: {
       type: String,
@@ -54,7 +54,7 @@ export default {
       }
     },
     link() {
-      const [title, href, display] = this.href.split('::')
+      const [title, href, display] = this.urlText.split('::')
 
       return {
         title,
