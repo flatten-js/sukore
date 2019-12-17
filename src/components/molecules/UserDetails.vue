@@ -2,12 +2,19 @@
   .user-details
     .user-details__user-head
       masthead(:url="masthead")
-    .user-details__user-body.user-profile
-      .user-profile__icon
-        user-icon(
-          :url="icon"
-          border
-          )
+    .user-profile
+      .user-profile-head
+        .user-profile-head__icon
+          user-icon(
+            :url="icon"
+            border
+            )
+        .user-profile-head__tools
+          material-button(
+            color="twitter"
+            size="small"
+            text="ホームに設定"
+            )
       .user-profile__name
         multi-line-text(
           :text="name"
@@ -66,6 +73,7 @@
 <script>
 import Masthead from '@/components/atoms/Masthead.vue'
 import UserIcon from '@/components/atoms/UserIcon.vue'
+import MaterialButton from '@/components/atoms/MaterialButton.vue'
 import MultiLineText from '@/components/atoms/MultiLineText.vue'
 import SingleLineText from '@/components/atoms/SingleLineText.vue'
 import Individuality from '@/components/atoms/Individuality.vue'
@@ -76,6 +84,7 @@ export default {
   components: {
     Masthead,
     UserIcon,
+    MaterialButton,
     MultiLineText,
     SingleLineText,
     Individuality,
@@ -143,18 +152,23 @@ export default {
 <style lang="scss" scoped>
   .user-details {
     background-color: #fff;
+  }
 
-    &__user-body {
-      padding: 0 1rem 1rem 1rem;
-      box-sizing: border-box;
+  .user-profile-head {
+    display: flex;
+    margin: 0 0 1rem;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    &__icon {
+      display: inline-block;
+      margin: -45px 0 0;
     }
   }
 
   .user-profile {
-    &__icon {
-      display: inline-block;
-      margin: -35px 0 1rem;
-    }
+    padding: 0 1rem 1rem 1rem;
+    box-sizing: border-box;
 
     &__name {
       margin: 0 0 .25rem;
