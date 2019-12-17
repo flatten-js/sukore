@@ -1,0 +1,142 @@
+<template lang="pug">
+  component.material-button(
+    :is="tag"
+    :class="propsClassGenerator"
+    v-bind="propsToggleAttribute"
+    )
+    | {{ text }}
+</template>
+
+<script>
+export default {
+  props: {
+    tag: {
+      type: String,
+      default: 'div',
+      validator(val) {
+        return ['div', 'a', 'router-link'].includes(val)
+      }
+    },
+    href: String,
+    target: {
+      type: String,
+      default: null,
+      validator(val) {
+        return ['_blank'].includes(val)
+      }
+    },
+    to: String,
+    exact: {
+      type: Boolean,
+      default: false
+    },
+    text: {
+      type: String,
+      required: true
+    },
+    type: {
+      type: String,
+      default: 'default',
+      validator(val) {
+        return ['default', 'more'].includes(val)
+      }
+    },
+    color: {
+      type: String,
+      default: 'default',
+      validator(val) {
+        return ['default', 'twitter'].includes(val)
+      }
+    },
+    size: {
+      type: String,
+      default: 'default',
+      validator(val) {
+        return ['small', 'default'].includes(val)
+      }
+    },
+    state: {
+      type: Boolean,
+      default: false
+    }
+  },
+  computed: {
+    propsClassGenerator() {
+      const { tag, type, color, size, state } = this
+
+      return {
+        [`-type-${type}`]: type,
+        [`-color-${color}`]: color,
+        [`-size-${size}`]: size,
+        '-link': tag.match(/[^div]/),
+        '-active': state
+      }
+    },
+    propsToggleAttribute() {
+      const { tag, href, target, to, exact } = this
+
+      switch(tag) {
+        case 'a':
+        return {
+          'href': href,
+          'target': target
+        }
+        case 'router-link':
+        return {
+          'to': to,
+          'exact': exact
+        }
+      }
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+  .material-button {
+    display: inline-block;
+    border-radius: 25px;
+
+    &.-link {
+      text-decoration: none;
+    }
+
+    &.-type-default {
+      padding: .5rem 1rem;
+    }
+
+    &.-type-more {
+      padding: .5rem 2rem;
+    }
+
+    &.-color-default {
+      border: 1px solid #1a1a1a;
+      color: #1a1a1a;
+    }
+
+    &.-color-twitter {
+      border: 1px solid #1DA1F2;
+      color: #1DA1F2;
+    }
+
+    &.-size-small {
+      font-size: .875rem;
+    }
+
+    &.-size-default {
+      font-size: 1rem;
+    }
+
+    &.-active {
+      color: white;
+
+      &.-color-default {
+        background-color: #1a1a1a;
+      }
+
+      &.-color-twitter {
+        background-color: #1DA1F2;
+      }
+    }
+  }
+</style>
