@@ -47,15 +47,11 @@ export default {
     &.-size-small {
       width: 40px;
       height: 40px;
-
-      &.-border {
-
-      }
     }
 
     &.-size-default {
-      width: 70px;
-      height: 70px;
+      width: 90px;
+      height: 90px;
 
       &.-border {
         border: 3px solid #fff;
