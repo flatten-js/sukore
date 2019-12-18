@@ -157,7 +157,6 @@ export default {
   .user-profile-head {
     display: flex;
     margin: 0 0 1rem;
-    align-items: flex-end;
     justify-content: space-between;
 
     &__icon {
@@ -167,7 +166,7 @@ export default {
   }
 
   .user-profile {
-    padding: 0 1rem 1rem 1rem;
+    padding: .5rem 1rem 1rem;
     box-sizing: border-box;
 
     &__name {
