@@ -12,9 +12,13 @@
         weight="bold"
         )
     .user-details-bar__button
-      anchor-button(
+      material-button(
+        tag="a"
         :href="screenName | convertTwitterPath"
+        vertical="short"
         color="twitter"
+        size="small"
+        :state="true"
         text="Twitterを見る"
         )
 </template>
@@ -22,13 +26,13 @@
 <script>
 import UserIcon from '@/components/atoms/UserIcon.vue'
 import SingleLineText from '@/components/atoms/SingleLineText.vue'
-import AnchorButton from '@/components/atoms/AnchorButton.vue'
+import MaterialButton from '@/components/atoms/MaterialButton.vue'
 
 export default {
   components: {
     UserIcon,
     SingleLineText,
-    AnchorButton
+    MaterialButton
   },
   filters: {
     convertTwitterPath(screenName) {

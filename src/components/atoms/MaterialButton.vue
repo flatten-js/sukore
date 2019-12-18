@@ -34,11 +34,18 @@ export default {
       type: String,
       required: true
     },
-    type: {
+    vertical: {
       type: String,
       default: 'default',
       validator(val) {
-        return ['default', 'more'].includes(val)
+        return ['short', 'default'].includes(val)
+      }
+    },
+    horizon: {
+      type: String,
+      default: 'default',
+      validator(val) {
+        return ['default', 'long'].includes(val)
       }
     },
     color: {
@@ -62,10 +69,11 @@ export default {
   },
   computed: {
     propsClassGenerator() {
-      const { tag, type, color, size, state } = this
+      const { tag, vertical, horizon, color, size, state } = this
 
       return {
-        [`-type-${type}`]: type,
+        [`-vertical-${vertical}`]: vertical,
+        [`-horizon-${horizon}`]: horizon,
         [`-color-${color}`]: color,
         [`-size-${size}`]: size,
         '-link': tag.match(/[^div]/),
@@ -101,12 +109,24 @@ export default {
       text-decoration: none;
     }
 
-    &.-type-default {
-      padding: .5rem 1rem;
+    &.-vertical-short {
+      padding-top: .35rem;
+      padding-bottom: .35rem;
     }
 
-    &.-type-more {
-      padding: .5rem 2rem;
+    &.-vertical-default {
+      padding-top: .5rem;
+      padding-bottom: .5rem;
+    }
+
+    &.-horizon-default {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    &.-horizon-long {
+      padding-left: 2rem;
+      padding-right: 2rem;
     }
 
     &.-color-default {

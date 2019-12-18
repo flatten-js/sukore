@@ -7,10 +7,14 @@
           )
       .image-more
         template(v-if="size > 1 && limit")
-          anchor-button(
+          material-button(
+            tag="a"
             href="#"
+            vertical="short"
+            horizon="long"
+            size="small"
+            state
             text="すべて見る"
-            type="more"
             @click.native.prevent="limit = !limit"
             )
     figcaption.card-details
@@ -28,7 +32,7 @@
 
 <script>
 import VaryStandardImage from '@/components/atoms/VaryStandardImage.vue'
-import AnchorButton from '@/components/atoms/AnchorButton.vue'
+import MaterialButton from '@/components/atoms/MaterialButton.vue'
 import MultiLineText from '@/components/atoms/MultiLineText.vue'
 import SingleLineText from '@/components/atoms/SingleLineText.vue'
 import ExtractText from '@/components/atoms/ExtractText.vue'
@@ -36,7 +40,7 @@ import ExtractText from '@/components/atoms/ExtractText.vue'
 export default {
   components: {
     VaryStandardImage,
-    AnchorButton,
+    MaterialButton,
     MultiLineText,
     SingleLineText,
     ExtractText
