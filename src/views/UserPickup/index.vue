@@ -3,16 +3,7 @@
     template(#user-details-catch)
       user-details-catch
         user-details(
-          :masthead="user.headerImage"
-          :icon="user.userIcon"
-          :name="user.name"
-          :screen-name="user.screenName"
-          :description="user.description"
-          :url-object="user.urlObject"
-          :following="user.follow"
-          :followers="user.followers"
-          :location="user.location"
-          :link="user.link"
+          v-bind="user"
           )
     template(#thumbnail-box-area)
       thumbnail-box-area
@@ -27,6 +18,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { FAVORITE } from '@/constants/graphql'
 
 import UserPickupTemplate from '@/components/templates/UserPickupTemplate.vue'
@@ -58,9 +50,9 @@ export default {
     favorites: FAVORITE.ALL
   },
   computed: {
-    user() {
-      return this.$store.getters.user
-    },
+    ...mapGetters([
+      'user'
+    ]),
     initTabItems() {
       const { screenName } = this
 

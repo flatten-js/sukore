@@ -7,8 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: {
-      headerImage: '',
-      userIcon: '',
+      masthead: '',
+      icon: '',
       name: '',
       screenName: '',
       description: '',
@@ -16,10 +16,14 @@ export default new Vuex.Store({
         url: [],
         description: []
       },
-      follow: '',
-      followers: '',
-      location: '',
-      link: ''
+      status: {
+        following: '',
+        followers: '',
+      },
+      remarks: {
+        location: '',
+        link: ''
+      }
     },
     mediaList: [],
     currentId: ''
@@ -85,8 +89,8 @@ export default new Vuex.Store({
         const user = res.data
 
         payload.user = {
-          headerImage: user.profile_banner_url,
-          userIcon: user.profile_image_url_https.replace('normal', '400x400'),
+          masthead: user.profile_banner_url,
+          icon: user.profile_image_url_https.replace('normal', '400x400'),
           name: user.name,
           screenName: user.screen_name,
           description: user.description,
@@ -94,10 +98,14 @@ export default new Vuex.Store({
             acc[cur] = user.entities[cur].urls
             return acc
           }, {}),
-          follow: user.friends_count,
-          followers: user.followers_count,
-          location: user.location,
-          link: user.url
+          status: {
+            following: user.friends_count,
+            followers: user.followers_count,
+          },
+          remarks: {
+            location: user.location,
+            link: user.url
+          }
         }
 
         commit('setUser', payload)

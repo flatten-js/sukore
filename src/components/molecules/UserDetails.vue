@@ -32,20 +32,20 @@
           :text="description | convertCustomUrlText(urlObject.description)"
           )
       .user-profile__remarks.user-profile-remarks
-        template(v-if="location")
+        template(v-if="remarks.location")
           span.user-profile-remarks__location
             inline-icon-text(
               name="map-pin"
-              :text="location"
+              :text="remarks.location"
               size="small"
               brightness="2"
               )
-        template(v-if="link")
+        template(v-if="remarks.link")
           span.user-profile-remarks__link
             inline-icon-text(
               type="link"
               name="link"
-              :url-text="link | convertCustomUrlText(urlObject.url)"
+              :url-text="remarks.link | convertCustomUrlText(urlObject.url)"
               size="small"
               brightness="2"
               )
@@ -54,7 +54,7 @@
           :to="screenName | convertUserStatusPath('following')"
           )
           individuality(
-            :text="following | convertCommaFormat"
+            :text="status.following | convertCommaFormat"
             weight="bold"
             mr="025"
             )
@@ -63,7 +63,7 @@
           :to="screenName | convertUserStatusPath('followers')"
           )
           individuality(
-            :text="followers | convertCommaFormat"
+            :text="status.followers | convertCommaFormat"
             weight="bold"
             mr="025"
             )
@@ -129,21 +129,19 @@ export default {
       type: Object,
       default: () => {}
     },
-    following: {
-      type: [String, Number],
-      required: true
+    status: {
+      type: Object,
+      default: () => ({
+        following: '',
+        followers: ''
+      })
     },
-    followers: {
-      type: [String, Number],
-      required: true
-    },
-    location: {
-      type: String,
-      required: true
-    },
-    link: {
-      type: String,
-      required: true
+    remarks: {
+      type: Object,
+      default: () => ({
+        location: '',
+        link: ''
+      })
     }
   }
 }
