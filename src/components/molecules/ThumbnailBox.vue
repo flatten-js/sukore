@@ -8,6 +8,7 @@
       .thumbnail-box-link__thumbnail
         relative-box-image(
           :src="src"
+          :sizes="thumbnailSize"
           animation="fade"
           )
       .thumbnail-box-link__badge
@@ -55,6 +56,14 @@ export default {
     imageCount: {
       type: Number,
       required: true
+    },
+    thumbnailSize: {
+      type: Object,
+      default: () => ({
+        w: '',
+        h: '',
+        resize: ''
+      })
     },
     state: {
       type: Boolean,

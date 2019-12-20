@@ -138,6 +138,7 @@ export default new Vuex.Store({
             created: obj.created_at,
             retweetedStatus: false,
             size: obj.extended_entities.media.length,
+            thumbnailSize: obj.extended_entities.media[0].sizes.small,
             state: false
           }
 
