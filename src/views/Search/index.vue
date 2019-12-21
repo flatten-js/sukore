@@ -22,6 +22,7 @@
               :src="media.src[0]"
               :screenName="media.screenName"
               :image-count="media.size"
+              :thumbnail-size="media.thumbnailSize"
               :state="media.state"
               @clickFavorite="clickFavorite"
               )
