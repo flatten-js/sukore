@@ -31,3 +31,35 @@ export const FAVORITE = {
     }
   `
 }
+
+export const HOME_USER = {
+  ALL: gql`
+    query homeUsers {
+      homeUsers {
+        screenName
+      }
+    }
+  `,
+  ADD: gql`
+    mutation createHomeUser (
+      $screenName: String!
+    ) {
+      createHomeUser (data: {
+        screenName: $screenName
+      }) {
+        screenName
+      }
+    }
+  `,
+  REMOVE: gql`
+    mutation deleteManyHomeUsers (
+      $screenName: String
+    ) {
+      deleteManyHomeUsers (where: {
+        screenName: $screenName
+      }) {
+        count
+      }
+    }
+  `
+}

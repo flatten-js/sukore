@@ -13,7 +13,9 @@
           material-button(
             color="twitter"
             size="small"
-            text="ホームに設定"
+            :state="home"
+            :text="toggleHomeSettingText"
+            @click.native="clickMaterialButton"
             )
       .user-profile__name
         multi-line-text(
@@ -125,6 +127,10 @@ export default {
       type: String,
       required: true
     },
+    home: {
+      type: Boolean,
+      required: true
+    },
     urlObject: {
       type: Object,
       default: () => {}
@@ -142,6 +148,16 @@ export default {
         location: '',
         link: ''
       })
+    }
+  },
+  computed: {
+    toggleHomeSettingText() {
+      return this.home ? 'ホームに設定中' : 'ホームに設定'
+    }
+  },
+  methods: {
+    clickMaterialButton() {
+      this.$emit('clickMaterialButton')
     }
   }
 }
@@ -164,7 +180,7 @@ export default {
   }
 
   .user-profile {
-    padding: .5rem 1rem 1rem;
+    padding: 1rem;
     box-sizing: border-box;
 
     &__name {

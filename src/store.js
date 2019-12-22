@@ -12,6 +12,7 @@ export default new Vuex.Store({
       name: '',
       screenName: '',
       description: '',
+      home: false,
       urlObject: {
         url: [],
         description: []
@@ -31,6 +32,15 @@ export default new Vuex.Store({
   mutations: {
     setUser(state, payload) {
       state.user = { ...state.user, ...payload.user }
+    },
+    initUserHome(state, payload) {
+      const index = payload.homeUsers.findIndex(user => user.screenName === payload.screenName)
+      if (index !== -1) {
+        state.user = { ...state.user, home: true }
+      }
+    },
+    updateUserHome(state) {
+      state.user = { ...state.user, home: !state.user.home }
     },
     updateCurrentId(state, payload) {
       state.currentId = payload.currentId
