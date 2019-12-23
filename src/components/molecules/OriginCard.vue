@@ -2,6 +2,7 @@
   figure.origin-card
     .origin-card__content
       template(v-if="type !== 'photo'")
+        //- ToDo: controlsがついている動画にもクリックイベント付与
         vary-standard-component(
           tag="video"
           :type="type"
