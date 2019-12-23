@@ -1,10 +1,18 @@
 <template lang="pug">
   figure.origin-card
-    .origin-card__image
-      template(v-for="src in viewAll")
-        vary-standard-image(
+    .origin-card__content
+      template(v-if="type !== 'photo'")
+        vary-standard-component(
+          tag="video"
+          :type="type"
           :src="src"
+          @click.native="videoPlayControl"
           )
+      template(v-else)
+        template(v-for="src in more")
+          vary-standard-component(
+            :src="src"
+            )
       .image-more
         template(v-if="size > 1 && limit")
           material-button(
@@ -31,7 +39,7 @@
 </template>
 
 <script>
-import VaryStandardImage from '@/components/atoms/VaryStandardImage.vue'
+import VaryStandardComponent from '@/components/atoms/VaryStandardComponent.vue'
 import MaterialButton from '@/components/atoms/MaterialButton.vue'
 import MultiLineText from '@/components/atoms/MultiLineText.vue'
 import SingleLineText from '@/components/atoms/SingleLineText.vue'
@@ -39,7 +47,7 @@ import ExtractText from '@/components/atoms/ExtractText.vue'
 
 export default {
   components: {
-    VaryStandardImage,
+    VaryStandardComponent,
     MaterialButton,
     MultiLineText,
     SingleLineText,
@@ -56,8 +64,15 @@ export default {
     }
   },
   props: {
-    srcList: {
-      type: Array,
+    type: {
+      type: String,
+      default: 'photo',
+      validator(val) {
+        return ['photo', 'video', 'animated_gif'].includes(val)
+      }
+    },
+    src: {
+      type: [Array, String],
       required: true
     },
     urlList: {
@@ -79,16 +94,26 @@ export default {
   },
   data() {
     return {
-      limit: true
+      limit: true,
+      playing: true
     }
   },
   computed: {
-    viewAll() {
-      const { srcList, limit } = this
-
-      return srcList.filter((src, index) => {
-        return limit ? !index : true
+    more() {
+      return this.src.filter((src, index) => {
+        return this.limit ? !index : true
       })
+    }
+  },
+  methods: {
+    videoPlayControl(e) {
+      const video = e.target
+
+      if (this.playing = !this.playing) {
+        video.play()
+      } else {
+        video.pause()
+      }
     }
   }
 }
@@ -98,17 +123,21 @@ export default {
   .origin-card {
     margin: 0;
 
-    &__image {
+    &__content {
       position: relative;
       font-size: 0;
       background-color: #f7f7f7;
 
-      .vary-standard-image {
+      .vary-standard-component {
         &:not(:nth-last-child(2)) {
           margin: 0 0 1rem;
         }
       }
     }
+  }
+
+  .video-mask {
+
   }
 
   .image-more {

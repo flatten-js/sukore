@@ -4,10 +4,10 @@
       thumbnail-box(
         :key="media.id"
         :id="media.id"
-        :src="media.src[0]"
+        :src="media.entities.thumbnail.src"
         :screenName="media.screenName"
         :image-count="media.size"
-        :thumbnail-size="media.thumbnailSize"
+        :thumbnail-size="media.entities.thumbnail.size"
         :state="media.state"
         @clickFavorite="clickFavorite"
         )

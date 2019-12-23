@@ -10,7 +10,8 @@
             )
         template(#body)
           origin-card(
-            :src-list="mediaFromId.src"
+            :type="mediaFromId.entities.type"
+            :src="mediaFromId.entities.src"
             :size="mediaFromId.size"
             :url-list="mediaFromId.urlList"
             :comment="mediaFromId.text"
@@ -44,10 +45,7 @@ export default {
       'noMediaListDuplicate'
     ]),
     mediaFromId() {
-      const { noMediaListDuplicate, id } = this
-      const index = noMediaListDuplicate.findIndex(media => media.id == id)
-
-      return noMediaListDuplicate[index]
+      return this.noMediaListDuplicate.find(media => media.id == this.id)
     }
   }
 }

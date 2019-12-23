@@ -146,6 +146,16 @@ export default new Vuex.Store({
             urlList: obj.entities.urls,
             text: obj.text,
             created: obj.created_at,
+            entities: {
+              type: obj.extended_entities.media[0].type,
+              thumbnail: {
+                src: obj.extended_entities.media[0].media_url_https,
+                size: obj.extended_entities.media[0].sizes.small
+              },
+              src: obj.extended_entities.media[0].type.match('photo')
+              ? obj.extended_entities.media.map(media => media.media_url_https)
+              : obj.extended_entities.media[0].video_info.variants[0].url
+            },
             retweetedStatus: false,
             size: obj.extended_entities.media.length,
             thumbnailSize: obj.extended_entities.media[0].sizes.small,
