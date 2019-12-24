@@ -95,8 +95,7 @@ export default {
   },
   data() {
     return {
-      limit: true,
-      playing: true
+      limit: true
     }
   },
   computed: {
@@ -110,7 +109,7 @@ export default {
     videoPlayControl(e) {
       const video = e.target
 
-      if (this.playing = !this.playing) {
+      if (video.paused) {
         video.play()
       } else {
         video.pause()
