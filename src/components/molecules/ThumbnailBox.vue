@@ -18,6 +18,11 @@
               name="collections"
               :text="imageCount"
               )
+      template(v-else-if="type === 'video'")
+        .thumbnail-box-link__video
+          svg-sprite(
+            name="controller-play"
+            )
       template(v-else-if="type === 'animated_gif'")
         .thumbnail-box-link__animated-gif
           text-badge(
@@ -36,12 +41,14 @@
 <script>
 import RelativeBoxImage from '@/components/atoms/RelativeBoxImage.vue'
 import TextBadge from '@/components/atoms/TextBadge.vue'
+import SvgSprite from '@/components/atoms/SvgSprite.vue'
 import SpaceExpandIcon from '@/components/atoms/SpaceExpandIcon.vue'
 
 export default {
   components: {
     RelativeBoxImage,
     TextBadge,
+    SvgSprite,
     SpaceExpandIcon
   },
   filters: {
@@ -142,17 +149,32 @@ export default {
       box-shadow: 0 2px 5px rgba(26, 26, 26, 0.26);
     }
 
+    &__video {
+      position: absolute;
+      padding: .75rem;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      line-height: 0;
+      color: rgba(255, 255, 255, .95);
+      border-radius: 50%;
+      background-color: rgba(26, 26, 26, .75);
+      box-shadow: 0 2px 5px rgba(26, 26, 26, 0.26);
+    }
+
     &__animated-gif {
       position: absolute;
       left: .5rem;
       bottom: .5rem;
+      box-shadow: 0 2px 5px rgba(26, 26, 26, 0.26);
     }
 
     &__fav {
       position: absolute;
       bottom: 0;
       right: 0;
-      color: rgba(255, 255, 255, .9);
+      line-height: 0;
+      color: rgba(255, 255, 255, .95);
 
       &.-favorite {
         color: #FF4063;
