@@ -30,8 +30,9 @@
         :class="{ '-favorite': state }"
         @click.prevent="clickFavorite"
         )
-        space-expand-icon(
+        svg-sprite(
           name="favorite"
+          size="large"
           shadow
           )
 </template>
@@ -40,14 +41,14 @@
 import Masthead from '@/components/atoms/Masthead.vue'
 import TextBadge from '@/components/atoms/TextBadge.vue'
 import MultiLineText from '@/components/atoms/MultiLineText.vue'
-import SpaceExpandIcon from '@/components/atoms/SpaceExpandIcon.vue'
+import SvgSprite from '@/components/atoms/SvgSprite.vue'
 
 export default {
   components: {
     Masthead,
     TextBadge,
     MultiLineText,
-    SpaceExpandIcon
+    SvgSprite
   },
   filters: {
     convertTextOmitted(text, limit = 30) {
@@ -120,8 +121,10 @@ export default {
     box-sizing: border-box;
 
     &__fav {
+      padding: .5rem;
       bottom: 1rem;
       right: 1rem;
+      line-height: 0;
       color: rgba(255, 255, 255, .95);
 
       &.-favorite {

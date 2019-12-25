@@ -23,14 +23,19 @@ export default {
       validator(val) {
         return ['default', 'large'].includes(val)
       }
+    },
+    shadow: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
     propsClassGenerator() {
-      const { size } = this
+      const { size, shadow } = this
 
       return {
-        [`-size-${size}`]: size
+        [`-size-${size}`]: size,
+        '-shadow': shadow
       }
     }
   }
@@ -49,6 +54,10 @@ export default {
     &.-size-large {
       width: 1.5rem;
       height: 1.5rem;
+    }
+
+    &.-shadow {
+      filter: drop-shadow(0 2px 5px rgba(26, 26, 26, .26));
     }
   }
 </style>

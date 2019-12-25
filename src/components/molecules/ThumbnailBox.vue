@@ -32,8 +32,9 @@
         :class="{ '-favorite': state }"
         @click.prevent="clickFavorite"
         )
-        space-expand-icon(
+        svg-sprite(
           name="favorite"
+          size="large"
           shadow
           )
 </template>
@@ -42,14 +43,12 @@
 import RelativeBoxImage from '@/components/atoms/RelativeBoxImage.vue'
 import TextBadge from '@/components/atoms/TextBadge.vue'
 import SvgSprite from '@/components/atoms/SvgSprite.vue'
-import SpaceExpandIcon from '@/components/atoms/SpaceExpandIcon.vue'
 
 export default {
   components: {
     RelativeBoxImage,
     TextBadge,
-    SvgSprite,
-    SpaceExpandIcon
+    SvgSprite
   },
   filters: {
     convertDetailsPath(id, screenName) {
@@ -172,6 +171,7 @@ export default {
 
     &__fav {
       position: absolute;
+      padding: .5rem;
       bottom: 0;
       right: 0;
       line-height: 0;
