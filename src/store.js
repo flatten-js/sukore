@@ -154,7 +154,7 @@ export default new Vuex.Store({
               },
               src: obj.extended_entities.media[0].type.match('photo')
               ? obj.extended_entities.media.map(media => media.media_url_https)
-              : obj.extended_entities.media[0].video_info.variants[0].url
+              : obj.extended_entities.media[0].video_info.variants.filter(variant => variant.content_type === 'video/mp4')[0].url
             },
             retweetedStatus: false,
             size: obj.extended_entities.media.length,
