@@ -33,6 +33,7 @@ export default {
     align-items: center;
     font-size: .75rem;
     color: #fff;
+    box-shadow: 0 2px 5px rgba(26, 26, 26, 0.26);
 
     &__icon {
       width: .75rem;
