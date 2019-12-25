@@ -11,9 +11,18 @@
           :sizes="thumbnailSize"
           animation="fade"
           )
-      .thumbnail-box-link__badge
-        template(v-if="imageCount > 1")
-          image-count-badge(:number="imageCount")
+      template(v-if="type === 'photo'")
+        .thumbnail-box-link__photo
+          template(v-if="imageCount > 1")
+            text-badge(
+              name="collections"
+              :text="imageCount"
+              )
+      template(v-else-if="type === 'animated_gif'")
+        .thumbnail-box-link__animated-gif
+          text-badge(
+            text="GIF"
+            )
       .thumbnail-box-link__fav(
         :class="{ '-favorite': state }"
         @click.prevent="clickFavorite"
@@ -26,13 +35,13 @@
 
 <script>
 import RelativeBoxImage from '@/components/atoms/RelativeBoxImage.vue'
-import ImageCountBadge from '@/components/atoms/ImageCountBadge.vue'
+import TextBadge from '@/components/atoms/TextBadge.vue'
 import SpaceExpandIcon from '@/components/atoms/SpaceExpandIcon.vue'
 
 export default {
   components: {
     RelativeBoxImage,
-    ImageCountBadge,
+    TextBadge,
     SpaceExpandIcon
   },
   filters: {
@@ -44,6 +53,13 @@ export default {
     id: {
       type: String,
       required: true
+    },
+    type: {
+      type: String,
+      default: 'photo',
+      validator(val) {
+        return ['photo', 'video', 'animated_gif'].includes(val)
+      }
     },
     screenName: {
       type: String,
@@ -117,14 +133,19 @@ export default {
   .thumbnail-box-link {
     display: block;
     height: 100%;
-    line-height: 0;
 
-    &__badge {
+    &__photo {
       position: absolute;
       top: .5rem;
       right: .5rem;
       border-radius: 25px;
       box-shadow: 0 2px 5px rgba(26, 26, 26, 0.26);
+    }
+
+    &__animated-gif {
+      position: absolute;
+      left: .5rem;
+      bottom: .5rem;
     }
 
     &__fav {

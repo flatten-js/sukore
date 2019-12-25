@@ -4,6 +4,7 @@
       thumbnail-box(
         :key="media.id"
         :id="media.id"
+        :type="media.entities.type"
         :src="media.entities.thumbnail.src"
         :screenName="media.screenName"
         :image-count="media.size"

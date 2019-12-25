@@ -1,24 +1,31 @@
 <template lang="pug">
-  .image-count-badge
-    svg.image-count-badge__icon
-      use(xlink:href="/img/icons/symbol-defs.svg#icon-collections")
-    .image-count-badge__text
-      | {{ number }}
+  .text-badge
+    template(v-if="name")
+      svg.text-badge__icon
+        use(:xlink:href="name | convertSymbolPath")
+    .text-badge__text
+      | {{ text }}
 </template>
 
 <script>
 export default {
+  filters: {
+    convertSymbolPath(name) {
+      return `/img/icons/symbol-defs.svg#icon-${name}`
+    }
+  },
   props: {
-    number: {
-      type: Number,
-      required: true
+    name: String,
+    text: {
+      type: [String, Number],
+      reqired: true
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .image-count-badge {
+  .text-badge {
     display: flex;
     padding: .25rem .5rem;
     border-radius: 25px;

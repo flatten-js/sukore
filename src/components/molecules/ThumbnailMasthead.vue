@@ -7,7 +7,10 @@
         )
     .thumbnail-masthead__badge
       template(v-if="imageCount > 1")
-        image-count-badge(:number="imageCount")
+        text-badge(
+          name="collections"
+          :text="imageCount"
+          )
     .thumbnail-masthead-body
       .thumbnail-masthead-description
         .thumbnail-masthead-description__query
@@ -35,14 +38,14 @@
 
 <script>
 import Masthead from '@/components/atoms/Masthead.vue'
-import ImageCountBadge from '@/components/atoms/ImageCountBadge.vue'
+import TextBadge from '@/components/atoms/TextBadge.vue'
 import MultiLineText from '@/components/atoms/MultiLineText.vue'
 import SpaceExpandIcon from '@/components/atoms/SpaceExpandIcon.vue'
 
 export default {
   components: {
     Masthead,
-    ImageCountBadge,
+    TextBadge,
     MultiLineText,
     SpaceExpandIcon
   },
