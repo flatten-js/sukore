@@ -26,12 +26,12 @@
             color="white"
             size="small"
             )
-      .thumbnail-masthead-body__fav(
-        :class="{ '-favorite': state }"
-        @click.prevent="clickFavorite"
+      .thumbnail-masthead-body__like(
+        :class="{ '-active': state }"
+        @click.prevent="clickLikeIcon"
         )
         svg-sprite(
-          name="favorite"
+          name="like"
           size="large"
           shadow
           )
@@ -79,8 +79,8 @@ export default {
     }
   },
   methods: {
-    clickFavorite() {
-      this.$emit('clickFavorite', this.id)
+    clickLikeIcon() {
+      this.$emit('clickLikeIcon', this.id)
     }
   }
 }
@@ -120,14 +120,14 @@ export default {
     justify-content: space-between;
     box-sizing: border-box;
 
-    &__fav {
+    &__like {
       padding: .5rem;
       bottom: 1rem;
       right: 1rem;
       line-height: 0;
       color: rgba(255, 255, 255, .95);
 
-      &.-favorite {
+      &.-active {
         color: #FF4063;
       }
     }

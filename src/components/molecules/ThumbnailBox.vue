@@ -28,12 +28,12 @@
           text-badge(
             text="GIF"
             )
-      .thumbnail-box-link__fav(
-        :class="{ '-favorite': state }"
-        @click.prevent="clickFavorite"
+      .thumbnail-box-link__like(
+        :class="{ '-active': state }"
+        @click.prevent="clickLikeIcon"
         )
         svg-sprite(
-          name="favorite"
+          name="like"
           size="large"
           shadow
           )
@@ -109,8 +109,8 @@ export default {
     }
   },
   methods: {
-    clickFavorite() {
-      this.$emit('clickFavorite', this.id)
+    clickLikeIcon() {
+      this.$emit('clickLikeIcon', this.id)
     }
   }
 }
@@ -165,7 +165,7 @@ export default {
       bottom: .5rem;
     }
 
-    &__fav {
+    &__like {
       position: absolute;
       padding: .5rem;
       bottom: 0;
@@ -173,7 +173,7 @@ export default {
       line-height: 0;
       color: rgba(255, 255, 255, .95);
 
-      &.-favorite {
+      &.-active {
         color: #FF4063;
       }
     }

@@ -11,7 +11,7 @@
             :text="searchResult.masthead.text"
             :image-count="searchResult.masthead.size"
             :state="searchResult.masthead.state"
-            @clickFavorite="clickFavorite"
+            @clickLikeIcon="updateLike"
             )
       template(#contents)
         thumbnail-box-grid
@@ -24,13 +24,13 @@
               :image-count="media.size"
               :thumbnail-size="media.thumbnailSize"
               :state="media.state"
-              @clickFavorite="clickFavorite"
+              @clickLikeIcon="updateLike"
               )
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import { FAVORITE } from '@/constants/graphql'
+import { LIKE } from '@/constants/graphql'
 
 import SearchTemplate from '@/components/templates/SearchTemplate.vue'
 import ThumbnailArea from '@/components/organisms/ThumbnailArea.vue'
@@ -54,11 +54,11 @@ export default {
   },
   data() {
     return {
-      favorites: []
+      likes: []
     }
   },
   apollo: {
-    favorites: FAVORITE.ALL
+    likes: LIKE.ALL
   },
   computed: {
     ...mapGetters([
@@ -82,7 +82,7 @@ export default {
       count: 100
     })
     await this.$store.commit('initMediaListState', {
-      favorites: this.favorites
+      likes: this.likes
     })
   },
   methods: {
@@ -100,60 +100,60 @@ export default {
           maxId: this.currentId
         })
         await this.$store.commit('initMediaListState', {
-          favorites: this.favorites
+          likes: this.likes
         })
       }
     },
-    clickFavorite(id) {
+    updateLike(id) {
       const media = this.noMediaListDuplicate.find(media => media.id === id)
 
       this.$store.commit('updateMediaListState', { tid: media.id })
 
       if (media.state) {
         this.$apollo.mutate({
-          mutation: FAVORITE.REMOVE,
+          mutation: LIKE.REMOVE,
           variables: {
             tid: media.id
           },
           update: (store) => {
-            const data = store.readQuery({ query: FAVORITE.ALL })
-            data.favorites = data.favorites.filter(fav => fav.tid !== media.id)
-            store.writeQuery({ query: FAVORITE.ALL, data })
+            const data = store.readQuery({ query: LIKE.ALL })
+            data.likes = data.likes.filter(like => like.tid !== media.id)
+            store.writeQuery({ query: LIKE.ALL, data })
           },
           optimisticResponse: {
             __typename: 'Mutation',
-            deleteManyFavorites: {
-              __typename: 'Favorite',
+            deleteManyLikes: {
+              __typename: 'Like',
               count: 0
             }
           }
         })
-        .catch(err => {
+        .catch(() => {
           this.$store.commit('updateMediaListState', { tid: media.id })
         })
       } else {
         this.$apollo.mutate({
-          mutation: FAVORITE.ADD,
+          mutation: LIKE.ADD,
           variables: {
             tid: media.id
           },
-          update: (store, { data: { createFavorite } }) => {
-            const data = store.readQuery({ query: FAVORITE.ALL })
-            data.favorites.push({
-              __typename: createFavorite.__typename,
-              tid: createFavorite.tid
+          update: (store, { data: { createLike } }) => {
+            const data = store.readQuery({ query: LIKE.ALL })
+            data.likes.push({
+              __typename: createLike.__typename,
+              tid: createLike.tid
             })
-            store.writeQuery({ query: FAVORITE.ALL, data })
+            store.writeQuery({ query: LIKE.ALL, data })
           },
           optimisticResponse: {
             __typename: 'Mutation',
-            createFavorite: {
-              __typename: 'Favorite',
+            createLike: {
+              __typename: 'Like',
               tid: media.id
             }
           }
         })
-        .catch(err => {
+        .catch(() => {
           this.$store.commit('updateMediaListState', { tid: media.id })
         })
       }

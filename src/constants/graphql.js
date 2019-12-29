@@ -1,18 +1,18 @@
 import gql from 'graphql-tag'
 
-export const FAVORITE = {
+export const LIKE = {
   ALL: gql`
-    query favorites {
-      favorites {
+    query likes {
+      likes {
         tid
       }
     }
   `,
   ADD: gql`
-    mutation createFavorite (
+    mutation createLike (
       $tid: String
     ) {
-      createFavorite ( data: {
+      createLike ( data: {
         tid: $tid
       }) {
         tid
@@ -20,10 +20,10 @@ export const FAVORITE = {
     }
   `,
   REMOVE: gql`
-    mutation deleteManyFavorites (
+    mutation deleteManyLikes (
       $tid: String
     ) {
-      deleteManyFavorites ( where: {
+      deleteManyLikes ( where: {
         tid: $tid
       }) {
         count

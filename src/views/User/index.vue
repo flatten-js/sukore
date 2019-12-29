@@ -20,7 +20,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { FAVORITE, HOME_USER } from '@/constants/graphql'
+import { FAVORITE, LIKE, HOME_USER } from '@/constants/graphql'
 
 import UserTemplate from '@/components/templates/UserTemplate.vue'
 import UserDetailsCatch from '@/components/organisms/UserDetailsCatch.vue'
@@ -46,21 +46,23 @@ export default {
     return {
       init: {
         favorites: false,
+        likes: false,
         homeUsers: false
       },
       favorites: [],
+      likes: [],
       homeUsers: []
     }
   },
   apollo: {
-    favorites: {
-      query: FAVORITE.ALL,
+    likes: {
+      query: LIKE.ALL,
       async result({ data }, key) {
         if (this.init[key]) return
         this.init = { ...this.init, [key]: true }
 
         await this.initUserPickupData(this.screenName, 100)
-        await this.$store.commit('initMediaListState', { favorites: data.favorites })
+        await this.$store.commit('initMediaListState', { likes: data.likes })
       }
     },
     homeUsers: {

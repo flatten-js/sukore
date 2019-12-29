@@ -52,7 +52,7 @@ export default new Vuex.Store({
       mediaList.splice(0, mediaList.length, ...payload.mediaList)
     },
     initMediaListState({ mediaList }, payload) {
-      payload.favorites.forEach(fav => {
+      payload.likes.forEach(fav => {
         const index = mediaList.findIndex(media => media.id === fav.tid)
 
         if (index !== -1) {
