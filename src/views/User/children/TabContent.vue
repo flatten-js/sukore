@@ -16,7 +16,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { LIKE } from '@/constants/graphql'
+import { sharedUpdateLike } from '@/constants/shared'
 
 import ThumbnailBoxGrid from '@/components/organisms/ThumbnailBoxGrid.vue'
 import ThumbnailBox from '@/components/molecules/ThumbnailBox.vue'
@@ -50,62 +50,7 @@ export default {
   methods: {
     updateLike(id) {
       const media = this.noMediaListDuplicate.find(media => media.id === id)
-
-      this.$store.commit('updateMediaListState', { tid: media.id })
-
-      if (media.state) {
-        this.$apollo.query({
-          query: LIKE.GET.ID,
-          variables: {
-            tid: media.id
-          }
-        })
-        .then(({ data }) => {
-          this.$apollo.mutate({
-            mutation: LIKE.REMOVE,
-            variables: {
-              id: data.likes[0].id
-            },
-            update: (store) => {
-              const data = store.readQuery({ query: LIKE.GET.ALL })
-              data.likes = data.likes.filter(like => like.tid !== media.id)
-              store.writeQuery({ query: LIKE.GET.ALL, data })
-            },
-            optimisticResponse: {
-              __typename: 'Mutation',
-              deleteLike: {
-                __typename: 'Like',
-                tid: media.id
-              }
-            }
-          })
-          .catch((err) => {
-            this.$store.commit('updateMediaListState', { tid: media.id })
-          })
-        })
-      } else {
-        this.$apollo.mutate({
-          mutation: LIKE.ADD,
-          variables: {
-            tid: media.id
-          },
-          update: (store, { data: { createLike } }) => {
-            const data = store.readQuery({ query: LIKE.GET.ALL })
-            data.likes.push(createLike)
-            store.writeQuery({ query: LIKE.GET.ALL, data })
-          },
-          optimisticResponse: {
-            __typename: 'Mutation',
-            createLike: {
-              __typename: 'Like',
-              tid: media.id
-            }
-          }
-        })
-        .catch(() => {
-          this.$store.commit('updateMediaListState', { tid: media.id })
-        })
-      }
+      sharedUpdateLike(this.$store, this.$apollo, media)
     }
   }
 }
