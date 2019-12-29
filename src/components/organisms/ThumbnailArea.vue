@@ -1,5 +1,5 @@
 <template lang="pug">
-  .thumbnail-area
+  section.thumbnail-area
     .thumbnail-area__masthead
       slot(name="masthead")
     .thumbnail-area__contents

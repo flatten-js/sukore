@@ -1,5 +1,5 @@
 <template lang="pug">
-  .thumbnail-box-grid
+  section.thumbnail-box-grid
     slot
 </template>
 

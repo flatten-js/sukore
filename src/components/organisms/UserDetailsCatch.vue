@@ -1,5 +1,5 @@
 <template lang="pug">
-  .user-details-catch
+  section.user-details-catch
     slot
 </template>
 
