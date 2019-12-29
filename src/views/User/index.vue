@@ -56,7 +56,7 @@ export default {
   },
   apollo: {
     likes: {
-      query: LIKE.ALL,
+      query: LIKE.GET.ALL,
       async result({ data }, key) {
         if (this.init[key]) return
         this.init = { ...this.init, [key]: true }
@@ -119,10 +119,7 @@ export default {
           },
           update: (store, { data: { createHomeUser } }) => {
             const data = store.readQuery({ query: HOME_USER.ALL })
-            data.homeUsers.push({
-              __typename: createHomeUser.__typename,
-              screenName: createHomeUser.screenName
-            })
+            data.homeUsers.push(createHomeUser)
             store.writeQuery({ query: HOME_USER.ALL, data })
           },
           optimisticResponse: {

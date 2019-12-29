@@ -16,7 +16,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { FAVORITE, LIKE } from '@/constants/graphql'
+import { LIKE } from '@/constants/graphql'
 
 import ThumbnailBoxGrid from '@/components/organisms/ThumbnailBoxGrid.vue'
 import ThumbnailBox from '@/components/molecules/ThumbnailBox.vue'
@@ -54,26 +54,34 @@ export default {
       this.$store.commit('updateMediaListState', { tid: media.id })
 
       if (media.state) {
-        this.$apollo.mutate({
-          mutation: LIKE.REMOVE,
+        this.$apollo.query({
+          query: LIKE.GET.ID,
           variables: {
             tid: media.id
-          },
-          update: (store) => {
-            const data = store.readQuery({ query: LIKE.ALL })
-            data.likes = data.likes.filter(like => like.tid !== media.id)
-            store.writeQuery({ query: LIKE.ALL, data })
-          },
-          optimisticResponse: {
-            __typename: 'Mutation',
-            deleteManyLikes: {
-              __typename: 'Like',
-              count: 0
-            }
           }
         })
-        .catch(() => {
-          this.$store.commit('updateMediaListState', { tid: media.id })
+        .then(({ data }) => {
+          this.$apollo.mutate({
+            mutation: LIKE.REMOVE,
+            variables: {
+              id: data.likes[0].id
+            },
+            update: (store) => {
+              const data = store.readQuery({ query: LIKE.GET.ALL })
+              data.likes = data.likes.filter(like => like.tid !== media.id)
+              store.writeQuery({ query: LIKE.GET.ALL, data })
+            },
+            optimisticResponse: {
+              __typename: 'Mutation',
+              deleteLike: {
+                __typename: 'Like',
+                tid: media.id
+              }
+            }
+          })
+          .catch((err) => {
+            this.$store.commit('updateMediaListState', { tid: media.id })
+          })
         })
       } else {
         this.$apollo.mutate({
@@ -82,12 +90,9 @@ export default {
             tid: media.id
           },
           update: (store, { data: { createLike } }) => {
-            const data = store.readQuery({ query: LIKE.ALL })
-            data.likes.push({
-              __typename: createLike.__typename,
-              tid: createLike.tid
-            })
-            store.writeQuery({ query: LIKE.ALL, data })
+            const data = store.readQuery({ query: LIKE.GET.ALL })
+            data.likes.push(createLike)
+            store.writeQuery({ query: LIKE.GET.ALL, data })
           },
           optimisticResponse: {
             __typename: 'Mutation',
