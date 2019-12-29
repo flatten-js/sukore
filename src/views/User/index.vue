@@ -1,5 +1,5 @@
 <template lang="pug">
-  user-pickup-template
+  user-template
     template(#user-details-catch)
       user-details-catch
         user-details(
@@ -22,7 +22,7 @@
 import { mapGetters } from 'vuex'
 import { FAVORITE, HOME_USER } from '@/constants/graphql'
 
-import UserPickupTemplate from '@/components/templates/UserPickupTemplate.vue'
+import UserTemplate from '@/components/templates/UserTemplate.vue'
 import UserDetailsCatch from '@/components/organisms/UserDetailsCatch.vue'
 import UserDetails from '@/components/molecules/UserDetails.vue'
 import ThumbnailBoxArea from '@/components/organisms/ThumbnailBoxArea.vue'
@@ -30,7 +30,7 @@ import FlexTabBar from '@/components/molecules/FlexTabBar.vue'
 
 export default {
   components: {
-    UserPickupTemplate,
+    UserTemplate,
     UserDetailsCatch,
     UserDetails,
     ThumbnailBoxArea,

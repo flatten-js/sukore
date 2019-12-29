@@ -9,21 +9,21 @@ export default new Router({
   routes: [
     {
       path: '/:screenName',
-      component: () => import('@/views/UserPickup'),
+      component: () => import('@/views/User'),
       props: route => ({
         screenName: route.params.screenName
       }),
       children: [
         {
           path: '',
-          component: () => import('@/views/UserPickup/children/TabContent.vue'),
+          component: () => import('@/views/User/children/TabContent.vue'),
           props: () => ({
             type: 'tweet'
           })
         },
         {
           path: 'retweet',
-          component: () => import('@/views/UserPickup/children/TabContent.vue'),
+          component: () => import('@/views/User/children/TabContent.vue'),
           props: () => ({
             type: 'retweet'
           })
