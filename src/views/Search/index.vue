@@ -54,11 +54,26 @@ export default {
   },
   data() {
     return {
+      init: {
+        likes: false
+      },
       likes: []
     }
   },
   apollo: {
-    likes: LIKE.ALL
+    likes: {
+      query: LIKE.ALL,
+      async result({ data }, key) {
+        if (this.init[key]) return
+        this.init = { ...this.init, [key]: true }
+
+        await this.$store.dispatch('tweetsSearch', {
+          query: this.query,
+          count: 100
+        })
+        await this.$store.commit('initMediaListState', { likes: this.likes })
+      }
+    }
   },
   computed: {
     ...mapGetters([
@@ -74,16 +89,8 @@ export default {
       }
     }
   },
-  async mounted() {
+  mounted() {
     this.$el.addEventListener('scroll', this.swaipToRefresh)
-
-    await this.$store.dispatch('tweetsSearch', {
-      query: this.query,
-      count: 100
-    })
-    await this.$store.commit('initMediaListState', {
-      likes: this.likes
-    })
   },
   methods: {
     async swaipToRefresh() {
