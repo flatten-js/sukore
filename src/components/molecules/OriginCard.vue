@@ -10,10 +10,13 @@
           @click.native="videoPlayControl"
           )
       template(v-else)
-        template(v-for="src in more")
-          vary-standard-component(
-            :src="src"
+        template(v-for="(src, i) in more")
+          router-link.origin-card-content__photo-link(
+            :to="screenName | convertPhotoZoomablePath(id, i)"
             )
+            vary-standard-component(
+              :src="src"
+              )
       .image-more
         template(v-if="size > 1 && limit")
           material-button(
@@ -55,6 +58,9 @@ export default {
     ExtractText
   },
   filters: {
+    convertPhotoZoomablePath(screenName, id, i) {
+      return `/${screenName}/media/${id}/photo/${i + 1}`
+    },
     convertLastUrlRemoval(comment) {
       return comment.replace(/\s(?:https?:\/\/[\w/$?.+-:%#&~=@]+)(?=$)/, '')
     },
@@ -71,6 +77,14 @@ export default {
       validator(val) {
         return ['photo', 'video', 'animated_gif'].includes(val)
       }
+    },
+    id: {
+      type: String,
+      reqired: true
+    },
+    screenName: {
+      type: String,
+      reqired: true
     },
     src: {
       type: [Array, String],
@@ -127,17 +141,17 @@ export default {
       position: relative;
       font-size: 0;
       background-color: #f7f7f7;
-
-      .vary-standard-component {
-        &:not(:nth-last-child(2)) {
-          margin: 0 0 1rem;
-        }
-      }
     }
   }
 
-  .video-mask {
-
+  .origin-card-content {
+    &__photo-link {
+      display: block;
+      
+      &:not(:nth-last-child(2)) {
+        margin: 0 0 1rem;
+      }
+    }
   }
 
   .image-more {

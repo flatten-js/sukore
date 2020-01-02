@@ -1,5 +1,7 @@
 <template lang="pug">
   pickup-detail-template
+    template(#photo-zoomable-content)
+      router-view
     template(#image-details-card)
       image-details-card
         template(#head)
@@ -11,6 +13,8 @@
         template(#body)
           origin-card(
             :type="mediaFromId.entities.type"
+            :id="mediaFromId.id"
+            :screen-name="mediaFromId.screenName"
             :src="mediaFromId.entities.src"
             :size="mediaFromId.size"
             :url-list="mediaFromId.urlList"

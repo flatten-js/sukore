@@ -49,7 +49,17 @@ export default new Router({
       component: () => import('@/views/PickupDetail'),
       props: route => ({
         id: route.params.id
-      })
+      }),
+      children: [
+        {
+          path: 'photo/:count',
+          component: () => import('@/views/PickupDetail/children/PhotoZoomableContent.vue'),
+          props: route => ({
+            id: route.params.id,
+            count: route.params.count
+          })
+        }
+      ]
     },
     {
       path: '/search/:query',
