@@ -152,9 +152,12 @@ export default new Vuex.Store({
                 src: obj.extended_entities.media[0].media_url_https,
                 size: obj.extended_entities.media[0].sizes.small
               },
-              src: obj.extended_entities.media[0].type.match('photo')
-              ? obj.extended_entities.media.map(media => media.media_url_https)
-              : obj.extended_entities.media[0].video_info.variants.filter(variant => variant.content_type === 'video/mp4')[0].url
+              media: {
+                src: obj.extended_entities.media[0].type.match('photo')
+                ? obj.extended_entities.media.map(media => media.media_url_https)
+                : obj.extended_entities.media[0].video_info.variants.filter(variant => variant.content_type === 'video/mp4')[0].url,
+                sizes: obj.extended_entities.media.map(media => media.sizes.medium)
+              }
             },
             retweetedStatus: false,
             size: obj.extended_entities.media.length,

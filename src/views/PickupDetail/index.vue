@@ -15,7 +15,7 @@
             :type="mediaFromId.entities.type"
             :id="mediaFromId.id"
             :screen-name="mediaFromId.screenName"
-            :src="mediaFromId.entities.src"
+            :src="mediaFromId.entities.media.src"
             :size="mediaFromId.size"
             :url-list="mediaFromId.urlList"
             :comment="mediaFromId.text"
