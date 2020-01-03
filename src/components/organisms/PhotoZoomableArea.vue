@@ -11,11 +11,19 @@
 <style lang="scss" scoped>
   .photo-zoomable-area {
     position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
 
     &__return {
       position: absolute;
       top: 1rem;
       left: 1rem;
+    }
+
+    &__photo {
+      width: 100%;
+      height: 100%;
     }
 
     &__zoom-controls {
