@@ -2,10 +2,15 @@
   photo-zoomable-area
     template(#return)
     template(#photo)
-      img.photo(
-        :style="zoomTransformStyle"
-        :src="photo.src"
+      .zoomable-area(
+        @touchstart="touchstart"
+        @touchmove="touchmove"
+        @touchend="touchend"
         )
+        img.zoomable-area__photo(
+          :style="zoomTransformStyle"
+          :src="photo.src"
+          )
     template(#controls)
       button(
         @click="zoomIn"
@@ -46,6 +51,14 @@ export default {
         now: 0,
         max: 0
       },
+      touched: {
+        x: 0,
+        y: 0
+      },
+      moved: {
+        x: 0,
+        y: 0
+      },
       position: {
         x: 0,
         y: 0
@@ -78,6 +91,12 @@ export default {
         h: scale.now * photo.h
       }
     },
+    calculatePhotoPosition() {
+      return {
+        x: this.position.x + this.moved.x,
+        y: this.position.y + this.moved.y
+      }
+    },
     calculatePhotoPositionCenter() {
       const { browser, calculatePhotoSize } = this
 
@@ -88,7 +107,7 @@ export default {
     },
     zoomTransformStyle() {
       return {
-        transform: `translateX(${this.position.x}px) translateY(${this.position.y}px) scale(${this.scale.now})`
+        transform: `translateX(${this.calculatePhotoPosition.x}px) translateY(${this.calculatePhotoPosition.y}px) scale(${this.scale.now})`
       }
     }
   },
@@ -99,6 +118,22 @@ export default {
     this.position = { x: this.calculatePhotoPositionCenter.x, y: this.calculatePhotoPositionCenter.y }
   },
   methods: {
+    touchstart(e) {
+      this.touched = {
+        x: e.touches[0].pageX,
+        y: e.touches[0].pageY
+      }
+    },
+    touchmove(e) {
+      this.moved = {
+        x: e.touches[0].pageX - this.touched.x,
+        y: e.touches[0].pageY - this.touched.y
+      }
+    },
+    touchend(e) {
+      this.position = { ...this.calculatePhotoPosition }
+      this.moved = { x: 0, y: 0 }
+    },
     zoomIn() {
       const { scale } = this
       if (scale.now >= scale.max) return
@@ -117,8 +152,13 @@ export default {
 }
 </script>
 
-<style scoped>
-  .photo {
-    transform-origin: top left;
+<style lang="scss" scoped>
+  .zoomable-area {
+    width: 100%;
+    height: 100%;
+
+    &__photo {
+      transform-origin: top left;
+    }
   }
 </style>
