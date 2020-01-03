@@ -7,6 +7,13 @@
         :src="photo.src"
         )
     template(#controls)
+      button(
+        @click="zoomIn"
+        ) +
+      span {{ scale.now }}
+      button(
+        @click="zoomOut"
+        ) -
 </template>
 
 <script>
@@ -63,6 +70,22 @@ export default {
         h: media.sizes[i].h
       }
     },
+    calculatePhotoSize() {
+      const { scale, photo } = this
+
+      return {
+        w: scale.now * photo.w,
+        h: scale.now * photo.h
+      }
+    },
+    calculatePhotoPositionCenter() {
+      const { browser, calculatePhotoSize } = this
+
+      return {
+        x: (browser.w - calculatePhotoSize.w) / 2,
+        y: (browser.h - calculatePhotoSize.h) / 2
+      }
+    },
     zoomTransformStyle() {
       return {
         transform: `translateX(${this.position.x}px) translateY(${this.position.y}px) scale(${this.scale.now})`
@@ -70,11 +93,26 @@ export default {
     }
   },
   mounted() {
-    const { browser, photo } = this
-    const initialScale = browser.w / photo.w
+    const initialScale = this.browser.w / this.photo.w
 
     this.scale = { min: initialScale, now: initialScale, max: initialScale * 2 ** 3 }
-    this.position = { x: (browser.w - (initialScale * photo.w )) / 2, y: (browser.h - (initialScale * photo.h)) / 2 }
+    this.position = { x: this.calculatePhotoPositionCenter.x, y: this.calculatePhotoPositionCenter.y }
+  },
+  methods: {
+    zoomIn() {
+      const { scale } = this
+      if (scale.now >= scale.max) return
+
+      this.scale = { ...scale, now: scale.now * 2 }
+      this.position = { x: this.calculatePhotoPositionCenter.x, y: this.calculatePhotoPositionCenter.y }
+    },
+    zoomOut() {
+      const { scale } = this
+      if (scale.now <= scale.min) return
+
+      this.scale = { ...scale, now: scale.now / 2 }
+      this.position = { x: this.calculatePhotoPositionCenter.x, y: this.calculatePhotoPositionCenter.y }
+    }
   }
 }
 </script>
