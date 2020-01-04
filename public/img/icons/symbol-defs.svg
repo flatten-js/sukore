@@ -20,5 +20,13 @@
       <title>controller-play</title>
       <path d="M20 10.001c0 0.498-0.508 0.857-0.508 0.857l-14.268 8.838c-1.040 0.682-1.89 0.177-1.89-1.115v-17.161c0-1.295 0.85-1.797 1.892-1.117l14.268 8.841c-0.002 0 0.507 0.358 0.507 0.857z"></path>
     </symbol>
+    <symbol id="icon-minus" viewBox="0 0 24 24">
+      <title>minus</title>
+      <path d="M3.023 10.492h17.953v3.016h-17.953v-3.016z"></path>
+    </symbol>
+    <symbol id="icon-plus" viewBox="0 0 24 24">
+      <title>plus</title>
+      <path d="M22 13.409h-8.591v8.591h-2.819v-8.591h-8.591v-2.819h8.591v-8.591h2.819v8.591h8.591v2.819z"></path>
+    </symbol>
   </defs>
 </svg>

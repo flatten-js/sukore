@@ -12,23 +12,23 @@
           :src="photo.src"
           )
     template(#controls)
-      button(
-        @click="zoomIn"
-        ) +
-      span {{ scale.now }}
-      button(
-        @click="zoomOut"
-        ) -
+      zoomable-controls(
+        :number="scale.now"
+        @zoomOut="zoomOut"
+        @zoomIn="zoomIn"
+        )
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 
 import PhotoZoomableArea from '@/components/organisms/PhotoZoomableArea.vue'
+import ZoomableControls from '@/components/molecules/ZoomableControls.vue'
 
 export default {
   components: {
-    PhotoZoomableArea
+    PhotoZoomableArea,
+    ZoomableControls
   },
   props: {
     id: {
