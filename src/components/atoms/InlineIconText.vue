@@ -100,7 +100,7 @@ export default {
     &__icon {
       margin-right: .25rem;
       fill: currentColor;
-      vertical-align: text-top;
+      vertical-align: middle;
     }
 
     &__link {
