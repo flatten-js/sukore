@@ -10,7 +10,7 @@
         )
         | {{ link.display }}
     template(v-else)
-      span
+      span.inline-icon-text__text
         | {{ text }}
 </template>
 
@@ -106,6 +106,11 @@ export default {
     &__link {
       color: #1b95e0;
       text-decoration: none;
+      vertical-align: middle;
+    }
+
+    &__text {
+      vertical-align: middle;
     }
   }
 </style>
