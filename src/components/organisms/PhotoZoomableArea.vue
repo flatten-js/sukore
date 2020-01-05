@@ -19,6 +19,7 @@
       position: absolute;
       top: 1rem;
       left: 1rem;
+      z-index: 2;
     }
 
     &__photo {
@@ -31,6 +32,7 @@
       width: 100%;
       left: 0;
       bottom: 0;
+      z-index: 2;
     }
   }
 </style>
