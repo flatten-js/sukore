@@ -9,8 +9,10 @@
         @touchend="touchend"
         )
         img.zoomable-area__photo(
+          ref="photo"
           :style="zoomTransformStyle"
           :src="photo.src"
+          @transitionend="zoomingTransitionEnd"
           )
     template(#controls)
       zoom-controls(
@@ -45,6 +47,9 @@ export default {
   },
   data() {
     return {
+      el: {
+        photo: null
+      },
       browser: {
         w: window.innerWidth,
         h: window.innerHeight
@@ -117,6 +122,7 @@ export default {
   mounted() {
     const initialScale = this.browser.w / this.photo.w
 
+    this.el = { photo: this.$refs.photo }
     this.scale = { min: initialScale, now: initialScale, max: initialScale * 2 ** 3 }
     this.position = { x: this.calculatePhotoPositionCenter.x, y: this.calculatePhotoPositionCenter.y }
   },
@@ -138,18 +144,25 @@ export default {
       this.moved = { x: 0, y: 0 }
     },
     zoomIn() {
-      const { scale } = this
+      const { scale, el } = this
       if (scale.now >= scale.max) return
+
+      el.photo.classList.add('-zooming')
 
       this.scale = { ...scale, now: scale.now * 2 }
       this.position = { x: this.calculatePhotoPositionCenter.x, y: this.calculatePhotoPositionCenter.y }
     },
     zoomOut() {
-      const { scale } = this
+      const { scale, el } = this
       if (scale.now <= scale.min) return
+
+      el.photo.classList.add('-zooming')
 
       this.scale = { ...scale, now: scale.now / 2 }
       this.position = { x: this.calculatePhotoPositionCenter.x, y: this.calculatePhotoPositionCenter.y }
+    },
+    zoomingTransitionEnd() {
+      this.el.photo.classList.remove('-zooming')
     }
   }
 }
@@ -162,6 +175,10 @@ export default {
 
     &__photo {
       transform-origin: top left;
+
+      &.-zooming {
+        transition: all .3s;
+      }
     }
   }
 </style>
