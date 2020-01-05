@@ -51,6 +51,15 @@ export default {
     mediaFromId() {
       return this.noMediaListDuplicate.find(media => media.id == this.id)
     }
+  },
+  watch: {
+    '$route'(to) {
+      if (to.path.match(/photo\/\d$/)) {
+        document.body.style.overflow = 'hidden'
+      } else {
+        document.body.style.overflow = ''
+      }
+    }
   }
 }
 </script>
