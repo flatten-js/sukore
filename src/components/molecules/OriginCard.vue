@@ -4,6 +4,7 @@
       template(v-if="type !== 'photo'")
         //- ToDo: controlsがついている動画にもクリックイベント付与
         vary-standard-component(
+          :style="ratioBrowserHeightStyle"
           tag="video"
           :type="type"
           :src="src"
@@ -12,10 +13,10 @@
       template(v-else)
         template(v-for="(src, i) in more")
           router-link.origin-card-content__photo-link(
-            :style="photoHeightStyle"
             :to="screenName | convertPhotoZoomablePath(id, i)"
             )
             vary-standard-component(
+              :style="ratioBrowserHeightStyle"
               :src="src"
               )
       .image-more
@@ -118,7 +119,7 @@ export default {
     }
   },
   computed: {
-    photoHeightStyle() {
+    ratioBrowserHeightStyle() {
       if (!this.limit) return
 
       return {
