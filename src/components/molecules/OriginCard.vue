@@ -12,6 +12,7 @@
       template(v-else)
         template(v-for="(src, i) in more")
           router-link.origin-card-content__photo-link(
+            :style="photoHeightStyle"
             :to="screenName | convertPhotoZoomablePath(id, i)"
             )
             vary-standard-component(
@@ -90,6 +91,10 @@ export default {
       type: [Array, String],
       required: true
     },
+    srcSize: {
+      type: Object,
+      default: () => {}
+    },
     urlList: {
       type: Array,
       default: () => []
@@ -113,6 +118,13 @@ export default {
     }
   },
   computed: {
+    photoHeightStyle() {
+      if (!this.limit) return
+
+      return {
+        height: `${(window.innerWidth / this.srcSize.w) * this.srcSize.h}px`
+      }
+    },
     more() {
       return this.src.filter((src, index) => {
         return this.limit ? !index : true
@@ -147,7 +159,7 @@ export default {
   .origin-card-content {
     &__photo-link {
       display: block;
-      
+
       &:not(:nth-last-child(2)) {
         margin: 0 0 1rem;
       }
