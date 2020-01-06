@@ -100,9 +100,11 @@ export default {
       }
     },
     calculatePhotoPosition() {
+      const { position, moved } = this
+
       return {
-        x: this.position.x + this.moved.x,
-        y: this.position.y + this.moved.y
+        x: position.x + moved.x,
+        y: position.y + moved.y
       }
     },
     calculatePhotoPositionCenter() {
@@ -140,26 +142,32 @@ export default {
       }
     },
     touchend(e) {
-      this.position = { ...this.calculatePhotoPosition }
+      this.position = this.calculatePhotoPosition
       this.moved = { x: 0, y: 0 }
     },
     zoomIn() {
-      const { scale, el } = this
+      const { scale, el, browser, calculatePhotoPosition } = this
       if (scale.now >= scale.max) return
 
       el.photo.classList.add('-zooming')
 
       this.scale = { ...scale, now: scale.now * 2 }
-      this.position = { x: this.calculatePhotoPositionCenter.x, y: this.calculatePhotoPositionCenter.y }
+      this.position = {
+        x: (calculatePhotoPosition.x * 2) - (browser.w / 2),
+        y: (calculatePhotoPosition.y * 2) - (browser.h / 2)
+      }
     },
     zoomOut() {
-      const { scale, el } = this
+      const { scale, el, browser, calculatePhotoPosition } = this
       if (scale.now <= scale.min) return
 
       el.photo.classList.add('-zooming')
 
       this.scale = { ...scale, now: scale.now / 2 }
-      this.position = { x: this.calculatePhotoPositionCenter.x, y: this.calculatePhotoPositionCenter.y }
+      this.position = {
+        x: (calculatePhotoPosition.x + (browser.w / 2)) / 2,
+        y: (calculatePhotoPosition.y + (browser.h / 2)) / 2
+      }
     },
     zoomingTransitionEnd() {
       this.el.photo.classList.remove('-zooming')
