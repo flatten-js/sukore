@@ -104,6 +104,7 @@ export default {
   .material-button {
     display: inline-block;
     border-radius: 25px;
+    transition: background-color .2s;
 
     &.-link {
       text-decoration: none;
