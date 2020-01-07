@@ -1,16 +1,22 @@
 <template lang="pug">
   .user-details-bar
     .user-details-bar__icon
-      user-icon(
-        size="small"
-        :url="icon"
+      router-link.user-details-bar-icon__link(
+        :to="screenName | convertUserPath"
         )
+        user-icon(
+          size="small"
+          :url="icon"
+          )
     .user-details-bar__name
-      single-line-text(
-        :text="name"
-        size="small"
-        weight="bold"
+      router-link.user-details-bar-name__link(
+        :to="screenName | convertUserPath"
         )
+        single-line-text(
+          :text="name"
+          size="small"
+          weight="bold"
+          )
     .user-details-bar__button
       material-button(
         tag="a"
@@ -37,6 +43,9 @@ export default {
   filters: {
     convertTwitterPath(screenName) {
       return `https://twitter.com/${screenName}`
+    },
+    convertUserPath(screenName) {
+      return `/${screenName}`
     }
   },
   props: {
@@ -75,6 +84,12 @@ export default {
 
     &__button {
       word-break: keep-all;
+    }
+  }
+
+  .user-details-bar-icon, .user-details-bar-name {
+    &__link {
+      text-decoration: none;
     }
   }
 </style>
