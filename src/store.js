@@ -33,7 +33,7 @@ export default new Vuex.Store({
     setUser(state, payload) {
       state.user = { ...state.user, ...payload.user }
     },
-    initUserHome(state, payload) {
+    initHomeSetting(state, payload) {
       const index = payload.homeUsers.findIndex(user => user.screenName === payload.screenName)
       if (index !== -1) {
         state.user = { ...state.user, home: true }
@@ -41,7 +41,7 @@ export default new Vuex.Store({
         state.user = { ...state.user, home: false }
       }
     },
-    updateUserHome(state) {
+    updateHomeUser(state) {
       state.user = { ...state.user, home: !state.user.home }
     },
     updateCurrentId(state, payload) {

@@ -15,7 +15,7 @@
             size="small"
             :state="home"
             :text="toggleHomeSettingText"
-            @click.native="clickMaterialButton"
+            @click.native="clickHomeSetting"
             )
       .user-profile__name
         multi-line-text(
@@ -156,8 +156,8 @@ export default {
     }
   },
   methods: {
-    clickMaterialButton() {
-      this.$emit('clickMaterialButton')
+    clickHomeSetting() {
+      this.$emit('clickHomeSetting')
     }
   }
 }

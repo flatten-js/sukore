@@ -4,7 +4,7 @@
       user-details-catch
         user-details(
           v-bind="user"
-          @clickMaterialButton="updateUserHome"
+          @clickHomeSetting="updateHomeUser"
           )
     template(#thumbnail-box-area)
       thumbnail-box-area
@@ -104,12 +104,12 @@ export default {
       await this.$store.commit('initMediaListState', { likes })
     },
     initHomeSetting(screenName, homeUsers) {
-      this.$store.commit('initUserHome', { screenName, homeUsers })
+      this.$store.commit('initHomeSetting', { screenName, homeUsers })
     },
-    updateUserHome() {
+    updateHomeUser() {
       const { screenName } = this
 
-      this.$store.commit('updateUserHome')
+      this.$store.commit('updateHomeUser')
 
       if (this.user.home) {
         this.$apollo.mutate({
@@ -131,7 +131,7 @@ export default {
           }
         })
         .catch(err => {
-          this.$store.commit('updateUserHome')
+          this.$store.commit('updateHomeUser')
         })
       } else {
         this.$apollo.mutate({
@@ -153,7 +153,7 @@ export default {
           }
         })
         .catch(err => {
-          this.$store.commit('updateUserHome')
+          this.$store.commit('updateHomeUser')
         })
       }
     }
