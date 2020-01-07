@@ -92,14 +92,17 @@ export default {
     }
   },
   watch: {
-    '$route'(to, from) {
-      this.initUser(to.params.screenName, 100, true, this.likes)
-      this.initHomeSetting(to.params.screenName, this.homeUsers)
+    '$route.params.screenName'(to, from) {
+      if (to === from) return
+
+      this.initUser(to, 100, true, this.likes)
+      this.initHomeSetting(to, this.homeUsers)
     }
   },
   methods: {
     async initUser(screenName, count, excludeReplies, likes) {
-      await this.$store.dispatch('userSearch', { screenName })
+      this.$store.commit('initMediaList')
+      this.$store.dispatch('userSearch', { screenName: this.screenName })
       await this.$store.dispatch('userTimelineSearch', { screenName, count, excludeReplies })
       await this.$store.commit('initMediaListState', { likes })
     },

@@ -47,6 +47,10 @@ export default new Vuex.Store({
     updateCurrentId(state, payload) {
       state.currentId = payload.currentId
     },
+    initMediaList({ mediaList }) {
+      if (!mediaList.length) return
+      mediaList.splice(0, mediaList.length)
+    },
     addMediaList({ mediaList }, payload) {
       mediaList.push(...payload.mediaList)
     },
