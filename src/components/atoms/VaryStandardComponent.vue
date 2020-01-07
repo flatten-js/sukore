@@ -64,6 +64,8 @@ export default {
 
 <style lang="scss" scoped>
   .vary-standard-component {
+    background-color: #dcdcdc;
+
     &.-standard-width {
       width: 100%;
       height: auto;
