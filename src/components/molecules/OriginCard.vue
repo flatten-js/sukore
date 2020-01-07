@@ -1,10 +1,11 @@
 <template lang="pug">
   figure.origin-card
-    .origin-card__content
+    .origin-card__content(
+      :style="ratioBrowserHeightStyle"
+      )
       template(v-if="type !== 'photo'")
         //- ToDo: controlsがついている動画にもクリックイベント付与
         vary-standard-component(
-          :style="ratioBrowserHeightStyle"
           tag="video"
           :type="type"
           :src="src"
@@ -16,7 +17,6 @@
             :to="screenName | convertPhotoZoomablePath(id, i)"
             )
             vary-standard-component(
-              :style="ratioBrowserHeightStyle"
               :src="src"
               )
       .image-more
