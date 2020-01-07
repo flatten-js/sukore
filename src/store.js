@@ -37,6 +37,8 @@ export default new Vuex.Store({
       const index = payload.homeUsers.findIndex(user => user.screenName === payload.screenName)
       if (index !== -1) {
         state.user = { ...state.user, home: true }
+      } else {
+        state.user = { ...state.user, home: false }
       }
     },
     updateUserHome(state) {

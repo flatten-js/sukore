@@ -45,11 +45,9 @@ export default {
   data() {
     return {
       init: {
-        favorites: false,
         likes: false,
         homeUsers: false
       },
-      favorites: [],
       likes: [],
       homeUsers: []
     }
@@ -57,12 +55,11 @@ export default {
   apollo: {
     likes: {
       query: LIKE.GET.ALL,
-      async result({ data }, key) {
+      result({ data }, key) {
         if (this.init[key]) return
         this.init = { ...this.init, [key]: true }
 
-        await this.initUserPickupData(this.screenName, 100)
-        await this.$store.commit('initMediaListState', { likes: data.likes })
+        this.initUser(this.screenName, 100, true, data.likes)
       }
     },
     homeUsers: {
@@ -71,10 +68,7 @@ export default {
         if (this.init[key]) return
         this.init = { ...this.init, [key]: true }
 
-        this.$store.commit('initUserHome', {
-          homeUsers: data.homeUsers,
-          screenName: this.screenName
-        })
+        this.initHomeSetting(this.screenName, data.homeUsers)
       }
     }
   },
@@ -97,14 +91,20 @@ export default {
       ]
     }
   },
+  watch: {
+    '$route'(to, from) {
+      this.initUser(to.params.screenName, 100, true, this.likes)
+      this.initHomeSetting(to.params.screenName, this.homeUsers)
+    }
+  },
   methods: {
-    async initUserPickupData(screenName, count, excludeReplies = true) {
+    async initUser(screenName, count, excludeReplies, likes) {
       await this.$store.dispatch('userSearch', { screenName })
-      await this.$store.dispatch('userTimelineSearch', {
-        screenName,
-        count,
-        excludeReplies
-      })
+      await this.$store.dispatch('userTimelineSearch', { screenName, count, excludeReplies })
+      await this.$store.commit('initMediaListState', { likes })
+    },
+    initHomeSetting(screenName, homeUsers) {
+      this.$store.commit('initUserHome', { screenName, homeUsers })
     },
     updateUserHome() {
       const { screenName } = this
