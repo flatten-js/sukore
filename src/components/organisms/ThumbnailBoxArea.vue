@@ -12,5 +12,9 @@
       border-bottom: 1px solid rgba(26, 26, 26, .2);
       background-color: #fff;
     }
+
+    &__content {
+      position: relative;
+    }
   }
 </style>

@@ -13,7 +13,7 @@
             :tab-items="initTabItems"
             )
         template(#content)
-          transition
+          transition(:name="transitionName")
             keep-alive
               router-view
 </template>
@@ -49,7 +49,8 @@ export default {
         homeUsers: false
       },
       likes: [],
-      homeUsers: []
+      homeUsers: [],
+      transitionName: ''
     }
   },
   apollo: {
@@ -92,6 +93,11 @@ export default {
     }
   },
   watch: {
+    '$route.path'(to, from) {
+      const toDepth = to.split('/')
+      const fromDepth = from.split('/')
+      this.transitionName = toDepth > fromDepth ? 'left-parry' : 'right-parry'
+    },
     '$route.params.screenName'(to, from) {
       if (to === from) return
 
@@ -164,16 +170,49 @@ export default {
 }
 </script>
 
-<style scoped>
-  .v-enter {
-    opacity: 0;
+<style lang="scss" scoped>
+  @mixin parry-transition($type, $order: ()) {
+    @each $e, $val in $order {
+      .#{$type}-parry-#{$e} {
+        @extend %#{$val};
+      }
+    }
   }
 
-  .v-enter-to {
-    opacity: 1;
+  %in {
+    transform: translateX(0);
   }
 
-  .v-enter-active {
-    transition: all ease-out .4s;
+  %left-out {
+    transform: translateX(-100%);
+  }
+
+  %right-out {
+    transform: translateX(100%);
+  }
+
+  $left-order: (
+    'enter': 'right-out',
+    'enter-to': 'in',
+    'leave': 'in',
+    'leave-to': 'left-out'
+  );
+
+  @include parry-transition('left', $order: $left-order)
+
+  $right-order: (
+    'enter': 'left-out',
+    'enter-to': 'in',
+    'leave': 'in',
+    'leave-to': 'right-out'
+  );
+
+  @include parry-transition('right', $order: $right-order)
+
+  .left-parry-enter-active,
+  .left-parry-leave-active,
+  .right-parry-enter-active,
+  .right-parry-leave-active {
+    transition: transform .4s;
   }
 </style>

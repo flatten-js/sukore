@@ -1,6 +1,6 @@
 <template lang="pug">
   thumbnail-box-grid
-    template(v-for="media in typeContent")
+    template(v-for="media in tweetFilter")
       thumbnail-box(
         :key="media.id"
         :id="media.id"
@@ -26,30 +26,14 @@ export default {
     ThumbnailBoxGrid,
     ThumbnailBox
   },
-  props: {
-    type: {
-      type: String,
-      required: true
-    }
-  },
   computed: {
     ...mapGetters([
-      'tweetFilter',
-      'retweetFilter',
-      'noMediaListDuplicate'
-    ]),
-    typeContent() {
-      switch (this.type) {
-        case 'tweet':
-        return this.tweetFilter
-        case 'retweet':
-        return this.retweetFilter
-      }
-    }
+      'tweetFilter'
+    ])
   },
   methods: {
     updateLike(id) {
-      const media = this.noMediaListDuplicate.find(media => media.id === id)
+      const media = this.tweetFilter.find(media => media.id === id)
       sharedUpdateLike(this.$store, this.$apollo, media)
     }
   }
