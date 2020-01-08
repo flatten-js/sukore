@@ -174,6 +174,8 @@ export default {
   @mixin parry-transition($type, $order: ()) {
     @each $e, $val in $order {
       .#{$type}-parry-#{$e} {
+        position: absolute;
+        width: 100%;
         @extend %#{$val};
       }
     }
