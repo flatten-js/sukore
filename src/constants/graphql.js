@@ -1,26 +1,13 @@
 import gql from 'graphql-tag'
 
 export const LIKE = {
-  GET: {
-    ALL: gql`
-      query likes {
-        likes {
-          tid
-        }
+  ALL: gql`
+    query likes {
+      likes {
+        tid
       }
-    `,
-    ID: gql`
-      query likes (
-        $tid: String
-      ) {
-        likes (where: {
-          tid: $tid
-        }) {
-          id
-        }
-      }
-    `
-  },
+    }
+  `,
   ADD: gql`
     mutation createLike (
       $tid: String
@@ -33,13 +20,13 @@ export const LIKE = {
     }
   `,
   REMOVE: gql`
-    mutation deleteLike (
-      $id: ID
+    mutation deleteManyLikes (
+      $tid: String
     ) {
-      deleteLike (where: {
-        id: $id
+      deleteManyLikes (where: {
+        tid: $tid
       }) {
-        tid
+        count
       }
     }
   `

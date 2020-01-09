@@ -55,7 +55,7 @@ export default {
   },
   apollo: {
     likes: {
-      query: LIKE.GET.ALL,
+      query: LIKE.ALL,
       result({ data }, key) {
         if (this.init[key]) return
         this.init = { ...this.init, [key]: true }
