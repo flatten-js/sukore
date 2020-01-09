@@ -171,12 +171,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @mixin parry-transition($type, $order: ()) {
-    @each $e, $val in $order {
+  @mixin parry-transition($type, $orders: ()) {
+    @each $e, $order in $orders {
       .#{$type}-parry-#{$e} {
         position: absolute;
         width: 100%;
-        @extend %#{$val};
+        @extend %#{$order};
       }
     }
   }
@@ -193,23 +193,23 @@ export default {
     transform: translateX(100%);
   }
 
-  $left-order: (
+  $left-orders: (
     'enter': 'right-out',
     'enter-to': 'in',
     'leave': 'in',
     'leave-to': 'left-out'
   );
 
-  @include parry-transition('left', $order: $left-order)
+  @include parry-transition('left', $orders: $left-orders)
 
-  $right-order: (
+  $right-orders: (
     'enter': 'left-out',
     'enter-to': 'in',
     'leave': 'in',
     'leave-to': 'right-out'
   );
 
-  @include parry-transition('right', $order: $right-order)
+  @include parry-transition('right', $orders: $right-orders)
 
   .left-parry-enter-active,
   .left-parry-leave-active,
