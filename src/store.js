@@ -34,11 +34,9 @@ export default new Vuex.Store({
       state.user = { ...state.user, ...payload.user }
     },
     initFave(state, payload) {
-      const index = payload.faves.findIndex(fave => fave.screenName === payload.screenName)
-      if (index !== -1) {
-        state.user = { ...state.user, fave: true }
-      } else {
-        state.user = { ...state.user, fave: false }
+      state.user = {
+        ...state.user,
+        fave: payload.faves.some(fave => fave.screenName === payload.screenName)
       }
     },
     updateFave(state) {
@@ -47,15 +45,15 @@ export default new Vuex.Store({
     updateCurrentId(state, payload) {
       state.currentId = payload.currentId
     },
-    initMediaList({ mediaList }) {
-      if (!mediaList.length) return
-      mediaList.splice(0, mediaList.length)
+    initMediaList(state) {
+      if (!state.mediaList.length) return
+      state.mediaList = []
     },
     addMediaList({ mediaList }, payload) {
       mediaList.push(...payload.mediaList)
     },
-    updateMediaList({ mediaList }, payload) {
-      mediaList.splice(0, mediaList.length, ...payload.mediaList)
+    updateMediaList(state, payload) {
+      state.mediaList = payload.mediaList
     },
     initMediaListState({ mediaList }, payload) {
       payload.likes.forEach(fav => {
