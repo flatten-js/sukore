@@ -12,7 +12,7 @@ export default new Vuex.Store({
       name: '',
       screenName: '',
       description: '',
-      home: false,
+      fave: false,
       urlObject: {
         url: [],
         description: []
@@ -33,16 +33,16 @@ export default new Vuex.Store({
     setUser(state, payload) {
       state.user = { ...state.user, ...payload.user }
     },
-    initHomeSetting(state, payload) {
-      const index = payload.homeUsers.findIndex(user => user.screenName === payload.screenName)
+    initFave(state, payload) {
+      const index = payload.faves.findIndex(fave => fave.screenName === payload.screenName)
       if (index !== -1) {
-        state.user = { ...state.user, home: true }
+        state.user = { ...state.user, fave: true }
       } else {
-        state.user = { ...state.user, home: false }
+        state.user = { ...state.user, fave: false }
       }
     },
-    updateHomeUser(state) {
-      state.user = { ...state.user, home: !state.user.home }
+    updateFave(state) {
+      state.user = { ...state.user, fave: !state.user.fave }
     },
     updateCurrentId(state, payload) {
       state.currentId = payload.currentId

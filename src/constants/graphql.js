@@ -45,19 +45,19 @@ export const LIKE = {
   `
 }
 
-export const HOME_USER = {
+export const FAVE = {
   ALL: gql`
-    query homeUsers {
-      homeUsers {
+    query faves {
+      faves {
         screenName
       }
     }
   `,
   ADD: gql`
-    mutation createHomeUser (
+    mutation createFave (
       $screenName: String!
     ) {
-      createHomeUser (data: {
+      createFave (data: {
         screenName: $screenName
       }) {
         screenName
@@ -65,10 +65,10 @@ export const HOME_USER = {
     }
   `,
   REMOVE: gql`
-    mutation deleteManyHomeUsers (
+    mutation deleteManyFaves (
       $screenName: String
     ) {
-      deleteManyHomeUsers (where: {
+      deleteManyFaves (where: {
         screenName: $screenName
       }) {
         count

@@ -13,9 +13,9 @@
           material-button(
             color="twitter"
             size="small"
-            :state="home"
-            :text="toggleHomeSettingText"
-            @click.native="clickHomeSetting"
+            :state="fave"
+            :text="toggleFaveSettingText"
+            @click.native="clickFaveSetting"
             )
       .user-profile__name
         multi-line-text(
@@ -127,7 +127,7 @@ export default {
       type: String,
       required: true
     },
-    home: {
+    fave: {
       type: Boolean,
       required: true
     },
@@ -151,13 +151,13 @@ export default {
     }
   },
   computed: {
-    toggleHomeSettingText() {
-      return this.home ? 'ホームに設定中' : 'ホームに設定'
+    toggleFaveSettingText() {
+      return this.fave ? '推しに設定中' : '推しに設定'
     }
   },
   methods: {
-    clickHomeSetting() {
-      this.$emit('clickHomeSetting')
+    clickFaveSetting() {
+      this.$emit('clickFaveSetting')
     }
   }
 }

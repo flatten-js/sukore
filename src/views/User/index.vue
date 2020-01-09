@@ -4,7 +4,7 @@
       user-details-catch
         user-details(
           v-bind="user"
-          @clickHomeSetting="updateHomeUser"
+          @clickFaveSetting="updateFave"
           )
     template(#thumbnail-box-area)
       thumbnail-box-area
@@ -20,7 +20,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { FAVORITE, LIKE, HOME_USER } from '@/constants/graphql'
+import { FAVE, LIKE } from '@/constants/graphql'
 
 import UserTemplate from '@/components/templates/UserTemplate.vue'
 import UserDetailsCatch from '@/components/organisms/UserDetailsCatch.vue'
@@ -45,11 +45,11 @@ export default {
   data() {
     return {
       init: {
-        likes: false,
-        homeUsers: false
+        faves: false,
+        likes: false
       },
+      faves: [],
       likes: [],
-      homeUsers: [],
       transitionName: ''
     }
   },
@@ -63,13 +63,13 @@ export default {
         this.initUser(this.screenName, 100, true, data.likes)
       }
     },
-    homeUsers: {
-      query: HOME_USER.ALL,
+    faves: {
+      query: FAVE.ALL,
       result({ data }, key) {
         if (this.init[key]) return
         this.init = { ...this.init, [key]: true }
 
-        this.initHomeSetting(this.screenName, data.homeUsers)
+        this.initFave(this.screenName, data.faves)
       }
     }
   },
@@ -102,7 +102,7 @@ export default {
       if (to === from) return
 
       this.initUser(to, 100, true, this.likes)
-      this.initHomeSetting(to, this.homeUsers)
+      this.initFave(to, this.faves)
     }
   },
   methods: {
@@ -112,57 +112,57 @@ export default {
       await this.$store.dispatch('userTimelineSearch', { screenName, count, excludeReplies })
       await this.$store.commit('initMediaListState', { likes })
     },
-    initHomeSetting(screenName, homeUsers) {
-      this.$store.commit('initHomeSetting', { screenName, homeUsers })
+    initFave(screenName, faves) {
+      this.$store.commit('initFave', { screenName, faves })
     },
-    updateHomeUser() {
-      const { screenName } = this
+    updateFave() {
+      const { screenName, user } = this
 
-      this.$store.commit('updateHomeUser')
+      this.$store.commit('updateFave')
 
-      if (this.user.home) {
+      if (user.fave) {
         this.$apollo.mutate({
-          mutation: HOME_USER.ADD,
-          variables: {
-            screenName: screenName
-          },
-          update: (store, { data: { createHomeUser } }) => {
-            const data = store.readQuery({ query: HOME_USER.ALL })
-            data.homeUsers.push(createHomeUser)
-            store.writeQuery({ query: HOME_USER.ALL, data })
-          },
-          optimisticResponse: {
-            __typename: 'Mutation',
-            createHomeUser: {
-              __typename: 'HomeUser',
-              screenName: screenName
-            }
-          }
-        })
-        .catch(err => {
-          this.$store.commit('updateHomeUser')
-        })
-      } else {
-        this.$apollo.mutate({
-          mutation: HOME_USER.REMOVE,
+          mutation: FAVE.REMOVE,
           variables: {
             screenName: screenName
           },
           update: (store) => {
-            const data = store.readQuery({ query: HOME_USER.ALL })
-            data.homeUsers = data.homeUsers.filter(user => user.screenName !== screenName)
-            store.writeQuery({ query: HOME_USER.ALL, data })
+            const data = store.readQuery({ query: FAVE.ALL })
+            data.faves = data.faves.filter(fave => fave.screenName !== screenName)
+            store.writeQuery({ query: FAVE.ALL, data })
           },
           optimisticResponse: {
             __typename: 'Mutation',
-            deleteManyHomeUsers: {
-              __typename: 'HomeUser',
+            deleteManyFaves: {
+              __typename: 'Fave',
               count: 0
             }
           }
         })
-        .catch(err => {
-          this.$store.commit('updateHomeUser')
+        .catch(() => {
+          this.$store.commit('updateFave')
+        })
+      } else {
+        this.$apollo.mutate({
+          mutation: FAVE.ADD,
+          variables: {
+            screenName: screenName
+          },
+          update: (store, { data: { createFave } }) => {
+            const data = store.readQuery({ query: FAVE.ALL })
+            data.faves.push(createFave)
+            store.writeQuery({ query: FAVE.ALL, data })
+          },
+          optimisticResponse: {
+            __typename: 'Mutation',
+            createFave: {
+              __typename: 'Fave',
+              screenName: screenName
+            }
+          }
+        })
+        .catch(() => {
+          this.$store.commit('updateFave')
         })
       }
     }
