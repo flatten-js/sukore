@@ -1,7 +1,7 @@
 <template lang="pug">
-  .navigation-controls
-    .navigation-controls__go-back(
-      @click="goBack"
+  .navigation-tools
+    .navigation-tools__back(
+      @click="back"
       )
       svg-sprite(name="chevron-left")
 </template>
@@ -14,7 +14,7 @@ export default {
     SvgSprite
   },
   methods: {
-    goBack() {
+    back() {
       this.$router.back()
     }
   }
@@ -22,8 +22,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .navigation-controls {
-    &__go-back {
+  .navigation-tools {
+    &__back {
       display: inline-block;
       padding: .5rem;
       font-size: 0;

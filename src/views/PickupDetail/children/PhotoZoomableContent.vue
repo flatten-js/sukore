@@ -1,7 +1,7 @@
 <template lang="pug">
   photo-zoomable-area
     template(#return)
-      navigation-controls
+      navigation-tools
     template(#photo)
       .zoomable-area(
         @touchstart="touchstart"
@@ -26,13 +26,13 @@
 import { mapGetters } from 'vuex'
 
 import PhotoZoomableArea from '@/components/organisms/PhotoZoomableArea.vue'
-import NavigationControls from '@/components/molecules/NavigationControls.vue'
+import NavigationTools from '@/components/molecules/NavigationTools.vue'
 import ZoomControls from '@/components/molecules/ZoomControls.vue'
 
 export default {
   components: {
     PhotoZoomableArea,
-    NavigationControls,
+    NavigationTools,
     ZoomControls
   },
   props: {
