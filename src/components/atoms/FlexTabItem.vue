@@ -5,6 +5,7 @@
     active-class="-active"
     exact-active-class="-exact-active"
     exact
+    replace
     )
     | {{ text }}
 </template>
