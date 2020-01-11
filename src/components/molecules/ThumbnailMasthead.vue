@@ -1,7 +1,7 @@
 <template lang="pug">
   .thumbnail-masthead
     .thumbnail-masthead__image
-      masthead(
+      head-banner(
         type="thumbnail"
         :url="url"
         )
@@ -38,14 +38,14 @@
 </template>
 
 <script>
-import Masthead from '@/components/atoms/Masthead.vue'
+import HeadBanner from '@/components/atoms/HeadBanner.vue'
 import TextBadge from '@/components/atoms/TextBadge.vue'
 import MultiLineText from '@/components/atoms/MultiLineText.vue'
 import SvgSprite from '@/components/atoms/SvgSprite.vue'
 
 export default {
   components: {
-    Masthead,
+    HeadBanner,
     TextBadge,
     MultiLineText,
     SvgSprite

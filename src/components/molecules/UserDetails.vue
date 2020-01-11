@@ -1,7 +1,7 @@
 <template lang="pug">
   .user-details
     .user-details__user-head
-      masthead(:url="masthead")
+      head-banner(:url="masthead")
     .user-profile
       .user-profile-head
         .user-profile-head__icon
@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import Masthead from '@/components/atoms/Masthead.vue'
+import HeadBanner from '@/components/atoms/HeadBanner.vue'
 import UserIcon from '@/components/atoms/UserIcon.vue'
 import MaterialButton from '@/components/atoms/MaterialButton.vue'
 import MultiLineText from '@/components/atoms/MultiLineText.vue'
@@ -84,7 +84,7 @@ import InlineIconText from '@/components/atoms/InlineIconText.vue'
 
 export default {
   components: {
-    Masthead,
+    HeadBanner,
     UserIcon,
     MaterialButton,
     MultiLineText,

@@ -1,5 +1,5 @@
 <template lang="pug">
-  .masthead(
+  .head-banner(
     :class="propsClassGenerator"
     :style="{ backgroundImage: `url(${url})` }"
     )
@@ -10,9 +10,9 @@ export default {
   props: {
     type: {
       type: String,
-      default: 'header',
+      default: 'default',
       validator(val) {
-        return ['header', 'thumbnail'].includes(val)
+        return ['default', 'thumbnail'].includes(val)
       }
     },
     url: [String, null]
@@ -30,15 +30,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .masthead {
+  .head-banner {
     width: 100%;
     background-repeat: no-repeat;
     background-color: #d1d1d1;
 
-    &.-type-header {
+    &.-type-default {
       padding-bottom: 33.3333%;
-      background-size: contain;
-      background-attachment: fixed;
+      background-size: cover;
     }
 
     &.-type-thumbnail {
