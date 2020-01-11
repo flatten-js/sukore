@@ -32,10 +32,11 @@ export default {
 <style lang="scss" scoped>
   .masthead {
     width: 100%;
+    background-repeat: no-repeat;
     background-color: #d1d1d1;
 
     &.-type-header {
-      height: 125px;
+      padding-bottom: 33.3333%;
       background-size: contain;
       background-attachment: fixed;
     }
