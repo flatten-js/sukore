@@ -4,19 +4,28 @@
     :class="propsClassGenerator"
     v-bind="propsToggleAttribute"
     )
-    | {{ text }}
+    template(v-if="tag === 'svg'")
+      use(:xlink:href="name | convertSymbolPath")
+    template(v-else)
+      | {{ text }}
 </template>
 
 <script>
 export default {
+  filters: {
+    convertSymbolPath(name) {
+      return `/img/icons/symbol-defs.svg#icon-${name}`
+    }
+  },
   props: {
     tag: {
       type: String,
       default: 'div',
       validator(val) {
-        return ['div', 'a', 'router-link'].includes(val)
+        return ['div', 'svg', 'a', 'router-link'].includes(val)
       }
     },
+    name: String,
     href: String,
     target: {
       type: String,
@@ -30,22 +39,19 @@ export default {
       type: Boolean,
       default: false
     },
-    text: {
-      type: String,
-      required: true
-    },
+    text: String,
     vertical: {
       type: String,
-      default: 'default',
+      default: 'medium',
       validator(val) {
-        return ['short', 'default'].includes(val)
+        return ['short', 'medium'].includes(val)
       }
     },
     horizon: {
       type: String,
-      default: 'default',
+      default: 'medium',
       validator(val) {
-        return ['default', 'long'].includes(val)
+        return ['short', 'medium', 'long'].includes(val)
       }
     },
     color: {
@@ -76,7 +82,8 @@ export default {
         [`-horizon-${horizon}`]: horizon,
         [`-color-${color}`]: color,
         [`-size-${size}`]: size,
-        '-link': tag.match(/[^div]/),
+        '-icon': tag.match('svg'),
+        '-link': tag.match(/[^div|svg]/),
         '-active': state
       }
     },
@@ -103,8 +110,18 @@ export default {
 <style lang="scss" scoped>
   .material-button {
     display: inline-block;
+    border: 1px solid currentColor;
     border-radius: 25px;
     transition: background-color .2s;
+
+    &.-icon {
+      fill: currentColor;
+
+      &.-size-default {
+        width: 1rem;
+        height: 1rem;
+      }
+    }
 
     &.-link {
       text-decoration: none;
@@ -115,12 +132,17 @@ export default {
       padding-bottom: .35rem;
     }
 
-    &.-vertical-default {
+    &.-vertical-medium {
       padding-top: .5rem;
       padding-bottom: .5rem;
     }
 
-    &.-horizon-default {
+    &.-horizon-short {
+      padding-left: .5rem;
+      padding-right: .5rem;
+    }
+
+    &.-horizon-medium {
       padding-left: 1rem;
       padding-right: 1rem;
     }
@@ -131,12 +153,10 @@ export default {
     }
 
     &.-color-default {
-      border: 1px solid #1a1a1a;
       color: #1a1a1a;
     }
 
     &.-color-twitter {
-      border: 1px solid #1DA1F2;
       color: #1DA1F2;
     }
 
