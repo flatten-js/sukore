@@ -61,6 +61,13 @@ export default {
         return ['default', 'twitter'].includes(val)
       }
     },
+    brightness: {
+      type: String,
+      default: '1',
+      validator(val) {
+        return ['1', '2'].includes(val)
+      }
+    },
     size: {
       type: String,
       default: 'default',
@@ -75,12 +82,13 @@ export default {
   },
   computed: {
     propsClassGenerator() {
-      const { tag, vertical, horizon, color, size, state } = this
+      const { tag, vertical, horizon, color, brightness, size, state } = this
 
       return {
         [`-vertical-${vertical}`]: vertical,
         [`-horizon-${horizon}`]: horizon,
         [`-color-${color}`]: color,
+        [`-brightness-${brightness}`]: brightness,
         [`-size-${size}`]: size,
         '-icon': tag.match('svg'),
         '-link': tag.match(/[^div|svg]/),
@@ -172,10 +180,19 @@ export default {
       color: white;
 
       &.-color-default {
-        background-color: #1a1a1a;
+        &.-brightness-1 {
+          border-color: #1a1a1a;
+          background-color: #1a1a1a;
+        }
+
+        &.-brightness-2 {
+          border: none;
+          background-color: rgba(26, 26, 26, .75);
+        }
       }
 
       &.-color-twitter {
+        border-color: #1DA1F2;
         background-color: #1DA1F2;
       }
     }

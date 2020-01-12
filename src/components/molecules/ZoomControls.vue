@@ -1,27 +1,37 @@
 <template lang="pug">
   .zoomable-controls
-    .zoomable-controls__zoom-out(
-      @click="zoomOut"
-      )
-      svg-sprite(name="minus")
+    .zoomable-controls__zoom-out
+      material-button(
+        tag="svg"
+        name="minus"
+        horizon="short"
+        brightness="2"
+        :state="true"
+        @click.native="zoomOut"
+        )
     .zoomable-controls__percent
       single-line-text(
         size="small"
         :text="number | convertPersent"
         )
-    .zoomable-controls__zoom-in(
-      @click="zoomIn"
-      )
-      svg-sprite(name="plus")
+    .zoomable-controls__zoom-in
+      material-button(
+        tag="svg"
+        name="plus"
+        horizon="short"
+        brightness="2"
+        :state="true"
+        @click.native="zoomIn"
+        )
 </template>
 
 <script>
-import SvgSprite from '@/components/atoms/SvgSprite.vue'
+import MaterialButton from '@/components/atoms/MaterialButton.vue'
 import SingleLineText from '@/components/atoms/SingleLineText.vue'
 
 export default {
   components: {
-    SvgSprite,
+    MaterialButton,
     SingleLineText
   },
   filters: {
@@ -67,13 +77,7 @@ export default {
     }
 
     &__zoom-out, &__zoom-in {
-      display: inline-block;
-      margin: 0 .5rem;
-      padding: .5rem;
       font-size: 0;
-      border-radius: 50%;
-      color: white;
-      background-color: rgba(26, 26, 26, .75);
     }
   }
 </style>

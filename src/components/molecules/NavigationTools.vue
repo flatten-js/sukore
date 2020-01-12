@@ -1,17 +1,22 @@
 <template lang="pug">
   .navigation-tools
-    .navigation-tools__back(
-      @click="back"
-      )
-      svg-sprite(name="chevron-left")
+    .navigation-tools__back
+      material-button(
+        tag="svg"
+        name="chevron-left"
+        horizon="short"
+        brightness="2"
+        :state="true"
+        @click.native="back"
+        )
 </template>
 
 <script>
-import SvgSprite from '@/components/atoms/SvgSprite.vue'
+import MaterialButton from '@/components/atoms/MaterialButton.vue'
 
 export default {
   components: {
-    SvgSprite
+    MaterialButton
   },
   methods: {
     back() {
@@ -20,16 +25,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-  .navigation-tools {
-    &__back {
-      display: inline-block;
-      padding: .5rem;
-      font-size: 0;
-      border-radius: 50%;
-      color: white;
-      background-color: rgba(26, 26, 26, .75);
-    }
-  }
-</style>
