@@ -17,6 +17,8 @@
     template(#controls)
       zoom-controls(
         :number="scale.now"
+        @zoomWidth="zoomWidth"
+        @zoomHeight="zoomHeight"
         @zoomOut="zoomOut"
         @zoomIn="zoomIn"
         )
@@ -99,6 +101,14 @@ export default {
         h: scale.now * photo.h
       }
     },
+    calculatePhotoInitScale() {
+      const { browser, photo } = this
+
+      return {
+        x: this.browser.w / this.photo.w,
+        y: this.browser.h / this.photo.h
+      }
+    },
     calculatePhotoPosition() {
       const { position, moved } = this
 
@@ -115,6 +125,21 @@ export default {
         y: (browser.h - calculatePhotoSize.h) / 2
       }
     },
+    calculatePhotoInitPositionOverlap() {
+      const { calculatePhotoPosition, calculatePhotoPositionCenter } = this
+
+      return Object.keys(calculatePhotoPosition).every(point => {
+        return calculatePhotoPosition[point] === calculatePhotoPositionCenter[point]
+      })
+    },
+    calculatePhotoScaleInitialState() {
+      const { scale, calculatePhotoInitScale } = this
+
+      return {
+        x: scale.min === calculatePhotoInitScale.x && scale.min === scale.now,
+        y: scale.min === calculatePhotoInitScale.y && scale.min === scale.now
+      }
+    },
     zoomTransformStyle() {
       return {
         transform: `translateX(${this.calculatePhotoPosition.x}px) translateY(${this.calculatePhotoPosition.y}px) scale(${this.scale.now})`
@@ -122,10 +147,10 @@ export default {
     }
   },
   mounted() {
-    const initialScale = this.browser.w / this.photo.w
+    const { calculatePhotoInitScale } = this
 
     this.el = { photo: this.$refs.photo }
-    this.scale = { min: initialScale, now: initialScale, max: initialScale * 2 ** 3 }
+    this.scale = { min: calculatePhotoInitScale.x, now: calculatePhotoInitScale.x, max: calculatePhotoInitScale.x * 2 ** 3 }
     this.position = { x: this.calculatePhotoPositionCenter.x, y: this.calculatePhotoPositionCenter.y }
   },
   methods: {
@@ -144,6 +169,24 @@ export default {
     touchend(e) {
       this.position = this.calculatePhotoPosition
       this.moved = { x: 0, y: 0 }
+    },
+    zoomWidth() {
+      const { scale, el, calculatePhotoInitScale, calculatePhotoInitPositionOverlap, calculatePhotoScaleInitialState } = this
+      if (calculatePhotoScaleInitialState.x && calculatePhotoInitPositionOverlap) return
+
+      el.photo.classList.add('-zooming')
+
+      this.scale = { min: calculatePhotoInitScale.x, now: calculatePhotoInitScale.x, max: calculatePhotoInitScale.x * 2 ** 3 }
+      this.position = this.calculatePhotoPositionCenter
+    },
+    zoomHeight() {
+      const { scale, el, calculatePhotoInitScale, calculatePhotoInitPositionOverlap, calculatePhotoScaleInitialState } = this
+      if (calculatePhotoScaleInitialState.y && calculatePhotoInitPositionOverlap) return
+
+      el.photo.classList.add('-zooming')
+
+      this.scale = { min: calculatePhotoInitScale.y, now: calculatePhotoInitScale.y, max: calculatePhotoInitScale.y * 2 ** 3 }
+      this.position = this.calculatePhotoPositionCenter
     },
     zoomIn() {
       const { scale, el, browser, calculatePhotoPosition } = this

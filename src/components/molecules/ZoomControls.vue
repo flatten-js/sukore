@@ -1,5 +1,28 @@
 <template lang="pug">
   .zoomable-controls
+    .zoomable-controls__zoom-width
+      material-button(
+        tag="svg"
+        name="width"
+        horizon="short"
+        brightness="2"
+        :state="true"
+        @click.native="zoomWidth"
+        )
+    .zoomable-controls__zoom-height
+      material-button(
+        tag="svg"
+        name="height"
+        horizon="short"
+        brightness="2"
+        :state="true"
+        @click.native="zoomHeight"
+        )
+    .zoomable-controls__percent
+      single-line-text(
+        size="small"
+        :text="number | convertPersent"
+        )
     .zoomable-controls__zoom-out
       material-button(
         tag="svg"
@@ -8,11 +31,6 @@
         brightness="2"
         :state="true"
         @click.native="zoomOut"
-        )
-    .zoomable-controls__percent
-      single-line-text(
-        size="small"
-        :text="number | convertPersent"
         )
     .zoomable-controls__zoom-in
       material-button(
@@ -46,6 +64,12 @@ export default {
     }
   },
   methods: {
+    zoomWidth() {
+      this.$emit('zoomWidth')
+    },
+    zoomHeight() {
+      this.$emit('zoomHeight')
+    },
     zoomOut() {
       this.$emit('zoomOut')
     },
@@ -68,7 +92,7 @@ export default {
     &__percent {
       width: 4rem;
       line-height: 1rem;
-      margin: 0 .5rem;
+      margin: 0 .25rem;
       padding: .5rem;
       color: #1a1a1a;
       text-align: center;
@@ -76,8 +100,9 @@ export default {
       border: 1px solid #1a1a1a;
     }
 
-    &__zoom-out, &__zoom-in {
+    &__zoom-width, &__zoom-height, &__zoom-out, &__zoom-in {
       font-size: 0;
+      margin: 0 .25rem;
     }
   }
 </style>
