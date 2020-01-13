@@ -93,7 +93,7 @@ export default {
         h: media.sizes[i].h
       }
     },
-    calculatePhotoSize() {
+    calcPhotoSize() {
       const { scale, photo } = this
 
       return {
@@ -101,7 +101,7 @@ export default {
         h: scale.now * photo.h
       }
     },
-    calculatePhotoInitScale() {
+    calcPhotoInitScale() {
       const { browser, photo } = this
 
       return {
@@ -109,7 +109,7 @@ export default {
         y: this.browser.h / this.photo.h
       }
     },
-    calculatePhotoPosition() {
+    calcPhotoPosition() {
       const { position, moved } = this
 
       return {
@@ -117,41 +117,41 @@ export default {
         y: position.y + moved.y
       }
     },
-    calculatePhotoPositionCenter() {
-      const { browser, calculatePhotoSize } = this
+    calcPhotoPositionCenter() {
+      const { browser, calcPhotoSize } = this
 
       return {
-        x: (browser.w - calculatePhotoSize.w) / 2,
-        y: (browser.h - calculatePhotoSize.h) / 2
+        x: (browser.w - calcPhotoSize.w) / 2,
+        y: (browser.h - calcPhotoSize.h) / 2
       }
     },
-    calculatePhotoInitPositionOverlap() {
-      const { calculatePhotoPosition, calculatePhotoPositionCenter } = this
+    calcPhotoInitPositionOverlap() {
+      const { calcPhotoPosition, calcPhotoPositionCenter } = this
 
-      return Object.keys(calculatePhotoPosition).every(point => {
-        return calculatePhotoPosition[point] === calculatePhotoPositionCenter[point]
+      return Object.keys(calcPhotoPosition).every(point => {
+        return calcPhotoPosition[point] === calcPhotoPositionCenter[point]
       })
     },
-    calculatePhotoScaleInitialState() {
-      const { scale, calculatePhotoInitScale } = this
+    calcPhotoScaleInitialState() {
+      const { scale, calcPhotoInitScale } = this
 
       return {
-        x: scale.min === calculatePhotoInitScale.x && scale.min === scale.now,
-        y: scale.min === calculatePhotoInitScale.y && scale.min === scale.now
+        x: scale.min === calcPhotoInitScale.x && scale.min === scale.now,
+        y: scale.min === calcPhotoInitScale.y && scale.min === scale.now
       }
     },
     zoomTransformStyle() {
       return {
-        transform: `translateX(${this.calculatePhotoPosition.x}px) translateY(${this.calculatePhotoPosition.y}px) scale(${this.scale.now})`
+        transform: `translateX(${this.calcPhotoPosition.x}px) translateY(${this.calcPhotoPosition.y}px) scale(${this.scale.now})`
       }
     }
   },
   mounted() {
-    const { calculatePhotoInitScale } = this
+    const { calcPhotoInitScale } = this
 
     this.el = { photo: this.$refs.photo }
-    this.scale = { min: calculatePhotoInitScale.x, now: calculatePhotoInitScale.x, max: calculatePhotoInitScale.x * 2 ** 3 }
-    this.position = { x: this.calculatePhotoPositionCenter.x, y: this.calculatePhotoPositionCenter.y }
+    this.scale = { min: calcPhotoInitScale.x, now: calcPhotoInitScale.x, max: calcPhotoInitScale.x * 2 ** 3 }
+    this.position = { x: this.calcPhotoPositionCenter.x, y: this.calcPhotoPositionCenter.y }
   },
   methods: {
     touchstart(e) {
@@ -167,49 +167,49 @@ export default {
       }
     },
     touchend(e) {
-      this.position = this.calculatePhotoPosition
+      this.position = this.calcPhotoPosition
       this.moved = { x: 0, y: 0 }
     },
     zoomWidth() {
-      const { scale, el, calculatePhotoInitScale, calculatePhotoInitPositionOverlap, calculatePhotoScaleInitialState } = this
-      if (calculatePhotoScaleInitialState.x && calculatePhotoInitPositionOverlap) return
+      const { scale, el, calcPhotoInitScale, calcPhotoInitPositionOverlap, calcPhotoScaleInitialState } = this
+      if (calcPhotoScaleInitialState.x && calcPhotoInitPositionOverlap) return
 
       el.photo.classList.add('-zooming')
 
-      this.scale = { min: calculatePhotoInitScale.x, now: calculatePhotoInitScale.x, max: calculatePhotoInitScale.x * 2 ** 3 }
-      this.position = this.calculatePhotoPositionCenter
+      this.scale = { min: calcPhotoInitScale.x, now: calcPhotoInitScale.x, max: calcPhotoInitScale.x * 2 ** 3 }
+      this.position = this.calcPhotoPositionCenter
     },
     zoomHeight() {
-      const { scale, el, calculatePhotoInitScale, calculatePhotoInitPositionOverlap, calculatePhotoScaleInitialState } = this
-      if (calculatePhotoScaleInitialState.y && calculatePhotoInitPositionOverlap) return
+      const { scale, el, calcPhotoInitScale, calcPhotoInitPositionOverlap, calcPhotoScaleInitialState } = this
+      if (calcPhotoScaleInitialState.y && calcPhotoInitPositionOverlap) return
 
       el.photo.classList.add('-zooming')
 
-      this.scale = { min: calculatePhotoInitScale.y, now: calculatePhotoInitScale.y, max: calculatePhotoInitScale.y * 2 ** 3 }
-      this.position = this.calculatePhotoPositionCenter
+      this.scale = { min: calcPhotoInitScale.y, now: calcPhotoInitScale.y, max: calcPhotoInitScale.y * 2 ** 3 }
+      this.position = this.calcPhotoPositionCenter
     },
     zoomIn() {
-      const { scale, el, browser, calculatePhotoPosition } = this
+      const { scale, el, browser, calcPhotoPosition } = this
       if (scale.now >= scale.max) return
 
       el.photo.classList.add('-zooming')
 
       this.scale = { ...scale, now: scale.now * 2 }
       this.position = {
-        x: (calculatePhotoPosition.x * 2) - (browser.w / 2),
-        y: (calculatePhotoPosition.y * 2) - (browser.h / 2)
+        x: (calcPhotoPosition.x * 2) - (browser.w / 2),
+        y: (calcPhotoPosition.y * 2) - (browser.h / 2)
       }
     },
     zoomOut() {
-      const { scale, el, browser, calculatePhotoPosition } = this
+      const { scale, el, browser, calcPhotoPosition } = this
       if (scale.now <= scale.min) return
 
       el.photo.classList.add('-zooming')
 
       this.scale = { ...scale, now: scale.now / 2 }
       this.position = {
-        x: (calculatePhotoPosition.x + (browser.w / 2)) / 2,
-        y: (calculatePhotoPosition.y + (browser.h / 2)) / 2
+        x: (calcPhotoPosition.x + (browser.w / 2)) / 2,
+        y: (calcPhotoPosition.y + (browser.h / 2)) / 2
       }
     },
     zoomingTransitionEnd() {
