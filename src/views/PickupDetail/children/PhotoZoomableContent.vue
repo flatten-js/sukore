@@ -133,11 +133,11 @@ export default {
       })
     },
     calcPhotoScaleInitialState() {
-      const { scale, calcPhotoInitScale } = this
+      const { scale, calcPhotoInitScale, calcPhotoInitPositionOverlap } = this
 
       return {
-        x: scale.min === calcPhotoInitScale.x && scale.min === scale.now,
-        y: scale.min === calcPhotoInitScale.y && scale.min === scale.now
+        x: scale.min === calcPhotoInitScale.x && scale.min === scale.now && calcPhotoInitPositionOverlap,
+        y: scale.min === calcPhotoInitScale.y && scale.min === scale.now && calcPhotoInitPositionOverlap
       }
     },
     zoomTransformStyle() {
@@ -151,7 +151,7 @@ export default {
 
     this.el = { photo: this.$refs.photo }
     this.scale = { min: calcPhotoInitScale.x, now: calcPhotoInitScale.x, max: calcPhotoInitScale.x * 2 ** 3 }
-    this.position = { x: this.calcPhotoPositionCenter.x, y: this.calcPhotoPositionCenter.y }
+    this.position = this.calcPhotoPositionCenter
   },
   methods: {
     touchstart(e) {
@@ -171,8 +171,8 @@ export default {
       this.moved = { x: 0, y: 0 }
     },
     zoomWidth() {
-      const { scale, el, calcPhotoInitScale, calcPhotoInitPositionOverlap, calcPhotoScaleInitialState } = this
-      if (calcPhotoScaleInitialState.x && calcPhotoInitPositionOverlap) return
+      const { scale, el, calcPhotoInitScale, calcPhotoScaleInitialState } = this
+      if (calcPhotoScaleInitialState.x) return
 
       el.photo.classList.add('-zooming')
 
@@ -180,8 +180,8 @@ export default {
       this.position = this.calcPhotoPositionCenter
     },
     zoomHeight() {
-      const { scale, el, calcPhotoInitScale, calcPhotoInitPositionOverlap, calcPhotoScaleInitialState } = this
-      if (calcPhotoScaleInitialState.y && calcPhotoInitPositionOverlap) return
+      const { scale, el, calcPhotoInitScale, calcPhotoScaleInitialState } = this
+      if (calcPhotoScaleInitialState.y) return
 
       el.photo.classList.add('-zooming')
 
