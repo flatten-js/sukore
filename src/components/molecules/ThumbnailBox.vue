@@ -29,13 +29,15 @@
             text="GIF"
             )
       .thumbnail-box-link__like(
-        :class="{ '-active': state }"
         @click.prevent="clickLikeIcon"
         )
-        svg-sprite(
+        material-button(
+          type="othello"
+          tag="svg"
           name="like"
-          size="large"
-          shadow
+          color="like"
+          horizon="short"
+          :state="state"
           )
 </template>
 
@@ -43,12 +45,14 @@
 import RelativeBoxImage from '@/components/atoms/RelativeBoxImage.vue'
 import TextBadge from '@/components/atoms/TextBadge.vue'
 import SvgSprite from '@/components/atoms/SvgSprite.vue'
+import MaterialButton from '@/components/atoms/MaterialButton.vue'
 
 export default {
   components: {
     RelativeBoxImage,
     TextBadge,
-    SvgSprite
+    SvgSprite,
+    MaterialButton
   },
   filters: {
     convertDetailsPath(id, screenName) {
@@ -171,11 +175,6 @@ export default {
       bottom: 0;
       right: 0;
       line-height: 0;
-      color: rgba(255, 255, 255, .95);
-
-      &.-active {
-        color: #FF4063;
-      }
     }
   }
 </style>

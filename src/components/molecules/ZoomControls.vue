@@ -2,6 +2,7 @@
   .zoomable-controls
     .zoomable-controls__zoom-width
       material-button(
+        type="immutable"
         tag="svg"
         name="width"
         horizon="short"
@@ -11,6 +12,7 @@
         )
     .zoomable-controls__zoom-height
       material-button(
+        type="immutable"
         tag="svg"
         name="height"
         horizon="short"
@@ -25,6 +27,7 @@
         )
     .zoomable-controls__zoom-out
       material-button(
+        type="immutable"
         tag="svg"
         name="minus"
         horizon="short"
@@ -34,6 +37,7 @@
         )
     .zoomable-controls__zoom-in
       material-button(
+        type="immutable"
         tag="svg"
         name="plus"
         horizon="short"

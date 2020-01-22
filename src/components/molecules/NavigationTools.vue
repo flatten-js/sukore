@@ -2,11 +2,10 @@
   .navigation-tools
     .navigation-tools__back
       material-button(
+        type="immutable"
         tag="svg"
         name="chevron-left"
         horizon="short"
-        brightness="2"
-        :state="true"
         @click.native="back"
         )
 </template>

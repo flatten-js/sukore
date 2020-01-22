@@ -18,6 +18,13 @@ export default {
     }
   },
   props: {
+    type: {
+      type: String,
+      default: 'default',
+      validator(val) {
+        return ['default', 'immutable', 'othello'].includes(val)
+      }
+    },
     tag: {
       type: String,
       default: 'div',
@@ -58,7 +65,7 @@ export default {
       type: String,
       default: 'default',
       validator(val) {
-        return ['default', 'twitter'].includes(val)
+        return ['default', 'twitter', 'like'].includes(val)
       }
     },
     brightness: {
@@ -82,9 +89,10 @@ export default {
   },
   computed: {
     propsClassGenerator() {
-      const { tag, vertical, horizon, color, brightness, size, state } = this
+      const { type, tag, vertical, horizon, color, brightness, size, state } = this
 
       return {
+        [`-type-${type}`]: type,
         [`-vertical-${vertical}`]: vertical,
         [`-horizon-${horizon}`]: horizon,
         [`-color-${color}`]: color,
@@ -120,7 +128,6 @@ export default {
     display: inline-block;
     border: 1px solid currentColor;
     border-radius: 25px;
-    transition: background-color .2s;
 
     &.-icon {
       fill: currentColor;
@@ -160,14 +167,6 @@ export default {
       padding-right: 2rem;
     }
 
-    &.-color-default {
-      color: #1a1a1a;
-    }
-
-    &.-color-twitter {
-      color: #1DA1F2;
-    }
-
     &.-size-small {
       font-size: .875rem;
     }
@@ -176,25 +175,75 @@ export default {
       font-size: 1rem;
     }
 
-    &.-active {
-      color: white;
+    &.-type-default {
+      transition: background-color .2s;
 
       &.-color-default {
-        &.-brightness-1 {
+        color: #1a1a1a;
+      }
+
+      &.-color-twitter {
+        color: #1DA1F2;
+      }
+
+      &.-color-like {
+        color: #FF4063;
+      }
+
+      &.-active {
+        color: white;
+
+        &.-color-default {
           border-color: #1a1a1a;
           background-color: #1a1a1a;
         }
 
-        &.-brightness-2 {
-          border: none;
-          background-color: rgba(26, 26, 26, .75);
+        &.-color-twitter {
+          border-color: #1DA1F2;
+          background-color: #1DA1F2;
+        }
+
+        &.-color-like {
+          border-color: #FF4063;
+          background-color: #FF4063;
         }
       }
+    }
 
-      &.-color-twitter {
-        border-color: #1DA1F2;
-        background-color: #1DA1F2;
+    &.-type-immutable {
+      color: white;
+      border: none;
+
+      &.-color-default {
+        background-color: rgba(26, 26, 26, .75);
       }
+    }
+
+    &.-type-othello {
+      color: white;
+      border-color: white;
+      background-color: rgba(185, 185, 185, .75);
+      transition: all .1s;
+
+      &.-active {
+        animation: pulse .2s linear;
+
+        &.-color-like {
+          background-color: rgba(255, 64, 99, .95);
+        }
+      }
+    }
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.125)
+    }
+    100% {
+      transform: scale(1);
     }
   }
 </style>
