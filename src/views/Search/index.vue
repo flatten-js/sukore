@@ -11,7 +11,7 @@
             :text="searchResult.masthead.text"
             :image-count="searchResult.masthead.size"
             :state="searchResult.masthead.state"
-            @clickLikeIcon="updateLike"
+            @click-like="updateLike"
             )
       template(#contents)
         thumbnail-box-grid
@@ -24,7 +24,7 @@
               :image-count="media.size"
               :thumbnail-size="media.thumbnailSize"
               :state="media.state"
-              @clickLikeIcon="updateLike"
+              @like-click="updateLike"
               )
 </template>
 

@@ -8,7 +8,7 @@
         horizon="short"
         brightness="2"
         :state="true"
-        @click.native="zoomWidth"
+        @click.native="emmitingZoomWidth"
         )
     .zoomable-controls__zoom-height
       material-button(
@@ -18,7 +18,7 @@
         horizon="short"
         brightness="2"
         :state="true"
-        @click.native="zoomHeight"
+        @click.native="emmitingZoomHeight"
         )
     .zoomable-controls__percent
       single-line-text(
@@ -33,7 +33,7 @@
         horizon="short"
         brightness="2"
         :state="true"
-        @click.native="zoomOut"
+        @click.native="emmitingZoomOut"
         )
     .zoomable-controls__zoom-in
       material-button(
@@ -43,7 +43,7 @@
         horizon="short"
         brightness="2"
         :state="true"
-        @click.native="zoomIn"
+        @click.native="emmitingZoomIn"
         )
 </template>
 
@@ -68,17 +68,17 @@ export default {
     }
   },
   methods: {
-    zoomWidth() {
-      this.$emit('zoomWidth')
+    emmitingZoomWidth() {
+      this.$emit('zoom-width-click')
     },
-    zoomHeight() {
-      this.$emit('zoomHeight')
+    emmitingZoomHeight() {
+      this.$emit('zoom-height-click')
     },
-    zoomOut() {
-      this.$emit('zoomOut')
+    emmitingZoomOut() {
+      this.$emit('zoom-out-click')
     },
-    zoomIn() {
-      this.$emit('zoomIn')
+    emmitingZoomIn() {
+      this.$emit('zoom-in-click')
     }
   }
 }

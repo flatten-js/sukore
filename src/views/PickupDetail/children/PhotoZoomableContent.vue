@@ -17,10 +17,10 @@
     template(#controls)
       zoom-controls(
         :number="scale.now"
-        @zoomWidth="zoomWidth"
-        @zoomHeight="zoomHeight"
-        @zoomOut="zoomOut"
-        @zoomIn="zoomIn"
+        @zoom-width-click="zoomWidth"
+        @zoom-height-click="zoomHeight"
+        @zoom-out-click="zoomOut"
+        @zoom-in-click="zoomIn"
         )
 </template>
 

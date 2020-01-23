@@ -15,7 +15,7 @@
             size="small"
             :state="fave"
             :text="toggleFaveSettingText"
-            @click.native="clickFaveSetting"
+            @click.native="emmitingFave"
             )
       .user-profile__name
         multi-line-text(
@@ -156,8 +156,8 @@ export default {
     }
   },
   methods: {
-    clickFaveSetting() {
-      this.$emit('clickFaveSetting')
+    emmitingFave() {
+      this.$emit('fave-click')
     }
   }
 }

@@ -10,7 +10,7 @@
         :image-count="media.size"
         :thumbnail-size="media.entities.thumbnail.size"
         :state="media.state"
-        @clickLikeIcon="updateLike"
+        @like-click="updateLike"
         )
 </template>
 

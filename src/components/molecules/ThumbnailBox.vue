@@ -29,7 +29,7 @@
             text="GIF"
             )
       .thumbnail-box-link__like(
-        @click.prevent="clickLikeIcon"
+        @click.prevent="emittingLike"
         )
         material-button(
           type="othello"
@@ -113,8 +113,8 @@ export default {
     }
   },
   methods: {
-    clickLikeIcon() {
-      this.$emit('clickLikeIcon', this.id)
+    emittingLike() {
+      this.$emit('like-click', this.id)
     }
   }
 }

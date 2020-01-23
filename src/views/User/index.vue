@@ -4,14 +4,12 @@
       user-details-catch
         user-details(
           v-bind="user"
-          @clickFaveSetting="updateFave"
+          @fave-click="updateFave"
           )
     template(#thumbnail-box-area)
       thumbnail-box-area
         template(#navigation)
-          flex-tab-bar(
-            :tab-items="initTabItems"
-            )
+          flex-tab-bar(:tab-items="initTabItems")
         template(#content)
           transition(:name="transitionName")
             keep-alive
