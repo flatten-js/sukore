@@ -72,7 +72,7 @@ export default {
           query: this.query,
           count: 100
         })
-        await this.$store.commit('initMediaListState', { likes: this.likes })
+        await this.$store.commit('initMediaListState', { likes: data.likes })
       }
     }
   },

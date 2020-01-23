@@ -106,18 +106,12 @@ export default {
     propsToggleAttribute() {
       const { tag, href, target, to, exact } = this
 
-      switch(tag) {
-        case 'a':
-        return {
-          'href': href,
-          'target': target
-        }
-        case 'router-link':
-        return {
-          'to': to,
-          'exact': exact
-        }
+      const switchTagAttribute = {
+        a: { href, target },
+        'router-link': { to, exact }
       }
+
+      return switchTagAttribute[tag]
     }
   }
 }

@@ -105,8 +105,8 @@ export default {
       const { browser, photo } = this
 
       return {
-        x: this.browser.w / this.photo.w,
-        y: this.browser.h / this.photo.h
+        x: browser.w / photo.w,
+        y: browser.h / photo.h
       }
     },
     calcPhotoPosition() {
@@ -166,12 +166,12 @@ export default {
         y: e.touches[0].pageY - this.touched.y
       }
     },
-    touchend(e) {
+    touchend() {
       this.position = this.calcPhotoPosition
       this.moved = { x: 0, y: 0 }
     },
     zoomWidth() {
-      const { scale, el, calcPhotoInitScale, calcPhotoScaleInitialState } = this
+      const { el, calcPhotoInitScale, calcPhotoScaleInitialState } = this
       if (calcPhotoScaleInitialState.x) return
 
       el.photo.classList.add('-zooming')
@@ -180,7 +180,7 @@ export default {
       this.position = this.calcPhotoPositionCenter
     },
     zoomHeight() {
-      const { scale, el, calcPhotoInitScale, calcPhotoScaleInitialState } = this
+      const { el, calcPhotoInitScale, calcPhotoScaleInitialState } = this
       if (calcPhotoScaleInitialState.y) return
 
       el.photo.classList.add('-zooming')

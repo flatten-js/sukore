@@ -22,7 +22,7 @@ export const sharedUpdateLike = ($store, $apollo, media) => {
         }
       }
     })
-    .catch((err) => {
+    .catch(() => {
       $store.commit('updateMediaListState', { tid: media.id })
     })
   } else {
