@@ -17,6 +17,7 @@
             text-badge(
               name="collections"
               :text="imageCount"
+              size="small"
               )
       template(v-else-if="type === 'video'")
         .thumbnail-box-link__video
@@ -26,7 +27,7 @@
       template(v-else-if="type === 'animated_gif'")
         .thumbnail-box-link__animated-gif
           text-badge(
-            text="GIF"
+            name="gif"
             )
       .thumbnail-box-link__like(
         @click.prevent="emittingLike"

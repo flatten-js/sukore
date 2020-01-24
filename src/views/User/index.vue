@@ -9,7 +9,7 @@
     template(#thumbnail-box-area)
       thumbnail-box-area
         template(#navigation)
-          flex-tab-bar(:tab-items="initTabItems")
+          flex-tab-bar(:tab-items="userTabItems")
         template(#content)
           transition(:name="transitionName")
             keep-alive
@@ -75,7 +75,7 @@ export default {
     ...mapGetters([
       'user'
     ]),
-    initTabItems() {
+    userTabItems() {
       const { screenName } = this
 
       return [
