@@ -30,7 +30,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { LIKE } from '@/constants/graphql'
+import { LIKE } from '@/apollo/graphql'
 import { sharedUpdateLike } from '@/constants/shared'
 
 import SearchTemplate from '@/components/templates/SearchTemplate.vue'

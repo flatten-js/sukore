@@ -1,4 +1,4 @@
-import { LIKE } from '@/constants/graphql'
+import { LIKE } from '@/apollo/graphql'
 
 export const sharedUpdateLike = ($store, $apollo, media) => {
   $store.commit('updateMediaListState', { tid: media.id })

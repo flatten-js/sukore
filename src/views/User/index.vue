@@ -18,7 +18,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { FAVE, LIKE } from '@/constants/graphql'
+import { FAVE, LIKE } from '@/apollo/graphql'
 
 import UserTemplate from '@/components/templates/UserTemplate.vue'
 import UserDetailsCatch from '@/components/organisms/UserDetailsCatch.vue'
