@@ -7,7 +7,7 @@
         :type="media.entities.type"
         :src="media.entities.thumbnail.src"
         :screenName="media.screenName"
-        :image-count="media.size"
+        :image-count="media.entities.length"
         :thumbnail-size="media.entities.thumbnail.size"
         :state="media.state"
         @like-click="updateLike"

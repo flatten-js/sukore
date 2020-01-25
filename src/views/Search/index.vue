@@ -5,11 +5,11 @@
         //- ToDo: ifを使わず初期化処理
         template(v-if="searchResult.masthead")
           thumbnail-masthead(
-            :url="searchResult.masthead.src[0]"
+            :url="searchResult.masthead.entities.thumbnail.src"
             :id="searchResult.masthead.id"
             :query="query"
             :text="searchResult.masthead.text"
-            :image-count="searchResult.masthead.size"
+            :image-count="searchResult.masthead.entities.length"
             :state="searchResult.masthead.state"
             @click-like="updateLike"
             )
@@ -19,10 +19,10 @@
             thumbnail-box(
               :key="media.id"
               :id="media.id"
-              :src="media.src[0]"
+              :src="media.entities.thumbnail.src"
               :screenName="media.screenName"
-              :image-count="media.size"
-              :thumbnail-size="media.thumbnailSize"
+              :image-count="media.entities.length"
+              :thumbnail-size="media.entities.thumbnail.size"
               :state="media.state"
               @like-click="updateLike"
               )
@@ -63,7 +63,7 @@ export default {
   },
   apollo: {
     likes: {
-      query: LIKE.GET.ALL,
+      query: LIKE.ALL,
       async result({ data }, key) {
         if (this.init[key]) return
         this.init = { ...this.init, [key]: true }

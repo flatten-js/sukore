@@ -20,7 +20,7 @@
               :src="src"
               )
       .image-more
-        template(v-if="size > 1 && limit")
+        template(v-if="length > 1 && limit")
           material-button(
             tag="a"
             href="#"
@@ -108,7 +108,7 @@ export default {
       type: String,
       required: true
     },
-    size: {
+    length: {
       type: Number,
       required: true
     }

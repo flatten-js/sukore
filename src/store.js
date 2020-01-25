@@ -146,7 +146,6 @@ export default new Vuex.Store({
             icon: obj.user.profile_image_url_https.replace('normal', '400x400'),
             name: obj.user.name,
             screenName: obj.user.screen_name,
-            src: obj.extended_entities.media.map(media => media.media_url_https),
             urlList: obj.entities.urls,
             text: obj.text,
             created: obj.created_at,
@@ -156,16 +155,13 @@ export default new Vuex.Store({
                 src: obj.extended_entities.media[0].media_url_https,
                 size: obj.extended_entities.media[0].sizes.small
               },
-              media: {
-                src: obj.extended_entities.media[0].type.match('photo')
-                ? obj.extended_entities.media.map(media => media.media_url_https)
-                : obj.extended_entities.media[0].video_info.variants.filter(variant => variant.content_type === 'video/mp4')[0].url,
-                sizes: obj.extended_entities.media.map(media => media.sizes.medium)
-              }
+              src: obj.extended_entities.media[0].type.match('photo')
+              ? obj.extended_entities.media.map(media => media.media_url_https)
+              : obj.extended_entities.media[0].video_info.variants.filter(variant => variant.content_type === 'video/mp4')[0].url,
+              sizes: obj.extended_entities.media.map(media => media.sizes.medium),
+              length: obj.extended_entities.media.length
             },
             retweetedStatus: false,
-            size: obj.extended_entities.media.length,
-            thumbnailSize: obj.extended_entities.media[0].sizes.small,
             state: false
           }
 

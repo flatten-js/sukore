@@ -84,7 +84,7 @@ export default {
     },
     photo() {
       const { count, mediaFromId } = this
-      const media = mediaFromId.entities.media
+      const media = mediaFromId.entities
       const i = count - 1
 
       return {
