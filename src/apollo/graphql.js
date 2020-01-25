@@ -5,17 +5,21 @@ export const LIKE = {
     query likes {
       likes {
         tid
+        data
       }
     }
   `,
   ADD: gql`
     mutation createLike (
       $tid: String
+      $data: Json
     ) {
       createLike ( data: {
         tid: $tid
+        data: $data
       }) {
         tid
+        data
       }
     }
   `,

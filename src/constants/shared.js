@@ -29,7 +29,8 @@ export const sharedUpdateLike = ($store, $apollo, media) => {
     $apollo.mutate({
       mutation: LIKE.ADD,
       variables: {
-        tid: media.id
+        tid: media.id,
+        data: media
       },
       update: (store, { data: { createLike } }) => {
         const data = store.readQuery({ query: LIKE.ALL })
@@ -40,7 +41,8 @@ export const sharedUpdateLike = ($store, $apollo, media) => {
         __typename: 'Mutation',
         createLike: {
           __typename: 'Like',
-          tid: media.id
+          tid: media.id,
+          data: media
         }
       }
     })
