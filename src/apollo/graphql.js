@@ -2,35 +2,72 @@ import gql from 'graphql-tag'
 
 export const LIKE = {
   ALL: gql`
-    query likes {
-      likes {
+    query likes (
+      $screenName: String!
+    ) {
+      likes (
+        where: {
+          usrs_some: {
+            screenName: $screenName
+          }
+        }
+      ) {
         tid
         data
       }
     }
   `,
-  ADD: gql`
-    mutation createLike (
-      $tid: String
-      $data: Json
+  UPSERT: gql`
+    mutation upsertLike (
+      $screenName: String!
+      $tid: String!
+      $data: Json!
     ) {
-      createLike ( data: {
-        tid: $tid
-        data: $data
-      }) {
+      upsertLike (
+        where: {
+          tid: $tid
+        }
+        create: {
+          tid: $tid
+          data: $data
+          usrs: {
+            connect: {
+              screenName: $screenName
+            }
+          }
+        }
+        update: {
+          usrs: {
+            connect: {
+              screenName: $screenName
+            }
+          }
+        }
+      ) {
         tid
         data
       }
     }
   `,
-  REMOVE: gql`
-    mutation deleteManyLikes (
-      $tid: String
+  DIS_CONNECT: gql`
+    mutation updateLike (
+      $screenName: String!
+      $tid: String!
     ) {
-      deleteManyLikes (where: {
-        tid: $tid
-      }) {
-        count
+      updateLike (
+        data: {
+          usrs: {
+            disconnect: {
+              screenName: $screenName
+            }
+          }
+        }
+        where: {
+          tid: $tid
+        }
+      ) {
+        tid
+        data
       }
     }
   `
@@ -38,31 +75,67 @@ export const LIKE = {
 
 export const FAVE = {
   ALL: gql`
-    query faves {
-      faves {
-        screenName
-      }
-    }
-  `,
-  ADD: gql`
-    mutation createFave (
+    query faves (
       $screenName: String!
     ) {
-      createFave (data: {
-        screenName: $screenName
-      }) {
-        screenName
+      faves (
+        where: {
+          usrs_some: {
+            screenName: $screenName
+          }
+        }
+      ) {
+        uid
       }
     }
   `,
-  REMOVE: gql`
-    mutation deleteManyFaves (
-      $screenName: String
+  UPSERT: gql`
+    mutation upsertFave (
+      $screenName: String!
+      $uid: String!
     ) {
-      deleteManyFaves (where: {
-        screenName: $screenName
-      }) {
-        count
+      upsertFave (
+        where: {
+          uid: $uid
+        }
+        create: {
+          uid: $uid
+          usrs: {
+            connect: {
+              screenName: $screenName
+            }
+          }
+        }
+        update: {
+          usrs: {
+            connect: {
+              screenName: $screenName
+            }
+          }
+        }
+      ) {
+        uid
+      }
+    }
+  `,
+  DIS_CONNECT: gql`
+    mutation updateFave (
+      $screenName: String!
+      $uid: String!
+    ) {
+      updateFave (
+        data: {
+          usrs: {
+            disconnect: {
+              screenName: $screenName
+            }
+          }
+        }
+        where: {
+          uid: $uid
+        }
+      ) {
+        uid
       }
     }
   `

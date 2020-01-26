@@ -19,6 +19,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { FAVE, LIKE } from '@/apollo/graphql'
+import { sharedUpdateFave } from '@/constants/shared'
 
 import UserTemplate from '@/components/templates/UserTemplate.vue'
 import UserDetailsCatch from '@/components/organisms/UserDetailsCatch.vue'
@@ -52,27 +53,38 @@ export default {
     }
   },
   apollo: {
-    likes: {
-      query: LIKE.ALL,
-      result({ data }, key) {
-        if (this.init[key]) return
-        this.init = { ...this.init, [key]: true }
-
-        this.initUser(this.screenName, 100, true, data.likes)
-      }
-    },
     faves: {
       query: FAVE.ALL,
+      variables() {
+        return {
+          screenName: this.auth.screenName
+        }
+      },
       result({ data }, key) {
         if (this.init[key]) return
         this.init = { ...this.init, [key]: true }
 
-        this.initFave(this.screenName, data.faves)
+        this.initUserData(this.screenName, data.faves)
+      }
+    },
+    likes: {
+      query: LIKE.ALL,
+      variables() {
+        return {
+          screenName: this.auth.screenName
+        }
+      },
+      result({ data }, key) {
+        if (this.init[key]) return
+        this.init = { ...this.init, [key]: true }
+
+        this.initUserMediaData(this.screenName, 100, true, data.likes)
       }
     }
   },
   computed: {
     ...mapGetters([
+      'auth',
       'user'
     ]),
     userTabItems() {
@@ -99,70 +111,24 @@ export default {
     '$route.params.screenName'(to, from) {
       if (to === from) return
 
-      this.initUser(to, 100, true, this.likes)
-      this.initFave(to, this.faves)
+      this.initUserData(to, this.faves)
+      this.initUserMediaData(to, 100, true, this.likes)
     }
   },
+  created() {
+    this.$store.commit('initMediaList')
+  },
   methods: {
-    async initUser(screenName, count, excludeReplies, likes) {
-      this.$store.commit('initMediaList')
-      this.$store.dispatch('userSearch', { screenName: this.screenName })
+    async initUserData(screenName, faves) {
+      await this.$store.dispatch('userSearch', { screenName })
+      await this.$store.commit('initFave', { uid: this.user.id, faves })
+    },
+    async initUserMediaData(screenName, count, excludeReplies, likes) {
       await this.$store.dispatch('userTimelineSearch', { screenName, count, excludeReplies })
       await this.$store.commit('initMediaListState', { likes })
     },
-    initFave(screenName, faves) {
-      this.$store.commit('initFave', { screenName, faves })
-    },
     updateFave() {
-      const { screenName, user } = this
-
-      this.$store.commit('updateFave')
-
-      if (user.fave) {
-        this.$apollo.mutate({
-          mutation: FAVE.REMOVE,
-          variables: {
-            screenName: screenName
-          },
-          update: (store) => {
-            const data = store.readQuery({ query: FAVE.ALL })
-            data.faves = data.faves.filter(fave => fave.screenName !== screenName)
-            store.writeQuery({ query: FAVE.ALL, data })
-          },
-          optimisticResponse: {
-            __typename: 'Mutation',
-            deleteManyFaves: {
-              __typename: 'Fave',
-              count: 0
-            }
-          }
-        })
-        .catch(() => {
-          this.$store.commit('updateFave')
-        })
-      } else {
-        this.$apollo.mutate({
-          mutation: FAVE.ADD,
-          variables: {
-            screenName: screenName
-          },
-          update: (store, { data: { createFave } }) => {
-            const data = store.readQuery({ query: FAVE.ALL })
-            data.faves.push(createFave)
-            store.writeQuery({ query: FAVE.ALL, data })
-          },
-          optimisticResponse: {
-            __typename: 'Mutation',
-            createFave: {
-              __typename: 'Fave',
-              screenName: screenName
-            }
-          }
-        })
-        .catch(() => {
-          this.$store.commit('updateFave')
-        })
-      }
+      sharedUpdateFave(this.$store, this.$apollo, this.auth.screenName, this.user)
     }
   }
 }

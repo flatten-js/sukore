@@ -6,6 +6,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    auth: {
+      screenName: 'this_world_girl'
+    },
     user: {
       masthead: '',
       icon: '',
@@ -36,7 +39,7 @@ export default new Vuex.Store({
     initFave(state, payload) {
       state.user = {
         ...state.user,
-        fave: payload.faves.some(fave => fave.screenName === payload.screenName)
+        fave: payload.faves.some(fave => fave.uid === payload.uid)
       }
     },
     updateFave(state) {
@@ -70,12 +73,9 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    user: ({ user }) => {
-      return user
-    },
-    currentId: ({ currentId }) => {
-      return currentId
-    },
+    auth: ({ auth }) => auth,
+    user: ({ user }) => user,
+    currentId: ({ currentId }) => currentId,
     noMediaListDuplicate: ({ mediaList }) => {
       return mediaList.filter((media, index, self) => {
         return self.findIndex(findMedia => findMedia.id === media.id) === index
@@ -103,6 +103,7 @@ export default new Vuex.Store({
         const user = res.data
 
         payload.user = {
+          id: user.id_str,
           masthead: user.profile_banner_url,
           icon: user.profile_image_url_https.replace('normal', '400x400'),
           name: user.name,
