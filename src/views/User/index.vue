@@ -19,7 +19,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { FAVE, LIKE } from '@/apollo/graphql'
-import { sharedUpdateFave } from '@/constants/shared'
+import { shareUpdateFave } from '@/apollo/graphql/used/shares'
 
 import UserTemplate from '@/components/templates/UserTemplate.vue'
 import UserDetailsCatch from '@/components/organisms/UserDetailsCatch.vue'
@@ -128,7 +128,7 @@ export default {
       await this.$store.commit('initMediaListState', { likes })
     },
     updateFave() {
-      sharedUpdateFave(this.$store, this.$apollo, this.auth.screenName, this.user)
+      shareUpdateFave(this.$store, this.$apollo, this.auth.screenName, this.user)
     }
   }
 }

@@ -1,6 +1,6 @@
 import { LIKE, FAVE } from '@/apollo/graphql'
 
-export const sharedUpdateLike = ($store, $apollo, screenName, media) => {
+export const shareUpdateLike = ($store, $apollo, screenName, media) => {
   const querys = { query: LIKE.ALL, variables: { screenName } }
 
   $store.commit('updateMediaListState', { tid: media.id })
@@ -57,7 +57,7 @@ export const sharedUpdateLike = ($store, $apollo, screenName, media) => {
   }
 }
 
-export const sharedUpdateFave = ($store, $apollo, screenName, user) => {
+export const shareUpdateFave = ($store, $apollo, screenName, user) => {
   const querys = { query: FAVE.ALL, variables: { screenName } }
 
   $store.commit('updateFave')

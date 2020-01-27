@@ -31,7 +31,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { LIKE } from '@/apollo/graphql'
-import { sharedUpdateLike } from '@/constants/shared'
+import { shareUpdateLike } from '@/apollo/graphql/used/shares'
 
 import SearchTemplate from '@/components/templates/SearchTemplate.vue'
 import ThumbnailArea from '@/components/organisms/ThumbnailArea.vue'
@@ -114,7 +114,7 @@ export default {
     },
     updateLike(id) {
       const media = this.noMediaListDuplicate.find(media => media.id === id)
-      sharedUpdateLike(this.$store, this.$apollo, media)
+      shareUpdateLike(this.$store, this.$apollo, media)
     }
   }
 }

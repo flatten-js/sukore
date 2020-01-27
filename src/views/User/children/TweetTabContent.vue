@@ -16,7 +16,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { sharedUpdateLike } from '@/constants/shared'
+import { shareUpdateLike } from '@/apollo/graphql/used/shares'
 
 import ThumbnailBoxGrid from '@/components/organisms/ThumbnailBoxGrid.vue'
 import ThumbnailBox from '@/components/molecules/ThumbnailBox.vue'
@@ -35,7 +35,7 @@ export default {
   methods: {
     updateLike(id) {
       const media = this.tweetFilter.find(media => media.id === id)
-      sharedUpdateLike(this.$store, this.$apollo, this.auth.screenName, media)
+      shareUpdateLike(this.$store, this.$apollo, this.auth.screenName, media)
     }
   }
 }
