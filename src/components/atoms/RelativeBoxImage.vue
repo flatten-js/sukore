@@ -93,7 +93,7 @@ export default {
 
       &.-animation-fade {
         opacity: 0;
-        transition: all ease-out .25s;
+        transition: all ease-out .4s;
       }
 
       &[lazy=loaded] {
