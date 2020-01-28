@@ -94,7 +94,7 @@ export default new Vuex.Store({
         user: null
       }
 
-      await axios.get('http://localhost:3000/api/twitter/users/show', {
+      await axios.get('/api/twitter/users/show', {
         params: {
           screen_name: screenName
         }
@@ -131,7 +131,7 @@ export default new Vuex.Store({
         mediaList: []
       }
 
-      await axios.get('http://localhost:3000/api/twitter/search', {
+      await axios.get('/api/twitter/statuses/user/timeline', {
         params: {
           screen_name: screenName,
           count: count,
@@ -191,7 +191,7 @@ export default new Vuex.Store({
         currentId: ''
       }
 
-      await axios.get('http://localhost:3000/api/twitter/search/tweets', {
+      await axios.get('/api/twitter/search/tweets', {
         params: {
           q: query,
           count,
