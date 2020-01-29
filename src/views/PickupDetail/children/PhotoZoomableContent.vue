@@ -11,7 +11,7 @@
         img.zoomable-area__photo(
           ref="photo"
           :style="zoomTransformStyle"
-          :src="photo.src"
+          :src="photo.src | convertLargeSize"
           @transitionend="zoomingTransitionEnd"
           )
     template(#controls)
@@ -36,6 +36,11 @@ export default {
     PhotoZoomableArea,
     NavigationTools,
     ZoomControls
+  },
+  filters: {
+    convertLargeSize(src) {
+      return `${src}?name=large`
+    }
   },
   props: {
     id: {
@@ -89,8 +94,8 @@ export default {
 
       return {
         src: media.src[i],
-        w: media.sizes[i].w,
-        h: media.sizes[i].h
+        w: media.sizes[i].large.w,
+        h: media.sizes[i].large.h
       }
     },
     calcPhotoSize() {
