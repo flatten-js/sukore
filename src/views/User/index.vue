@@ -60,11 +60,12 @@ export default {
           screenName: this.auth.screenName
         }
       },
-      result({ data }, key) {
+      async result({ data }, key) {
         if (this.init[key]) return
         this.init = { ...this.init, [key]: true }
 
-        this.initUserData(this.screenName, data.faves)
+        await this.$nextTick()
+        await this.initUserData(this.screenName, data.faves)
       }
     },
     likes: {
@@ -74,11 +75,12 @@ export default {
           screenName: this.auth.screenName
         }
       },
-      result({ data }, key) {
+      async result({ data }, key) {
         if (this.init[key]) return
         this.init = { ...this.init, [key]: true }
 
-        this.initUserMediaData(this.screenName, 100, true, data.likes)
+        await this.$nextTick()
+        await this.initUserMediaData(this.screenName, 100, true, data.likes)
       }
     }
   },
