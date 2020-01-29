@@ -56,6 +56,10 @@ export default new Router({
       ]
     },
     {
+      path: '/i/likes',
+      component: () => import('@/views/Likes')
+    },
+    {
       path: '/search/:query',
       component: () => import('@/views/Search'),
       props: route => ({
