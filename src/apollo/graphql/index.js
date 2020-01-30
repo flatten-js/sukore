@@ -3,12 +3,12 @@ import gql from 'graphql-tag'
 export const LIKE = {
   ALL: gql`
     query likes (
-      $screenName: String!
+      $iid: String!
     ) {
       likes (
         where: {
           usrs_some: {
-            screenName: $screenName
+            iid: $iid
           }
         }
       ) {
@@ -19,7 +19,7 @@ export const LIKE = {
   `,
   UPSERT: gql`
     mutation upsertLike (
-      $screenName: String!
+      $iid: String!
       $tid: String!
       $data: Json!
     ) {
@@ -32,14 +32,14 @@ export const LIKE = {
           data: $data
           usrs: {
             connect: {
-              screenName: $screenName
+              iid: $iid
             }
           }
         }
         update: {
           usrs: {
             connect: {
-              screenName: $screenName
+              iid: $iid
             }
           }
         }
@@ -51,14 +51,14 @@ export const LIKE = {
   `,
   DIS_CONNECT: gql`
     mutation updateLike (
-      $screenName: String!
+      $iid: String!
       $tid: String!
     ) {
       updateLike (
         data: {
           usrs: {
             disconnect: {
-              screenName: $screenName
+              iid: $iid
             }
           }
         }
@@ -76,12 +76,12 @@ export const LIKE = {
 export const FAVE = {
   ALL: gql`
     query faves (
-      $screenName: String!
+      $iid: String!
     ) {
       faves (
         where: {
           usrs_some: {
-            screenName: $screenName
+            iid: $iid
           }
         }
       ) {
@@ -91,7 +91,7 @@ export const FAVE = {
   `,
   UPSERT: gql`
     mutation upsertFave (
-      $screenName: String!
+      $iid: String!
       $uid: String!
     ) {
       upsertFave (
@@ -102,14 +102,14 @@ export const FAVE = {
           uid: $uid
           usrs: {
             connect: {
-              screenName: $screenName
+              iid: $iid
             }
           }
         }
         update: {
           usrs: {
             connect: {
-              screenName: $screenName
+              iid: $iid
             }
           }
         }
@@ -120,14 +120,14 @@ export const FAVE = {
   `,
   DIS_CONNECT: gql`
     mutation updateFave (
-      $screenName: String!
+      $iid: String!
       $uid: String!
     ) {
       updateFave (
         data: {
           usrs: {
             disconnect: {
-              screenName: $screenName
+              iid: $iid
             }
           }
         }

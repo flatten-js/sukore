@@ -57,7 +57,7 @@ export default {
       query: FAVE.ALL,
       variables() {
         return {
-          screenName: this.auth.screenName
+          iid: this.oauth.iid
         }
       },
       async result({ data }, key) {
@@ -72,7 +72,7 @@ export default {
       query: LIKE.ALL,
       variables() {
         return {
-          screenName: this.auth.screenName
+          iid: this.oauth.iid
         }
       },
       async result({ data }, key) {
@@ -86,7 +86,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'auth',
+      'oauth',
       'user'
     ]),
     userTabItems() {
@@ -130,7 +130,7 @@ export default {
       await this.$store.commit('initMediaListState', { likes })
     },
     updateFave() {
-      shareUpdateFave(this.$store, this.$apollo, this.auth.screenName, this.user)
+      shareUpdateFave(this.$store, this.$apollo, this.oauth.iid, this.user)
     }
   }
 }

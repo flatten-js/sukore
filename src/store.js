@@ -6,8 +6,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    auth: {
-      screenName: 'this_world_girl'
+    oauth: {
+      iid: '1035366824412471296'
     },
     user: {
       masthead: '',
@@ -73,7 +73,7 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    auth: ({ auth }) => auth,
+    oauth: ({ oauth }) => oauth,
     user: ({ user }) => user,
     currentId: ({ currentId }) => currentId,
     noMediaListDuplicate: ({ mediaList }) => {

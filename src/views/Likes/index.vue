@@ -44,7 +44,7 @@ export default {
       query: LIKE.ALL,
       variables() {
         return {
-          screenName: this.auth.screenName
+          iid: this.oauth.iid
         }
       },
       async result({ data }, key) {
@@ -60,7 +60,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'auth',
+      'oauth',
       'noMediaListDuplicate'
     ])
   },
@@ -74,7 +74,7 @@ export default {
     },
     updateLike(id) {
       const media = this.noMediaListDuplicate.find(media => media.id === id)
-      shareUpdateLike(this.$store, this.$apollo, this.auth.screenName, media)
+      shareUpdateLike(this.$store, this.$apollo, this.oauth.iid, media)
     }
   }
 }

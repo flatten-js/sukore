@@ -28,14 +28,14 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'auth',
+      'oauth',
       'tweetFilter'
     ])
   },
   methods: {
     updateLike(id) {
       const media = this.tweetFilter.find(media => media.id === id)
-      shareUpdateLike(this.$store, this.$apollo, this.auth.screenName, media)
+      shareUpdateLike(this.$store, this.$apollo, this.oauth.iid, media)
     }
   }
 }

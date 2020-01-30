@@ -1,7 +1,7 @@
 import { LIKE, FAVE } from '@/apollo/graphql'
 
-export const shareUpdateLike = ($store, $apollo, screenName, media) => {
-  const querys = { query: LIKE.ALL, variables: { screenName } }
+export const shareUpdateLike = ($store, $apollo, iid, media) => {
+  const querys = { query: LIKE.ALL, variables: { iid } }
 
   $store.commit('updateMediaListState', { tid: media.id })
 
@@ -9,7 +9,7 @@ export const shareUpdateLike = ($store, $apollo, screenName, media) => {
     $apollo.mutate({
       mutation: LIKE.DIS_CONNECT,
       variables: {
-        screenName,
+        iid,
         tid: media.id
       },
       update: (store) => {
@@ -33,7 +33,7 @@ export const shareUpdateLike = ($store, $apollo, screenName, media) => {
     $apollo.mutate({
       mutation: LIKE.UPSERT,
       variables: {
-        screenName,
+        iid,
         tid: media.id,
         data: media
       },
@@ -57,8 +57,8 @@ export const shareUpdateLike = ($store, $apollo, screenName, media) => {
   }
 }
 
-export const shareUpdateFave = ($store, $apollo, screenName, user) => {
-  const querys = { query: FAVE.ALL, variables: { screenName } }
+export const shareUpdateFave = ($store, $apollo, iid, user) => {
+  const querys = { query: FAVE.ALL, variables: { iid } }
 
   $store.commit('updateFave')
 
@@ -66,7 +66,7 @@ export const shareUpdateFave = ($store, $apollo, screenName, user) => {
     $apollo.mutate({
       mutation: FAVE.DIS_CONNECT,
       variables: {
-        screenName,
+        iid,
         uid: user.id
       },
       update: (store) => {
@@ -89,7 +89,7 @@ export const shareUpdateFave = ($store, $apollo, screenName, user) => {
     $apollo.mutate({
       mutation: FAVE.UPSERT,
       variables: {
-        screenName,
+        iid,
         uid: user.id
       },
       update: (store, { data: { upsertFave } }) => {
