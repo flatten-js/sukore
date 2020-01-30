@@ -1,7 +1,6 @@
 <template lang="pug">
   lazy-component.relative-box-image(
     v-lazy-container="initVLazyContainer"
-    @show="setBackgroundDominant"
     )
     img.relative-box-image__body(
       :class="propsClassGenerator"
@@ -10,8 +9,6 @@
 </template>
 
 <script>
-import ColorThief from 'colorthief'
-
 export default {
   filters: {
     convertReduceSize(src) {
@@ -54,20 +51,6 @@ export default {
       return {
         [`-animation-${animation}`]: animation
       }
-    }
-  },
-  methods: {
-    setBackgroundDominant({ $el }) {
-      const colorThief = new ColorThief()
-      const image = new Image(this.sizes.w, this.sizes.h)
-      image.crossOrigin = 'Anonymous'
-
-      image.addEventListener('load', () => {
-        const dominant = colorThief.getColor(image)
-        $el.style.backgroundColor = `rgb(${dominant})`
-      })
-
-      image.src = this.src
     }
   }
 }
