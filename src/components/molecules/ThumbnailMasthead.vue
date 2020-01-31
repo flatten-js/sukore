@@ -10,6 +10,7 @@
         text-badge(
           name="collections"
           :text="imageCount"
+          size="small"
           )
     .thumbnail-masthead-body
       .thumbnail-masthead-description
@@ -27,13 +28,15 @@
             size="small"
             )
       .thumbnail-masthead-body__like(
-        :class="{ '-active': state }"
-        @click.prevent="clickLikeIcon"
+        @click.prevent="emittingLike"
         )
-        svg-sprite(
+        material-button(
+          type="othello"
+          tag="svg"
           name="like"
-          size="large"
-          shadow
+          color="like"
+          horizon="short"
+          :state="state"
           )
 </template>
 
@@ -41,14 +44,14 @@
 import HeadBanner from '@/components/atoms/HeadBanner.vue'
 import TextBadge from '@/components/atoms/TextBadge.vue'
 import MultiLineText from '@/components/atoms/MultiLineText.vue'
-import SvgSprite from '@/components/atoms/SvgSprite.vue'
+import MaterialButton from '@/components/atoms/MaterialButton.vue'
 
 export default {
   components: {
     HeadBanner,
     TextBadge,
     MultiLineText,
-    SvgSprite
+    MaterialButton
   },
   filters: {
     convertTextOmitted(text, limit = 30) {
@@ -79,8 +82,8 @@ export default {
     }
   },
   methods: {
-    clickLikeIcon() {
-      this.$emit('clickLikeIcon', this.id)
+    emittingLike() {
+      this.$emit('like-click', this.id)
     }
   }
 }

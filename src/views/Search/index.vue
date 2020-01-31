@@ -3,19 +3,20 @@
     thumbnail-area
       template(#masthead)
         //- ToDo: ifを使わず初期化処理
-        template(v-if="searchResult.masthead")
+        template(v-if="searchMedia.masthead")
           thumbnail-masthead(
-            :url="searchResult.masthead.entities.thumbnail.src"
-            :id="searchResult.masthead.id"
+            :id="searchMedia.masthead.id"
+            :url="searchMedia.masthead.entities.thumbnail.src"
+            :screenName="searchMedia.masthead.screenName"
             :query="query"
-            :text="searchResult.masthead.text"
-            :image-count="searchResult.masthead.entities.length"
-            :state="searchResult.masthead.state"
-            @click-like="updateLike"
+            :text="searchMedia.masthead.text"
+            :image-count="searchMedia.masthead.entities.length"
+            :state="searchMedia.masthead.state"
+            @like-click="updateLike"
             )
       template(#contents)
         thumbnail-box-grid
-          template(v-for="media in searchResult.body")
+          template(v-for="media in searchMedia.body")
             thumbnail-box(
               :key="media.id"
               :id="media.id"
@@ -64,24 +65,27 @@ export default {
   apollo: {
     likes: {
       query: LIKE.ALL,
+      variables() {
+        return {
+          iid: this.oauth.iid
+        }
+      },
       async result({ data }, key) {
         if (this.init[key]) return
         this.init = { ...this.init, [key]: true }
 
-        await this.$store.dispatch('tweetsSearch', {
-          query: this.query,
-          count: 100
-        })
-        await this.$store.commit('initMediaListState', { likes: data.likes })
+        await this.$nextTick()
+        await this.initTweetMediaLisDatat(this.query, 100, data.likes)
       }
     }
   },
   computed: {
     ...mapGetters([
+      'oauth',
       'noMediaListDuplicate',
       'currentId'
     ]),
-    searchResult() {
+    searchMedia() {
       const [masthead, ...body] = this.noMediaListDuplicate
 
       return {
@@ -90,10 +94,17 @@ export default {
       }
     }
   },
+  created() {
+    this.$store.commit('initMediaList')
+  },
   mounted() {
     this.$el.addEventListener('scroll', this.swaipToRefresh)
   },
   methods: {
+    async initTweetMediaLisDatat(query, count, likes) {
+      await this.$store.dispatch('tweetsSearch', { query, count })
+      await this.$store.commit('initMediaListState', { likes })
+    },
     async swaipToRefresh() {
       const el = this.$el,
             elHeight = el.scrollHeight,
@@ -114,7 +125,7 @@ export default {
     },
     updateLike(id) {
       const media = this.noMediaListDuplicate.find(media => media.id === id)
-      shareUpdateLike(this.$store, this.$apollo, media)
+      shareUpdateLike(this.$store, this.$apollo, this.oauth.iid, media)
     }
   }
 }
