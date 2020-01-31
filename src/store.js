@@ -10,6 +10,7 @@ export default new Vuex.Store({
       iid: '1035366824412471296'
     },
     user: {
+      id: '',
       masthead: '',
       icon: '',
       name: '',
@@ -39,7 +40,7 @@ export default new Vuex.Store({
     initFave(state, payload) {
       state.user = {
         ...state.user,
-        fave: payload.faves.some(fave => fave.uid === payload.uid)
+        fave: payload.faves.some(fave => fave.uid === state.user.id)
       }
     },
     updateFave(state) {
@@ -82,10 +83,10 @@ export default new Vuex.Store({
       })
     },
     tweetFilter: (state, { noMediaListDuplicate }) => {
-      return noMediaListDuplicate.filter(obj => !obj.retweetedStatus)
+      return noMediaListDuplicate.filter(obj => !obj.retweeted)
     },
     retweetFilter: (state, { noMediaListDuplicate }) => {
-      return noMediaListDuplicate.filter(obj => obj.retweetedStatus)
+      return noMediaListDuplicate.filter(obj => obj.retweeted)
     }
   },
   actions: {
@@ -162,7 +163,7 @@ export default new Vuex.Store({
               sizes: obj.extended_entities.media.map(media => media.sizes),
               length: obj.extended_entities.media.length
             },
-            retweetedStatus: false,
+            retweeted: false,
             state: false
           }
 
@@ -173,7 +174,7 @@ export default new Vuex.Store({
               name: obj.retweeted_status.user.name,
               screenName: obj.retweeted_status.user.screen_name,
               text: obj.retweeted_status.text,
-              retweetedStatus: obj.retweeted_status.user.screen_name !== screenName
+              retweeted: obj.retweeted_status.user.screen_name !== screenName
             }
 
             mediaObjectTemplate = { ...mediaObjectTemplate, ...updateMediaObject }
@@ -222,7 +223,7 @@ export default new Vuex.Store({
               sizes: obj.extended_entities.media.map(media => media.sizes),
               length: obj.extended_entities.media.length
             },
-            retweetedStatus: false,
+            retweeted: false,
             state: false
           }
 
@@ -233,7 +234,7 @@ export default new Vuex.Store({
               name: obj.retweeted_status.user.name,
               screenName: obj.retweeted_status.user.screen_name,
               text: obj.retweeted_status.text,
-              retweetedStatus: obj.retweeted_status.user.screen_name !== getters.user.screenName
+              retweeted: obj.retweeted_status.user.screen_name !== getters.user.screenName
             }
 
             mediaObjectTemplate = { ...mediaObjectTemplate, ...updateMediaObject }

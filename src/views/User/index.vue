@@ -123,7 +123,7 @@ export default {
   methods: {
     async initUserData(screenName, faves) {
       await this.$store.dispatch('userSearch', { screenName })
-      await this.$store.commit('initFave', { uid: this.user.id, faves })
+      await this.$store.commit('initFave', { faves })
     },
     async initUserMediaData(screenName, count, excludeReplies, likes) {
       await this.$store.dispatch('userTimelineSearch', { screenName, count, excludeReplies })
