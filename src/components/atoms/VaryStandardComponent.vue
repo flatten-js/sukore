@@ -32,7 +32,7 @@ export default {
       type: String,
       default: 'width',
       validator(val) {
-        return ['width', 'height'].includes(val)
+        return ['width', 'height', 'all'].includes(val)
       }
     }
   },
@@ -73,6 +73,11 @@ export default {
 
     &.-standard-height {
       width: auto;
+      height: 100%;
+    }
+
+    &.-standard-all {
+      width: 100%;
       height: 100%;
     }
   }

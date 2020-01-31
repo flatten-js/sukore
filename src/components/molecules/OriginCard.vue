@@ -9,6 +9,7 @@
           tag="video"
           :type="type"
           :src="src"
+          standard="all"
           @click.native="videoPlayControl"
           )
       template(v-else)

@@ -16,7 +16,7 @@
             :id="mediaFromId.id"
             :screen-name="mediaFromId.screenName"
             :src="mediaFromId.entities.src"
-            :src-size="mediaFromId.entities.sizes[0]"
+            :src-size="mediaFromId.entities.sizes[0].medium"
             :length="mediaFromId.entities.length"
             :url-list="mediaFromId.urlList"
             :comment="mediaFromId.text"
