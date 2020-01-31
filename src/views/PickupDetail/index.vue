@@ -6,21 +6,21 @@
       image-details-card
         template(#head)
           user-details-bar(
-            :icon="mediaFromId.icon"
-            :name="mediaFromId.name"
-            :screen-name="mediaFromId.screenName"
+            :icon="foundMedia.icon"
+            :name="foundMedia.name"
+            :screen-name="foundMedia.screenName"
             )
         template(#body)
           origin-card(
-            :type="mediaFromId.entities.type"
-            :id="mediaFromId.id"
-            :screen-name="mediaFromId.screenName"
-            :src="mediaFromId.entities.src"
-            :src-size="mediaFromId.entities.sizes[0].medium"
-            :length="mediaFromId.entities.length"
-            :url-list="mediaFromId.urlList"
-            :comment="mediaFromId.text"
-            :created="mediaFromId.created"
+            :type="foundMedia.entities.type"
+            :id="foundMedia.id"
+            :screen-name="foundMedia.screenName"
+            :src="foundMedia.entities.src"
+            :src-size="foundMedia.entities.sizes[0].medium"
+            :length="foundMedia.entities.length"
+            :url-list="foundMedia.urlList"
+            :comment="foundMedia.text"
+            :created="foundMedia.created"
             )
 </template>
 
@@ -49,7 +49,7 @@ export default {
     ...mapGetters([
       'noMediaListDuplicate'
     ]),
-    mediaFromId() {
+    foundMedia() {
       return this.noMediaListDuplicate.find(media => media.id == this.id)
     }
   },

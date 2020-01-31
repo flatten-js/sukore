@@ -84,12 +84,12 @@ export default {
     ...mapGetters([
       'noMediaListDuplicate'
     ]),
-    mediaFromId() {
+    foundMedia() {
       return this.noMediaListDuplicate.find(media => media.id == this.id)
     },
     photo() {
-      const { count, mediaFromId } = this
-      const media = mediaFromId.entities
+      const { count, foundMedia } = this
+      const media = foundMedia.entities
       const i = count - 1
 
       return {
