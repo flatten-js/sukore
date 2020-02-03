@@ -47,10 +47,11 @@ export default {
           iid: this.oauth.iid
         }
       },
+      skip() {
+        return this.init.likes
+      },
       async result({ data }, key) {
-        if (this.init[key]) return
         this.init = { ...this.init, [key]: true }
-
         const mediaListFormat = data.likes.map(like => like.data)
 
         await this.$nextTick()

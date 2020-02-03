@@ -68,8 +68,10 @@ export default {
           iid: this.oauth.iid
         }
       },
+      skip() {
+        return this.init.faves
+      },
       async result({ data }, key) {
-        if (this.init[key]) return
         this.init = { ...this.init, [key]: true }
 
         await this.$nextTick()
@@ -83,8 +85,10 @@ export default {
           iid: this.oauth.iid
         }
       },
+      skip() {
+        return this.init.likes
+      },
       async result({ data }, key) {
-        if (this.init[key]) return
         this.init = { ...this.init, [key]: true }
 
         await this.$nextTick()
