@@ -10,6 +10,9 @@
       thumbnail-box-area
         template(#navigation)
           flex-tab-bar(:tab-items="userTabItems")
+        template(#loading)
+          template(v-if="loading.likes")
+            loader-box
         template(#content)
           transition(:name="transitionName")
             keep-alive
@@ -26,6 +29,7 @@ import UserDetailsCatch from '@/components/organisms/UserDetailsCatch.vue'
 import UserDetails from '@/components/molecules/UserDetails.vue'
 import ThumbnailBoxArea from '@/components/organisms/ThumbnailBoxArea.vue'
 import FlexTabBar from '@/components/molecules/FlexTabBar.vue'
+import LoaderBox from '@/components/molecules/LoaderBox.vue'
 
 export default {
   components: {
@@ -33,7 +37,8 @@ export default {
     UserDetailsCatch,
     UserDetails,
     ThumbnailBoxArea,
-    FlexTabBar
+    FlexTabBar,
+    LoaderBox
   },
   props: {
     screenName: {
@@ -46,6 +51,9 @@ export default {
       init: {
         faves: false,
         likes: false
+      },
+      loading: {
+        likes: true
       },
       faves: [],
       likes: [],
@@ -80,7 +88,8 @@ export default {
         this.init = { ...this.init, [key]: true }
 
         await this.$nextTick()
-        await this.initUserMediaData(this.screenName, 100, true, data.likes)
+        await this.initUserMediaData(this.screenName, 200, true, data.likes)
+        this.loading = { ...this.loading, [key]: false }
       }
     }
   },

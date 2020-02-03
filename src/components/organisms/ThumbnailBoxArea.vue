@@ -2,6 +2,8 @@
   section.thumbnail-box-area
     .thumbnail-box-area__navigation
       slot(name="navigation")
+    .thumbnail-box-area__loading
+      slot(name="loading")
     .thumbnail-box-area__content
       slot(name="content")
 </template>
