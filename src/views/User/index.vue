@@ -48,6 +48,9 @@ export default {
   },
   data() {
     return {
+      lifecycle: {
+        created: true
+      },
       init: {
         faves: false,
         likes: false
@@ -71,11 +74,9 @@ export default {
       skip() {
         return this.init.faves
       },
-      async result({ data }, key) {
-        this.init = { ...this.init, [key]: true }
-
-        await this.$nextTick()
-        await this.initUserData(this.screenName, data.faves)
+      result({ data }, key) {
+        this.queryInitReady(key)
+        this.initUserData(this.screenName, data.faves)
       }
     },
     likes: {
@@ -86,21 +87,21 @@ export default {
         }
       },
       skip() {
-        return this.init.likes
+        return this.lifecycle.created || this.init.likes
       },
       async result({ data }, key) {
-        this.init = { ...this.init, [key]: true }
+        this.queryInitReady(key)
 
-        await this.$nextTick()
         await this.initUserMediaData(this.screenName, 200, true, data.likes)
-        this.loading = { ...this.loading, [key]: false }
+        this.queryLoadingReady(key)
       }
     }
   },
   computed: {
     ...mapGetters([
       'oauth',
-      'user'
+      'user',
+      'media'
     ]),
     userTabItems() {
       const { screenName } = this
@@ -131,7 +132,15 @@ export default {
     }
   },
   created() {
-    this.$store.commit('initMediaList')
+    this.lifecycle = { created: false }
+
+    if (this.media.sender === this.screenName) {
+      this.queryInitReady('likes')
+      this.queryLoadingReady('likes')
+      return
+    }
+
+    this.$store.commit('initMedia')
   },
   methods: {
     async initUserData(screenName, faves) {
@@ -144,6 +153,12 @@ export default {
     },
     updateFave() {
       shareUpdateFave(this.$store, this.$apollo, this.oauth.iid, this.user)
+    },
+    queryInitReady(key) {
+      this.init = { ...this.init, [key]: true }
+    },
+    queryLoadingReady(key) {
+      this.loading = { [key]: false }
     }
   }
 }

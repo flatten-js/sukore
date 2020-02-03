@@ -66,11 +66,11 @@ export default {
     ])
   },
   created() {
-    this.$store.commit('initMediaList')
+    this.$store.commit('initMedia')
   },
   methods: {
     async initLikesMediaData(mediaList, likes) {
-      await this.$store.commit('addMediaList', { mediaList })
+      await this.$store.commit('addMedia', { mediaList })
       await this.$store.commit('initMediaListState', { likes })
     },
     updateLike(id) {

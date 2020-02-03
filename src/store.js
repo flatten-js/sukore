@@ -30,6 +30,10 @@ export default new Vuex.Store({
         link: ''
       }
     },
+    media: {
+      sender: '',
+      list: []
+    },
     mediaList: [],
     currentId: ''
   },
@@ -49,44 +53,53 @@ export default new Vuex.Store({
     updateCurrentId(state, payload) {
       state.currentId = payload.currentId
     },
-    initMediaList(state) {
-      if (!state.mediaList.length) return
-      state.mediaList = []
+    initMedia(state) {
+      state.media = {
+        sender: '',
+        list: []
+      }
     },
-    addMediaList({ mediaList }, payload) {
-      mediaList.push(...payload.mediaList)
+    addMedia(state, payload) {
+      state.media = {
+        sender: payload.screenName,
+        list: payload.mediaList
+      }
     },
-    updateMediaList(state, payload) {
-      state.mediaList = payload.mediaList
+    updateMedia(state, payload) {
+      state.media = {
+        ...state.media,
+        list: state.media.list.concat(payload.mediaList)
+      }
     },
-    initMediaListState({ mediaList }, payload) {
-      payload.likes.forEach(fav => {
-        const index = mediaList.findIndex(media => media.id === fav.tid)
+    initMediaListState({ media }, payload) {
+      payload.likes.forEach(like => {
+        const i = media.list.findIndex(media => media.id === like.tid)
 
-        if (index !== -1) {
-          mediaList.splice(index, 1, { ...mediaList[index], state: true })
+        if (i !== -1) {
+          media.list.splice(i, 1, { ...media.list[i], state: true })
         }
       })
     },
-    updateMediaListState({ mediaList }, payload) {
-      const index = mediaList.findIndex(media => media.id === payload.tid)
-      mediaList.splice(index, 1, { ...mediaList[index], state: !mediaList[index].state })
+    updateMediaListState({ media }, payload) {
+      const i = media.list.findIndex(media => media.id === payload.tid)
+      media.list.splice(i, 1, { ...media.list[i], state: !media.list[i].state })
     }
   },
   getters: {
     oauth: ({ oauth }) => oauth,
     user: ({ user }) => user,
+    media: ({ media }) => media,
     currentId: ({ currentId }) => currentId,
-    noMediaListDuplicate: ({ mediaList }) => {
-      return mediaList.filter((media, index, self) => {
-        return self.findIndex(findMedia => findMedia.id === media.id) === index
+    noMediaListDuplicate: ({ media }) => {
+      return media.list.filter((media, i, self) => {
+        return self.findIndex(findMedia => findMedia.id === media.id) === i
       })
     },
     tweetFilter: (state, { noMediaListDuplicate }) => {
-      return noMediaListDuplicate.filter(obj => !obj.retweeted)
+      return noMediaListDuplicate.filter(media => !media.retweeted)
     },
     retweetFilter: (state, { noMediaListDuplicate }) => {
-      return noMediaListDuplicate.filter(obj => obj.retweeted)
+      return noMediaListDuplicate.filter(media => media.retweeted)
     }
   },
   actions: {
@@ -129,6 +142,7 @@ export default new Vuex.Store({
     },
     async userTimelineSearch({ commit }, { screenName, count, excludeReplies }) {
       const payload = {
+        screenName,
         mediaList: []
       }
 
@@ -183,11 +197,12 @@ export default new Vuex.Store({
           payload.mediaList.push(mediaObjectTemplate)
         })
 
-        commit('updateMediaList', payload)
+        commit('addMedia', payload)
       })
     },
-    async tweetsSearch({ getters, commit }, { type = 'update', query, count, maxId }) {
+    async tweetsSearch({ getters, commit }, { type = 'add', query, count, maxId }) {
       const payload = {
+        screenName: '',
         mediaList: [],
         currentId: ''
       }
@@ -246,10 +261,10 @@ export default new Vuex.Store({
 
         const typeSwitch = {
           add() {
-            commit('addMediaList', payload)
+            commit('addMedia', payload)
           },
           update() {
-            commit('updateMediaList', payload)
+            commit('updateMedia', payload)
           }
         }
 

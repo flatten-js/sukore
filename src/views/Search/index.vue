@@ -97,7 +97,7 @@ export default {
     }
   },
   created() {
-    this.$store.commit('initMediaList')
+    this.$store.commit('initMedia')
   },
   mounted() {
     this.$el.addEventListener('scroll', this.swaipToRefresh)
@@ -115,7 +115,7 @@ export default {
 
       if (elHeight === Math.round(windowHeight + scrollY)) {
         await this.$store.dispatch('tweetsSearch', {
-          type: 'add',
+          type: 'update',
           query: this.query,
           count: 200,
           maxId: this.currentId
