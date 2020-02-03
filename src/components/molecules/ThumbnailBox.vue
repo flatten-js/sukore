@@ -124,6 +124,7 @@ export default {
 <style lang="scss" scoped>
   .thumbnail-box {
     position: relative;
+    background-color: #eee;
 
     &.-column-2 {
       width: 50%;

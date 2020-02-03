@@ -41,7 +41,7 @@ export default {
   .user-icon {
     border-radius: 50%;
     background-size: cover;
-    background-color: #dcdcdc;
+    background-color: #dfdfdf;
     box-sizing: border-box;
 
     &.-size-small {

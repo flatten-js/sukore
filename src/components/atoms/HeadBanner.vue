@@ -33,7 +33,7 @@ export default {
   .head-banner {
     width: 100%;
     background-repeat: no-repeat;
-    background-color: #d1d1d1;
+    background-color: #eee;
 
     &.-type-default {
       padding-bottom: 33.3333%;
