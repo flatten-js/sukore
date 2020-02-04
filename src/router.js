@@ -8,6 +8,10 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
+      path: '/explore',
+      component: () => import('@/views/Explore')
+    },
+    {
       path: '/:screenName',
       component: () => import('@/views/User'),
       props: route => ({
