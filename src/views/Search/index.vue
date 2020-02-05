@@ -4,7 +4,7 @@
       template(#masthead)
         //- ToDo: ifを使わず初期化処理
         template(v-if="searchMedia.masthead")
-          thumbnail-masthead(
+          thumbnail-head(
             :id="searchMedia.masthead.id"
             :url="searchMedia.masthead.entities.thumbnail.src"
             :screenName="searchMedia.masthead.screenName"
@@ -36,7 +36,7 @@ import { shareUpdateLike } from '@/apollo/graphql/used/shares'
 
 import SearchTemplate from '@/components/templates/SearchTemplate.vue'
 import ThumbnailArea from '@/components/organisms/ThumbnailArea.vue'
-import ThumbnailMasthead from '@/components/molecules/ThumbnailMasthead.vue'
+import ThumbnailHead from '@/components/molecules/ThumbnailHead.vue'
 import ThumbnailBoxGrid from '@/components/organisms/ThumbnailBoxGrid.vue'
 import ThumbnailBox from '@/components/molecules/ThumbnailBox.vue'
 
@@ -44,7 +44,7 @@ export default {
   components: {
     SearchTemplate,
     ThumbnailArea,
-    ThumbnailMasthead,
+    ThumbnailHead,
     ThumbnailBoxGrid,
     ThumbnailBox
   },
