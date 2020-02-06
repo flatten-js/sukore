@@ -6,9 +6,8 @@
       :to="id | convertDetailsPath(screenName)"
       )
       .thumbnail-box-link__thumbnail
-        relative-box-image(
+        relative-box-component(
           :src="src"
-          :sizes="thumbnailSize"
           animation="fade"
           )
       template(v-if="type === 'photo'")
@@ -43,14 +42,14 @@
 </template>
 
 <script>
-import RelativeBoxImage from '@/components/atoms/RelativeBoxImage.vue'
+import RelativeBoxComponent from '@/components/atoms/RelativeBoxComponent.vue'
 import TextBadge from '@/components/atoms/TextBadge.vue'
 import SvgSprite from '@/components/atoms/SvgSprite.vue'
 import MaterialButton from '@/components/atoms/MaterialButton.vue'
 
 export default {
   components: {
-    RelativeBoxImage,
+    RelativeBoxComponent,
     TextBadge,
     SvgSprite,
     MaterialButton
