@@ -23,6 +23,12 @@ router.get('/statuses/user/timeline', async (req, res) => {
   .catch(err => console.error(err))
 })
 
+router.get('/statuses/home/timeline', async (req , res) => {
+  await client.get('statuses/home_timeline', params.query)
+  .then(data => res.json(data))
+  .catch(err => console.error(err))
+})
+
 router.get('/users/show', async (req, res) => {
   await client.get('users/show', params.query)
   .then(data => res.json(data))

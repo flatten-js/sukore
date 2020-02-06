@@ -103,6 +103,65 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    async homeTimelineSearch({ commit }, { count, excludeReplies }) {
+      const payload = {
+        sender: 'home',
+        mediaList: []
+      }
+
+      await axios.get('/api/twitter/statuses/home/timeline', {
+        params: {
+          count,
+          exclude_replies: excludeReplies
+        }
+      })
+      .then(res => {
+        res.data.forEach(obj => {
+          if (!obj.extended_entities) return
+
+          let mediaObjectTemplate = {
+            id: obj.id_str,
+            icon: obj.user.profile_image_url_https.replace('normal', '400x400'),
+            name: obj.user.name,
+            screenName: obj.user.screen_name,
+            urlList: obj.entities.urls,
+            text: obj.text,
+            created: obj.created_at,
+            entities: {
+              type: obj.extended_entities.media[0].type,
+              thumbnail: {
+                src: obj.extended_entities.media[0].media_url_https,
+                size: obj.extended_entities.media[0].sizes.small
+              },
+              src: obj.extended_entities.media[0].type.match('photo')
+              ? obj.extended_entities.media.map(media => media.media_url_https)
+              : [obj.extended_entities.media[0].video_info.variants.filter(variant => variant.content_type === 'video/mp4')[0].url],
+              sizes: obj.extended_entities.media.map(media => media.sizes),
+              length: obj.extended_entities.media.length
+            },
+            retweeted: false,
+            state: false
+          }
+
+          if (obj.retweeted_status) {
+            const updateMediaObject = {
+              id: obj.retweeted_status.id_str,
+              icon: obj.retweeted_status.user.profile_image_url_https.replace('normal', '400x400'),
+              name: obj.retweeted_status.user.name,
+              screenName: obj.retweeted_status.user.screen_name,
+              text: obj.retweeted_status.text,
+              retweeted: obj.retweeted_status.user.screen_name
+            }
+
+            mediaObjectTemplate = { ...mediaObjectTemplate, ...updateMediaObject }
+          }
+
+          payload.mediaList.push(mediaObjectTemplate)
+        })
+
+        commit('addMedia', payload)
+      })
+    },
     async userSearch({ commit }, { screenName }) {
       const payload = {
         user: null
