@@ -8,6 +8,10 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
+      path: '/',
+      component: () => import('@/views/Home')
+    },
+    {
       path: '/explore',
       component: () => import('@/views/Explore')
     },
