@@ -2,8 +2,8 @@
   .pickup-detail-template
     .pickup-detail-template__photo-zoomable-content
       slot(name="photo-zoomable-content")
-    .pickup-detail-template__image-details-card
-      slot(name="image-details-card")
+    .pickup-detail-template__pickup-card
+      slot(name="pickup-card")
 </template>
 
 <style lang="scss" scoped>

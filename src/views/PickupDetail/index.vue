@@ -2,26 +2,30 @@
   pickup-detail-template
     template(#photo-zoomable-content)
       router-view
-    template(#image-details-card)
-      image-details-card
+    template(#pickup-card)
+      pickup-card
         template(#head)
           user-details-bar(
             :icon="foundMedia.icon"
             :name="foundMedia.name"
             :screen-name="foundMedia.screenName"
             )
-        template(#body)
-          origin-card(
-            :type="foundMedia.entities.type"
+        template(#media)
+          card-details-box(
             :id="foundMedia.id"
-            :screen-name="foundMedia.screenName"
+            :screenName="foundMedia.screenName"
+            :type="foundMedia.entities.type"
             :src="foundMedia.entities.src"
-            :src-size="foundMedia.entities.sizes[0].medium"
+            :src-size="foundMedia.entities.thumbnail.size"
             :length="foundMedia.entities.length"
-            :url-list="foundMedia.urlList"
-            :state="foundMedia.state"
+            )
+        template(#details)
+          card-details(
+            :id="foundMedia.id"
             :comment="foundMedia.text"
+            :url-list="foundMedia.urlList"
             :created="foundMedia.created"
+            :state="foundMedia.state"
             @like-click="updateLike"
             )
 </template>
@@ -31,16 +35,18 @@ import { mapGetters } from 'vuex'
 import { shareUpdateLike } from '@/apollo/graphql/used/shares'
 
 import PickupDetailTemplate from '@/components/templates/PickupDetailTemplate.vue'
-import ImageDetailsCard from '@/components/organisms/ImageDetailsCard.vue'
+import PickupCard from '@/components/organisms/PickupCard.vue'
 import UserDetailsBar from '@/components/molecules/UserDetailsBar.vue'
-import OriginCard from '@/components/molecules/OriginCard.vue'
+import CardDetailsBox from '@/components/molecules/CardDetailsBox.vue'
+import CardDetails from '@/components/molecules/CardDetails.vue'
 
 export default {
   components: {
     PickupDetailTemplate,
-    ImageDetailsCard,
+    PickupCard,
     UserDetailsBar,
-    OriginCard
+    CardDetailsBox,
+    CardDetails
   },
   props: {
     id: {
