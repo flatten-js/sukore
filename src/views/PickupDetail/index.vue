@@ -19,13 +19,16 @@
             :src-size="foundMedia.entities.sizes[0].medium"
             :length="foundMedia.entities.length"
             :url-list="foundMedia.urlList"
+            :state="foundMedia.state"
             :comment="foundMedia.text"
             :created="foundMedia.created"
+            @like-click="updateLike"
             )
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import { shareUpdateLike } from '@/apollo/graphql/used/shares'
 
 import PickupDetailTemplate from '@/components/templates/PickupDetailTemplate.vue'
 import ImageDetailsCard from '@/components/organisms/ImageDetailsCard.vue'
@@ -47,6 +50,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      'oauth',
       'noMediaListDuplicate'
     ]),
     foundMedia() {
@@ -60,6 +64,12 @@ export default {
       } else {
         document.body.style.overflow = ''
       }
+    }
+  },
+  methods: {
+    updateLike(id) {
+      const media = this.noMediaListDuplicate.find(media => media.id === id)
+      shareUpdateLike(this.$store, this.$apollo, this.oauth.iid, media)
     }
   }
 }

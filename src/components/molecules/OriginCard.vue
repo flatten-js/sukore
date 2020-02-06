@@ -32,16 +32,28 @@
             text="すべて見る"
             @click.native.prevent="limit = !limit"
             )
-    figcaption.card-details
-      .card-details__comment
-        extract-text(
-          :text="comment | convertLastUrlRemoval | convertCustomUrlText(urlList)"
-          )
-      .card-details__createdAt
-        single-line-text(
-          :text="created"
-          size="small"
-          brightness="2"
+    figcaption.origin-card-details
+      .origin-card-details-body
+        .origin-card-details-body__comment
+          extract-text(
+            :text="comment | convertLastUrlRemoval | convertCustomUrlText(urlList)"
+            )
+        .origin-card-details-body__createdAt
+          single-line-text(
+            :text="created"
+            size="small"
+            brightness="2"
+            )
+      .origin-card-details__like(
+        @click.prevent="emittingLike"
+        )
+        material-button(
+          type="othello"
+          tag="svg"
+          name="like"
+          color="like"
+          horizon="short"
+          :state="state"
           )
 </template>
 
@@ -112,6 +124,10 @@ export default {
     length: {
       type: Number,
       required: true
+    },
+    state: {
+      type: Boolean,
+      reqired: true
     }
   },
   data() {
@@ -134,6 +150,9 @@ export default {
     }
   },
   methods: {
+    emittingLike() {
+      this.$emit('like-click', this.id)
+    },
     videoPlayControl(e) {
       const video = e.target
 
@@ -175,10 +194,19 @@ export default {
     transform: translateX(-50%);
   }
 
-  .card-details {
+  .origin-card-details {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
     padding: 1rem;
     box-sizing: border-box;
 
+    &__like {
+      margin-left: .5rem;
+    }
+  }
+
+  .origin-card-details-body {
     &__comment {
       margin: 0 0 .5rem;
     }
