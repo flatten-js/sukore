@@ -1,8 +1,14 @@
 <template lang="pug">
   figure.origin-card
-    .origin-card__content(
+    .origin-card-content(
       :style="ratioBrowserHeightStyle"
       )
+      .origin-card-content__badge
+        template(v-if="length > 1 && limit")
+          text-badge(
+            :text="length | convertImageLength"
+            size="small"
+            )
       template(v-if="type !== 'photo'")
         //- ToDo: controlsがついている動画にもクリックイベント付与
         vary-standard-component(
@@ -58,6 +64,7 @@
 </template>
 
 <script>
+import TextBadge from '@/components/atoms/TextBadge.vue'
 import VaryStandardComponent from '@/components/atoms/VaryStandardComponent.vue'
 import MaterialButton from '@/components/atoms/MaterialButton.vue'
 import MultiLineText from '@/components/atoms/MultiLineText.vue'
@@ -66,6 +73,7 @@ import ExtractText from '@/components/atoms/ExtractText.vue'
 
 export default {
   components: {
+    TextBadge,
     VaryStandardComponent,
     MaterialButton,
     MultiLineText,
@@ -73,6 +81,9 @@ export default {
     ExtractText
   },
   filters: {
+    convertImageLength(length) {
+      return `1 / ${length}`
+    },
     convertPhotoZoomablePath(screenName, id, i) {
       return `/${screenName}/media/${id}/photo/${i + 1}`
     },
@@ -169,15 +180,19 @@ export default {
 <style lang="scss" scoped>
   .origin-card {
     margin: 0;
-
-    &__content {
-      position: relative;
-      font-size: 0;
-      background-color: #f7f7f7;
-    }
   }
 
   .origin-card-content {
+    position: relative;
+    font-size: 0;
+    background-color: #f7f7f7;
+
+    &__badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+    }
+
     &__photo-link {
       display: block;
 

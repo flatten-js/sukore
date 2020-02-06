@@ -45,13 +45,12 @@ export default {
   .text-badge {
     $this: #{&};
     display: flex;
-    min-width: 1.4rem;
+    min-width: 1.5rem;
     padding: .25rem .5rem;
     border-radius: 25px;
     background-color: rgba(26, 26, 26, .75);
     align-items: center;
     color: #fff;
-    box-shadow: 0 2px 5px rgba(26, 26, 26, 0.26);
 
     &__icon {
       margin: 0 .25rem 0 0;
