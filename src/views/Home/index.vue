@@ -1,32 +1,36 @@
 <template lang="pug">
   home-template
     template(#timeline)
-      timeline-stream
-        template(v-for="media in noMediaListDuplicate")
-          timeline-card
-            template(#head)
-              user-details-bar(
-                :icon="media.icon"
-                :name="media.name"
-                :screen-name="media.screenName"
-                )
-            template(#media)
-              card-thumbnail-box(
-                :type="media.entities.type"
-                :id="media.id"
-                :screen-name="media.screenName"
-                :src="media.entities.src"
-                :length="media.entities.length"
-                )
-            template(#details)
-              card-details(
-                :id="media.id"
-                :comment="media.text"
-                :url-list="media.urlList"
-                :created="media.created"
-                :state="media.state"
-                @like-click="updateLike"
-                )
+      timeline-area
+        template(#loading)
+          template(v-if="loading.likes")
+            loader-box
+        template(#stream)
+          template(v-for="media in noMediaListDuplicate")
+            timeline-card
+              template(#head)
+                user-details-bar(
+                  :icon="media.icon"
+                  :name="media.name"
+                  :screen-name="media.screenName"
+                  )
+              template(#media)
+                card-thumbnail-box(
+                  :type="media.entities.type"
+                  :id="media.id"
+                  :screen-name="media.screenName"
+                  :src="media.entities.src"
+                  :length="media.entities.length"
+                  )
+              template(#details)
+                card-details(
+                  :id="media.id"
+                  :comment="media.text"
+                  :url-list="media.urlList"
+                  :created="media.created"
+                  :state="media.state"
+                  @like-click="updateLike"
+                  )
 </template>
 
 <script>
@@ -35,7 +39,8 @@ import { LIKE } from '@/apollo/graphql'
 import { shareUpdateLike } from '@/apollo/graphql/used/shares'
 
 import HomeTemplate from '@/components/templates/HomeTemplate.vue'
-import TimelineStream from '@/components/organisms/TimelineStream.vue'
+import TimelineArea from '@/components/organisms/TimelineArea.vue'
+import LoaderBox from '@/components/molecules/LoaderBox.vue'
 import TimelineCard from '@/components/organisms/TimelineCard.vue'
 import UserDetailsBar from '@/components/molecules/UserDetailsBar.vue'
 import CardThumbnailBox from '@/components/molecules/CardThumbnailBox.vue'
@@ -44,7 +49,8 @@ import CardDetails from '@/components/molecules/CardDetails.vue'
 export default {
   components: {
     HomeTemplate,
-    TimelineStream,
+    TimelineArea,
+    LoaderBox,
     TimelineCard,
     CardThumbnailBox,
     UserDetailsBar,
@@ -57,6 +63,9 @@ export default {
       },
       init: {
         likes: false
+      },
+      loading: {
+        likes: true
       },
       likes: []
     }
@@ -72,9 +81,11 @@ export default {
       skip() {
         return this.lifecycle.created || this.init.likes
       },
-      result({ data }, key) {
+      async result({ data }, key) {
         this.queryInitReady(key)
-        this.initHomeMediaData(100, true, data.likes)
+
+        await this.initHomeMediaData(100, true, data.likes)
+        this.queryLoadingReady(key)
       }
     }
   },
@@ -90,6 +101,7 @@ export default {
 
     if (this.media.sender === 'home') {
       this.queryInitReady('likes')
+      this.queryLoadingReady('likes')
       return
     }
 
@@ -106,6 +118,9 @@ export default {
     },
     queryInitReady(key) {
       this.init = { [key]: true }
+    },
+    queryLoadingReady(key) {
+      this.loading = { [key]: false }
     }
   }
 }
