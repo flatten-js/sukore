@@ -19,6 +19,7 @@
           )
     .user-details-bar__button
       material-button(
+        type="simple"
         tag="a"
         :href="screenName | convertTwitterPath"
         vertical="short"

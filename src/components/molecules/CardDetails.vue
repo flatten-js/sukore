@@ -16,7 +16,6 @@
       )
       material-button(
         type="othello"
-        tag="svg"
         name="like"
         color="like"
         horizon="short"

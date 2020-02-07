@@ -4,8 +4,9 @@
     :class="propsClassGenerator"
     v-bind="propsToggleAttribute"
     )
-    template(v-if="tag === 'svg'")
-      use(:xlink:href="name | convertSymbolPath")
+    template(v-if="name")
+      svg.material-button__icon
+        use(:xlink:href="name | convertSymbolPath")
     template(v-else)
       | {{ text }}
 </template>
@@ -18,22 +19,28 @@ export default {
     }
   },
   props: {
-    type: {
-      type: String,
-      default: 'default',
-      validator(val) {
-        return ['default', 'immutable', 'othello'].includes(val)
-      }
-    },
     tag: {
       type: String,
       default: 'div',
       validator(val) {
-        return ['div', 'svg', 'a', 'router-link'].includes(val)
+        return ['div', 'a', 'router-link'].includes(val)
       }
     },
-    name: String,
-    href: String,
+    type: {
+      type: String,
+      default: 'default',
+      validator(val) {
+        return ['default', 'simple', 'keep-alive', 'othello'].includes(val)
+      }
+    },
+    name: {
+      type: String,
+      default: ''
+    },
+    href: {
+      type: String,
+      default: ''
+    },
     target: {
       type: String,
       default: null,
@@ -41,12 +48,18 @@ export default {
         return ['_blank'].includes(val)
       }
     },
-    to: String,
+    to: {
+      type: String,
+      default: ''
+    },
     exact: {
       type: Boolean,
       default: false
     },
-    text: String,
+    text: {
+      type: String,
+      default: ''
+    },
     vertical: {
       type: String,
       default: 'medium',
@@ -68,13 +81,6 @@ export default {
         return ['default', 'twitter', 'like'].includes(val)
       }
     },
-    brightness: {
-      type: String,
-      default: '1',
-      validator(val) {
-        return ['1', '2'].includes(val)
-      }
-    },
     size: {
       type: String,
       default: 'default',
@@ -89,18 +95,17 @@ export default {
   },
   computed: {
     propsClassGenerator() {
-      const { type, tag, vertical, horizon, color, brightness, size, state } = this
+      const { type, tag, vertical, horizon, color, size, name, state } = this
 
       return {
         [`-type-${type}`]: type,
         [`-vertical-${vertical}`]: vertical,
         [`-horizon-${horizon}`]: horizon,
         [`-color-${color}`]: color,
-        [`-brightness-${brightness}`]: brightness,
         [`-size-${size}`]: size,
-        '-icon': tag.match('svg'),
-        '-link': tag.match(/[^div|svg]/),
-        '-active': state
+        '-icon': name,
+        '-link': tag.match(/[^div]/),
+        '-alive': state
       }
     },
     propsToggleAttribute() {
@@ -108,7 +113,10 @@ export default {
 
       const switchTagAttribute = {
         a: { href, target },
-        'router-link': { to, exact }
+        'router-link': {
+          to, exact,
+          'exact-active-class': '-exact-active'
+        }
       }
 
       return switchTagAttribute[tag]
@@ -119,17 +127,21 @@ export default {
 
 <style lang="scss" scoped>
   .material-button {
+    $this: #{&};
     display: inline-block;
     border: 1px solid currentColor;
     border-radius: 25px;
 
-    &.-icon {
-      fill: currentColor;
+    $color-default: #1a1a1a;
+    $color-twitter: #1DA1F2;
+    $color-like: #FF4063;
 
-      &.-size-default {
-        width: 1rem;
-        height: 1rem;
-      }
+    &.-icon {
+      line-height: 0;
+    }
+
+    &__icon {
+      fill: currentColor;
     }
 
     &.-link {
@@ -163,50 +175,75 @@ export default {
 
     &.-size-small {
       font-size: .875rem;
+
+      #{$this}__icon {
+        width: .875rem;
+        height: .875rem;
+      }
     }
 
     &.-size-default {
       font-size: 1rem;
+
+      #{$this}__icon {
+        width: 1rem;
+        height: 1rem;
+      }
     }
 
     &.-type-default {
+      border: transparent;
+      color: rgba(26, 26, 26, .5);
+      transition: all .2s;
+
+      &:active {
+        color: $color-twitter;
+        background-color: rgba(26, 161, 242, .15);
+      }
+
+      &.-alive, &.-exact-active {
+        color: $color-twitter;
+      }
+    }
+
+    &.-type-simple {
       transition: background-color .2s;
 
       &.-color-default {
-        color: #1a1a1a;
+        color: $color-default;
       }
 
       &.-color-twitter {
-        color: #1DA1F2;
+        color: $color-twitter;
       }
 
       &.-color-like {
-        color: #FF4063;
+        color: $color-like;
       }
 
-      &.-active {
+      &.-alive {
         color: white;
 
         &.-color-default {
-          border-color: #1a1a1a;
-          background-color: #1a1a1a;
+          border-color: $color-default;
+          background-color: $color-default;
         }
 
         &.-color-twitter {
-          border-color: #1DA1F2;
-          background-color: #1DA1F2;
+          border-color: $color-twitter;
+          background-color: $color-twitter;
         }
 
         &.-color-like {
-          border-color: #FF4063;
-          background-color: #FF4063;
+          border-color: $color-like;
+          background-color: $color-like;
         }
       }
     }
 
-    &.-type-immutable {
+    &.-type-keep-alive {
       color: white;
-      border: none;
+      border: transparent;
 
       &.-color-default {
         background-color: rgba(26, 26, 26, .75);
@@ -219,7 +256,7 @@ export default {
       background-color: rgba(185, 185, 185, .75);
       transition: all .1s;
 
-      &.-active {
+      &.-alive {
         animation: pulse .2s linear;
 
         &.-color-like {

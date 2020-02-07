@@ -2,8 +2,7 @@
   .navigation-tools
     .navigation-tools__back
       material-button(
-        type="immutable"
-        tag="svg"
+        type="keep-alive"
         name="chevron-left"
         horizon="short"
         @click.native="back"

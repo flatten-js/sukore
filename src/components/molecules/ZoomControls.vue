@@ -2,21 +2,17 @@
   .zoomable-controls
     .zoomable-controls__zoom-width
       material-button(
-        type="immutable"
-        tag="svg"
+        type="keep-alive"
         name="width"
         horizon="short"
-        brightness="2"
         :state="true"
         @click.native="emmitingZoomWidth"
         )
     .zoomable-controls__zoom-height
       material-button(
-        type="immutable"
-        tag="svg"
+        type="keep-alive"
         name="height"
         horizon="short"
-        brightness="2"
         :state="true"
         @click.native="emmitingZoomHeight"
         )
@@ -27,21 +23,17 @@
         )
     .zoomable-controls__zoom-out
       material-button(
-        type="immutable"
-        tag="svg"
+        type="keep-alive"
         name="minus"
         horizon="short"
-        brightness="2"
         :state="true"
         @click.native="emmitingZoomOut"
         )
     .zoomable-controls__zoom-in
       material-button(
-        type="immutable"
-        tag="svg"
+        type="keep-alive"
         name="plus"
         horizon="short"
-        brightness="2"
         :state="true"
         @click.native="emmitingZoomIn"
         )

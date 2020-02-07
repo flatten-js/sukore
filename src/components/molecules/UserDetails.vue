@@ -11,6 +11,7 @@
             )
         .user-profile-head__tools
           material-button(
+            type="simple"
             color="twitter"
             size="small"
             :state="fave"
