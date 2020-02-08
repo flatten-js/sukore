@@ -64,14 +64,10 @@ export default {
 
       return {
         'autoplay': type !== 'photo',
+        'muted': type !== 'photo',
         'controls': type === 'video',
         'loop': type === 'animated_gif'
       }
-    }
-  },
-  mounted() {
-    if (this.type !== 'photo') {
-      this.$refs.video.muted = true
     }
   }
 }
