@@ -9,6 +9,7 @@
             :icon="foundMedia.icon"
             :name="foundMedia.name"
             :screen-name="foundMedia.screenName"
+            option="button"
             )
         template(#media)
           card-details-box(

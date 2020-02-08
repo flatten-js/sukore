@@ -17,17 +17,26 @@
           size="small"
           weight="bold"
           )
-    .user-details-bar__button
-      material-button(
-        type="simple"
-        tag="a"
-        :href="screenName | convertTwitterPath"
-        vertical="short"
-        color="twitter"
-        size="small"
-        :state="true"
-        text="Twitterを見る"
-        )
+    .user-details-bar__options
+      template(v-if="option === 'menu'")
+        .user-details-bar-options__menu
+          material-button(
+            name="dots-horizontal"
+            color="twitter"
+            horizon="short"
+            )
+      template(v-else)
+        .user-details-bar-options__button
+          material-button(
+            type="simple"
+            tag="a"
+            :href="screenName | convertTwitterPath"
+            vertical="short"
+            color="twitter"
+            size="small"
+            :state="true"
+            text="Twitterを見る"
+            )
 </template>
 
 <script>
@@ -61,6 +70,13 @@ export default {
     screenName: {
       type: String,
       required: true
+    },
+    option: {
+      type: String,
+      default: 'menu',
+      validator(val) {
+        return ['menu', 'button'].includes(val)
+      }
     }
   }
 }
@@ -82,15 +98,21 @@ export default {
       flex: 1 1 100%;
       overflow: hidden;
     }
-
-    &__button {
-      word-break: keep-all;
-    }
   }
 
   .user-details-bar-icon, .user-details-bar-name {
     &__link {
       text-decoration: none;
+    }
+  }
+
+  .user-details-bar-options {
+    &__menu {
+      margin-right: -.5rem;
+    }
+
+    &__button {
+      word-break: keep-all;
     }
   }
 </style>
