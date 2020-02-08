@@ -70,6 +70,7 @@ export default {
 
 <style lang="scss" scoped>
   .extract-text {
+    color: #1a1a1a;
     white-space: pre-line;
     word-wrap: break-word;
 

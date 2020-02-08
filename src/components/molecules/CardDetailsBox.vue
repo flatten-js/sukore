@@ -27,8 +27,7 @@
     .card-details-box__more
       template(v-if="length > 1 && limit")
         material-button(
-          tag="a"
-          href="#"
+          type="simple"
           vertical="short"
           horizon="long"
           size="small"
