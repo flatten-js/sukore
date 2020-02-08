@@ -17,7 +17,7 @@
           size="small"
           )
     .card-thumbnail-box__gif
-      template(v-if="type === 'gif'")
+      template(v-if="type === 'animated_gif'")
         text-badge(
           name="gif"
           )
