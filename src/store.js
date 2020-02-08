@@ -61,7 +61,7 @@ export default new Vuex.Store({
     },
     addMedia(state, payload) {
       state.media = {
-        sender: payload.screenName,
+        sender: payload.sender,
         list: payload.mediaList
       }
     },
@@ -201,7 +201,7 @@ export default new Vuex.Store({
     },
     async userTimelineSearch({ commit }, { screenName, count, excludeReplies }) {
       const payload = {
-        screenName,
+        sender: screenName,
         mediaList: []
       }
 
@@ -261,7 +261,7 @@ export default new Vuex.Store({
     },
     async tweetsSearch({ getters, commit }, { type = 'add', query, count, maxId }) {
       const payload = {
-        screenName: '',
+        sender: '',
         mediaList: [],
         currentId: ''
       }
