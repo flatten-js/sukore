@@ -9,7 +9,7 @@
             :url="icon"
             border
             )
-        .user-profile-head__tools
+        .user-profile-head__tools(ref="tools")
           material-button(
             type="simple"
             color="twitter"
@@ -155,6 +155,9 @@ export default {
     toggleFaveSettingText() {
       return this.fave ? '推しに設定中' : '推しに設定'
     }
+  },
+  mounted() {
+    this.$emit('fave-offset-pass', this.$refs.tools.offsetTop)
   },
   methods: {
     emmitingFave() {

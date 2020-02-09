@@ -1,9 +1,21 @@
 <template lang="pug">
   user-template
+    template(#header-area)
+      header-area
+        user-details-bar(
+          type="simple"
+          :name="user.name"
+          :screen-name="user.screenName"
+          option="fave"
+          :fave="user.fave"
+          :adjust="isFaveOverlap"
+          @fave-click="updateFave"
+          )
     template(#user-details-catch)
       user-details-catch
         user-details(
           v-bind="user"
+          @fave-offset-pass="fetchFaveOffset"
           @fave-click="updateFave"
           )
     template(#thumbnail-box-area)
@@ -31,6 +43,9 @@ import ThumbnailBoxArea from '@/components/organisms/ThumbnailBoxArea.vue'
 import TextTabBar from '@/components/molecules/TextTabBar.vue'
 import LoaderBox from '@/components/molecules/LoaderBox.vue'
 
+import HeaderArea from '@/components/organisms/HeaderArea.vue'
+import UserDetailsBar from '@/components/molecules/UserDetailsBar.vue'
+
 export default {
   components: {
     UserTemplate,
@@ -38,7 +53,9 @@ export default {
     UserDetails,
     ThumbnailBoxArea,
     TextTabBar,
-    LoaderBox
+    LoaderBox,
+    HeaderArea,
+    UserDetailsBar
   },
   props: {
     screenName: {
@@ -60,7 +77,9 @@ export default {
       },
       faves: [],
       likes: [],
-      transitionName: ''
+      transitionName: '',
+      faveOffset: 0,
+      pageOffset: 0
     }
   },
   apollo: {
@@ -116,6 +135,9 @@ export default {
           text: 'リツイート'
         }
       ]
+    },
+    isFaveOverlap() {
+      return this.pageOffset > this.faveOffset
     }
   },
   watch: {
@@ -142,6 +164,9 @@ export default {
 
     this.$store.commit('initMedia')
   },
+  mounted() {
+    window.addEventListener('scroll', this.scroll)
+  },
   methods: {
     async initUserData(screenName, faves) {
       await this.$store.dispatch('userSearch', { screenName })
@@ -159,6 +184,12 @@ export default {
     },
     queryLoadingReady(key) {
       this.loading = { [key]: false }
+    },
+    fetchFaveOffset(offset) {
+      this.faveOffset = offset
+    },
+    scroll() {
+      this.pageOffset = window.pageYOffset
     }
   }
 }
