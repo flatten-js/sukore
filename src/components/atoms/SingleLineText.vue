@@ -1,11 +1,21 @@
 <template lang="pug">
-  .single-line-text(:class="propsClassGenerator")
+  component.single-line-text(
+    :is="tag"
+    :class="propsClassGenerator"
+    )
     | {{ text }}
 </template>
 
 <script>
 export default {
   props: {
+    tag: {
+      type: String,
+      default: 'div',
+      validator(val) {
+        return ['div', 'h1', 'h2'].includes(val)
+      }
+    },
     text: {
       type: String,
       required: true
@@ -14,7 +24,7 @@ export default {
       type: String,
       default: 'default',
       validator(val) {
-        return ['small', 'default'].includes(val)
+        return ['small', 'default', 'large'].includes(val)
       }
     },
     weight: {
@@ -48,16 +58,21 @@ export default {
 
 <style lang="scss" scoped>
   .single-line-text {
+    margin: 0;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+
+    &.-size-small {
+      font-size: .875rem;
+    }
 
     &.-size-default {
       font-size: 1rem;
     }
 
-    &.-size-small {
-      font-size: .875rem;
+    &.-size-large {
+      font-size: 1.125rem;
     }
 
     &.-weight-normal {
