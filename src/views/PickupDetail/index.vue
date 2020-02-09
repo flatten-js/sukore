@@ -9,7 +9,7 @@
             :icon="foundMedia.icon"
             :name="foundMedia.name"
             :screen-name="foundMedia.screenName"
-            option="button"
+            option="twitter"
             )
         template(#media)
           card-details-box(
