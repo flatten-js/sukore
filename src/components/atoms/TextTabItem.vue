@@ -1,5 +1,5 @@
 <template lang="pug">
-  router-link.flex-tab-item(
+  router-link.text-tab-item(
     :class="propsClassGenerator"
     :to="to"
     active-class="-active"
@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .flex-tab-item {
+  .text-tab-item {
     padding: 1rem;
     font-size: .875rem;
     font-weight: bold;

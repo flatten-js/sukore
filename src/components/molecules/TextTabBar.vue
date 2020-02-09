@@ -1,7 +1,7 @@
 <template lang="pug">
-  nav.flex-tab-bar
+  nav.text-tab-bar
     template(v-for="tab in tabItems")
-      flex-tab-item(
+      text-tab-item(
         :to="tab.to"
         :text="tab.text"
         :match="match"
@@ -9,11 +9,11 @@
 </template>
 
 <script>
-import FlexTabItem from '@/components/atoms/FlexTabItem.vue'
+import TextTabItem from '@/components/atoms/TextTabItem.vue'
 
 export default {
   components: {
-    FlexTabItem
+    TextTabItem
   },
   props: {
     tabItems: {
@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style scoped>
-  .flex-tab-bar {
+  .text-tab-bar {
     display: flex;
     background-color: #fff;
   }

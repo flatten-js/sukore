@@ -9,7 +9,7 @@
     template(#thumbnail-box-area)
       thumbnail-box-area
         template(#navigation)
-          flex-tab-bar(:tab-items="userTabItems")
+          text-tab-bar(:tab-items="userTabItems")
         template(#loading)
           template(v-if="loading.likes")
             loader-box
@@ -28,7 +28,7 @@ import UserTemplate from '@/components/templates/UserTemplate.vue'
 import UserDetailsCatch from '@/components/organisms/UserDetailsCatch.vue'
 import UserDetails from '@/components/molecules/UserDetails.vue'
 import ThumbnailBoxArea from '@/components/organisms/ThumbnailBoxArea.vue'
-import FlexTabBar from '@/components/molecules/FlexTabBar.vue'
+import TextTabBar from '@/components/molecules/TextTabBar.vue'
 import LoaderBox from '@/components/molecules/LoaderBox.vue'
 
 export default {
@@ -37,7 +37,7 @@ export default {
     UserDetailsCatch,
     UserDetails,
     ThumbnailBoxArea,
-    FlexTabBar,
+    TextTabBar,
     LoaderBox
   },
   props: {
