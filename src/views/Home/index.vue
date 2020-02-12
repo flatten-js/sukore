@@ -1,5 +1,5 @@
 <template lang="pug">
-  home-template
+  home-layout
     template(#timeline)
       timeline-area
         template(#loading)
@@ -38,7 +38,7 @@ import { mapGetters } from 'vuex'
 import { LIKE } from '@/apollo/graphql'
 import { shareUpdateLike } from '@/apollo/graphql/used/shares'
 
-import HomeTemplate from '@/components/templates/HomeTemplate.vue'
+import HomeLayout from '@/components/templates/HomeLayout.vue'
 import TimelineArea from '@/components/organisms/TimelineArea.vue'
 import LoaderBox from '@/components/molecules/LoaderBox.vue'
 import TimelineCard from '@/components/organisms/TimelineCard.vue'
@@ -48,7 +48,7 @@ import CardDetails from '@/components/molecules/CardDetails.vue'
 
 export default {
   components: {
-    HomeTemplate,
+    HomeLayout,
     TimelineArea,
     LoaderBox,
     TimelineCard,

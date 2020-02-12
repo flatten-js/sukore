@@ -1,5 +1,5 @@
 <template lang="pug">
-  user-template
+  user-layout
     template(#header-area)
       header-area
         user-details-bar(
@@ -36,26 +36,25 @@ import { mapGetters } from 'vuex'
 import { FAVE, LIKE } from '@/apollo/graphql'
 import { shareUpdateFave } from '@/apollo/graphql/used/shares'
 
-import UserTemplate from '@/components/templates/UserTemplate.vue'
+import UserLayout from '@/components/templates/UserLayout.vue'
+import HeaderArea from '@/components/organisms/HeaderArea.vue'
+import UserDetailsBar from '@/components/molecules/UserDetailsBar.vue'
 import UserDetailsCatch from '@/components/organisms/UserDetailsCatch.vue'
 import UserDetails from '@/components/molecules/UserDetails.vue'
 import ThumbnailBoxArea from '@/components/organisms/ThumbnailBoxArea.vue'
 import TextTabBar from '@/components/molecules/TextTabBar.vue'
 import LoaderBox from '@/components/molecules/LoaderBox.vue'
 
-import HeaderArea from '@/components/organisms/HeaderArea.vue'
-import UserDetailsBar from '@/components/molecules/UserDetailsBar.vue'
-
 export default {
   components: {
-    UserTemplate,
+    UserLayout,
+    HeaderArea,
+    UserDetailsBar,
     UserDetailsCatch,
     UserDetails,
     ThumbnailBoxArea,
     TextTabBar,
-    LoaderBox,
-    HeaderArea,
-    UserDetailsBar
+    LoaderBox
   },
   props: {
     screenName: {

@@ -1,5 +1,5 @@
 <template lang="pug">
-  search-template
+  search-layout
     thumbnail-area
       template(#masthead)
         //- ToDo: ifを使わず初期化処理
@@ -35,7 +35,7 @@ import { mapGetters } from 'vuex'
 import { LIKE } from '@/apollo/graphql'
 import { shareUpdateLike } from '@/apollo/graphql/used/shares'
 
-import SearchTemplate from '@/components/templates/SearchTemplate.vue'
+import SearchLayout from '@/components/templates/SearchLayout.vue'
 import ThumbnailArea from '@/components/organisms/ThumbnailArea.vue'
 import ThumbnailHead from '@/components/molecules/ThumbnailHead.vue'
 import ThumbnailBoxGrid from '@/components/organisms/ThumbnailBoxGrid.vue'
@@ -43,7 +43,7 @@ import ThumbnailBox from '@/components/molecules/ThumbnailBox.vue'
 
 export default {
   components: {
-    SearchTemplate,
+    SearchLayout,
     ThumbnailArea,
     ThumbnailHead,
     ThumbnailBoxGrid,

@@ -1,5 +1,5 @@
 <template lang="pug">
-  explore-template
+  explore-layout
     template(#search-area)
       search-area
         search-form(
@@ -10,13 +10,13 @@
 </template>
 
 <script>
-import ExploreTemplate from '@/components/templates/ExploreTemplate.vue'
+import ExploreLayout from '@/components/templates/ExploreLayout.vue'
 import SearchArea from '@/components/organisms/SearchArea.vue'
 import SearchForm from '@/components/molecules/SearchForm.vue'
 
 export default {
   components: {
-    ExploreTemplate,
+    ExploreLayout,
     SearchArea,
     SearchForm
   },

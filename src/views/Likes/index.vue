@@ -1,5 +1,5 @@
 <template lang="pug">
-  likes-template
+  likes-layout
     template(#thumbnail-box-grid)
       thumbnail-box-grid
         template(v-for="media in noMediaListDuplicate")
@@ -21,13 +21,13 @@ import { mapGetters } from 'vuex'
 import { LIKE } from '@/apollo/graphql'
 import { shareUpdateLike } from '@/apollo/graphql/used/shares'
 
-import LikesTemplate from '@/components/templates/LikesTemplate.vue'
+import LikesLayout from '@/components/templates/LikesLayout.vue'
 import ThumbnailBoxGrid from '@/components/organisms/ThumbnailBoxGrid.vue'
 import ThumbnailBox from '@/components/molecules/ThumbnailBox.vue'
 
 export default {
   components: {
-    LikesTemplate,
+    LikesLayout,
     ThumbnailBoxGrid,
     ThumbnailBox
   },

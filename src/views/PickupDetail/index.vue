@@ -1,5 +1,5 @@
 <template lang="pug">
-  pickup-detail-template
+  pickup-detail-layout
     template(#photo-zoomable-content)
       router-view
     template(#pickup-card)
@@ -35,7 +35,7 @@
 import { mapGetters } from 'vuex'
 import { shareUpdateLike } from '@/apollo/graphql/used/shares'
 
-import PickupDetailTemplate from '@/components/templates/PickupDetailTemplate.vue'
+import PickupDetailLayout from '@/components/templates/PickupDetailLayout.vue'
 import PickupCard from '@/components/organisms/PickupCard.vue'
 import UserDetailsBar from '@/components/molecules/UserDetailsBar.vue'
 import CardDetailsBox from '@/components/molecules/CardDetailsBox.vue'
@@ -43,7 +43,7 @@ import CardDetails from '@/components/molecules/CardDetails.vue'
 
 export default {
   components: {
-    PickupDetailTemplate,
+    PickupDetailLayout,
     PickupCard,
     UserDetailsBar,
     CardDetailsBox,
