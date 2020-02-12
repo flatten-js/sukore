@@ -11,8 +11,8 @@
           :adjust="isFaveOverlap"
           @fave-click="updateFave"
           )
-    template(#user-details-catch)
-      user-details-catch
+    template(#user-details-area)
+      user-details-area
         user-details(
           v-bind="user"
           @fave-offset-pass="fetchFaveOffset"
@@ -39,7 +39,7 @@ import { shareUpdateFave } from '@/apollo/graphql/used/shares'
 import UserLayout from '@/components/templates/UserLayout.vue'
 import HeaderArea from '@/components/organisms/HeaderArea.vue'
 import UserDetailsBar from '@/components/molecules/UserDetailsBar.vue'
-import UserDetailsCatch from '@/components/organisms/UserDetailsCatch.vue'
+import UserDetailsArea from '@/components/organisms/UserDetailsArea.vue'
 import UserDetails from '@/components/molecules/UserDetails.vue'
 import ThumbnailBoxArea from '@/components/organisms/ThumbnailBoxArea.vue'
 import TextTabBar from '@/components/molecules/TextTabBar.vue'
@@ -50,7 +50,7 @@ export default {
     UserLayout,
     HeaderArea,
     UserDetailsBar,
-    UserDetailsCatch,
+    UserDetailsArea,
     UserDetails,
     ThumbnailBoxArea,
     TextTabBar,
