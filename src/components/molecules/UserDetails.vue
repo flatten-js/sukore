@@ -61,7 +61,7 @@
               name="link"
               :url-text="remarks.link | convertCustomUrlText(urlObject.url)"
               size="small"
-              brightness="2"
+              color="twitter"
               space="small"
               )
       .user-profile__status.user-profile-status

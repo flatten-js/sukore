@@ -36,6 +36,13 @@ export default {
         return ['small', 'default'].includes(val)
       }
     },
+    color: {
+      type: String,
+      default: 'default',
+      validator(val) {
+        return ['default', 'twitter', ''].includes(val)
+      }
+    },
     brightness: {
       type: String,
       default: '1',
@@ -53,10 +60,11 @@ export default {
   },
   computed: {
     propsClassGenerator() {
-      const { size, brightness, space } = this
+      const { size, color, brightness, space } = this
 
       return {
         [`-size-${size}`]: size,
+        [`-color-${color}`]: color,
         [`-brightness-${brightness}`]: brightness,
         [`-space-${space}`]: space
       }
@@ -97,12 +105,20 @@ export default {
       @include size-template;
     }
 
-    &.-brightness-1 {
-      color: rgba(26, 26, 26, 1);
+    &.-color-default {
+      color: #1a1a1a;
+
+      &.-brightness-1 {
+        color: rgba(26, 26, 26, 1);
+      }
+
+      &.-brightness-2 {
+        color: rgba(26, 26, 26, .75);
+      }
     }
 
-    &.-brightness-2 {
-      color: rgba(26, 26, 26, .75);
+    &.-color-twitter {
+      color: #1b95e0;
     }
 
     &.-space-small {
@@ -124,12 +140,12 @@ export default {
     }
 
     &__icon {
-      fill: currentColor;
+      fill: rgba(26, 26, 26, .75);
       vertical-align: middle;
     }
 
     &__link {
-      color: #1b95e0;
+      color: currentColor;
       text-decoration: none;
       vertical-align: middle;
     }
