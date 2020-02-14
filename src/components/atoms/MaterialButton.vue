@@ -71,14 +71,14 @@ export default {
       type: String,
       default: 'medium',
       validator(val) {
-        return ['short', 'medium', 'long'].includes(val)
+        return ['short', 'medium', 'long', 'match'].includes(val)
       }
     },
     color: {
       type: String,
       default: 'default',
       validator(val) {
-        return ['default', 'twitter', 'like'].includes(val)
+        return ['default', 'twitter', 'like', 'system'].includes(val)
       }
     },
     size: {
@@ -129,12 +129,14 @@ export default {
   .material-button {
     $this: #{&};
     display: inline-block;
+    text-align: center;
     border: 1px solid currentColor;
     border-radius: 25px;
 
     $color-default: #1a1a1a;
     $color-twitter: #1DA1F2;
     $color-like: #FF4063;
+    $color-system: #eee;
 
     &.-icon {
       line-height: 0;
@@ -171,6 +173,10 @@ export default {
     &.-horizon-long {
       padding-left: 2rem;
       padding-right: 2rem;
+    }
+
+    &.-horizon-match {
+      width: 100%;
     }
 
     &.-size-small {
@@ -247,6 +253,11 @@ export default {
 
       &.-color-default {
         background-color: rgba(26, 26, 26, .75);
+      }
+
+      &.-color-system {
+        color: #1a1a1a;
+        background-color: $color-system;
       }
     }
 

@@ -42,15 +42,23 @@ export default {
       validator(val) {
         return ['1', '2'].includes(val)
       }
+    },
+    space: {
+      type: String,
+      default: 'default',
+      validator(val) {
+        return ['small', 'default', 'large'].includes(val)
+      }
     }
   },
   computed: {
     propsClassGenerator() {
-      const { size, brightness } = this
+      const { size, brightness, space } = this
 
       return {
         [`-size-${size}`]: size,
-        [`-brightness-${brightness}`]: brightness
+        [`-brightness-${brightness}`]: brightness,
+        [`-space-${space}`]: space
       }
     },
     link() {
@@ -97,8 +105,25 @@ export default {
       color: rgba(26, 26, 26, .75);
     }
 
+    &.-space-small {
+      #{$this}__icon {
+        margin-right: .25rem;
+      }
+    }
+
+    &.-space-default {
+      #{$this}__icon {
+        margin-right: .5rem;
+      }
+    }
+
+    &.-space-large {
+      #{$this}__icon {
+        margin-right: 1rem;
+      }
+    }
+
     &__icon {
-      margin-right: .25rem;
       fill: currentColor;
       vertical-align: middle;
     }
