@@ -9,15 +9,25 @@
             :url="icon"
             border
             )
-        .user-profile-head__tools(ref="tools")
-          material-button(
-            type="simple"
-            color="twitter"
-            size="small"
-            :state="fave"
-            :text="toggleFaveSettingText"
-            @click.native="emmitingFave"
-            )
+        .user-profile-head-tools(ref="tools")
+          .user-profile-head-tools__menu
+            material-button(
+              type="simple"
+              name="dots-horizontal"
+              color="twitter"
+              size="small"
+              horizon="short"
+              @click.native="$emit('menu-click')"
+              )
+          .user-profile-head-tools__fave
+            material-button(
+              type="simple"
+              color="twitter"
+              size="small"
+              :state="fave"
+              :text="toggleFaveSettingText"
+              @click.native="emmitingFave"
+              )
       .user-profile__name
         multi-line-text(
           :text="name"
@@ -42,6 +52,7 @@
               :text="remarks.location"
               size="small"
               brightness="2"
+              space="small"
               )
         template(v-if="remarks.link")
           span.user-profile-remarks__link
@@ -51,6 +62,7 @@
               :url-text="remarks.link | convertCustomUrlText(urlObject.url)"
               size="small"
               brightness="2"
+              space="small"
               )
       .user-profile__status.user-profile-status
         router-link.user-profile-status__following(
@@ -180,6 +192,15 @@ export default {
     &__icon {
       display: inline-block;
       margin: -45px 0 0;
+    }
+  }
+
+  .user-profile-head-tools {
+    display: flex;
+    align-items: center;
+
+    &__menu {
+      margin-right: .5rem;
     }
   }
 
