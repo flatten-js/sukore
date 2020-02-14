@@ -10,7 +10,6 @@
               inline-icon-text(
                 :name="item.name"
                 :text="item.text"
-                size="small"
                 )
           template(v-else-if="item.href")
             a.popup-content-list-item__link(
@@ -20,14 +19,12 @@
               inline-icon-text(
                 :name="item.name"
                 :text="item.text"
-                size="small"
                 )
           template(v-else)
             .popup-content-list-item__raw
               inline-icon-text(
                 :name="item.name"
                 :text="item.text"
-                size="small"
                 )
     .popup-content__cancel
       material-button(
@@ -74,9 +71,14 @@ export default {
   }
 
   .popup-content-list-item {
+    &:active {
+      background-color: #f7f7f7;
+    }
+
     &__link {
       display: block;
       text-decoration: none;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
 
     &__link, &__raw {
