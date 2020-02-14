@@ -16,6 +16,7 @@
         user-details(
           v-bind="user"
           @fave-offset-pass="fetchFaveOffset"
+          @menu-click="graduallyPopup('start')"
           @fave-click="updateFave"
           )
     template(#thumbnail-box-area)
@@ -29,6 +30,25 @@
           transition(:name="transitionName")
             keep-alive
               router-view
+    template(#option-menu-popup)
+      transition(
+        name="fade"
+        @enter="graduallyPopup('content')"
+        )
+        template(v-if="popup.start")
+          popup(
+            @click.native.self="graduallyPopup('content')"
+            )
+            template(#content)
+              transition(
+                name="slide"
+                @leave="graduallyPopup('start')"
+                )
+                template(v-if="popup.content")
+                  popup-content(
+                    :items="options"
+                    @cancel-click="graduallyPopup('content')"
+                    )
 </template>
 
 <script>
@@ -44,6 +64,8 @@ import UserDetails from '@/components/molecules/UserDetails.vue'
 import ThumbnailBoxArea from '@/components/organisms/ThumbnailBoxArea.vue'
 import TextTabBar from '@/components/molecules/TextTabBar.vue'
 import LoaderBox from '@/components/molecules/LoaderBox.vue'
+import Popup from '@/components/organisms/Popup.vue'
+import PopupContent from '@/components/molecules/PopupContent.vue'
 
 export default {
   components: {
@@ -54,7 +76,9 @@ export default {
     UserDetails,
     ThumbnailBoxArea,
     TextTabBar,
-    LoaderBox
+    LoaderBox,
+    Popup,
+    PopupContent
   },
   props: {
     screenName: {
@@ -78,7 +102,11 @@ export default {
       likes: [],
       transitionName: '',
       faveOffset: 0,
-      pageOffset: 0
+      pageOffset: 0,
+      popup: {
+        start: false,
+        content: false
+      }
     }
   },
   apollo: {
@@ -137,9 +165,23 @@ export default {
     },
     isFaveOverlap() {
       return this.pageOffset > this.faveOffset
+    },
+    options() {
+      const { screenName } = this
+
+      return [
+        {
+          name: 'world',
+          href: `https://twitter.com/${screenName}`,
+          text: `@${screenName}さんのTwitterを表示`
+        }
+      ]
     }
   },
   watch: {
+    'popup.start'(to) {
+      document.body.style.overflow = to ? 'hidden' : ''
+    },
     '$route.path'(to, from) {
       const toDepth = to.split('/')
       const fromDepth = from.split('/')
@@ -189,6 +231,9 @@ export default {
     },
     scroll() {
       this.pageOffset = window.pageYOffset
+    },
+  	graduallyPopup(key) {
+      this.popup = { ...this.popup, [key]: !this.popup[key] }
     }
   }
 }
@@ -240,5 +285,25 @@ export default {
   .right-parry-enter-active,
   .right-parry-leave-active {
     transition: transform .4s;
+  }
+
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .3s;
+  }
+
+  .slide-enter, .slide-leave-to {
+    transform: translateY(100%);
+  }
+
+  .slide-enter-to, .slide-leave {
+    transform: translateY(0);
+  }
+
+  .slide-enter-active, .slide-leave-active {
+    transition: transform .3s;
   }
 </style>
