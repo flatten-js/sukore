@@ -58,6 +58,13 @@ export default {
   .popup-content {
     margin: 0;
     background-color: white;
+    border-radius: 10px 10px 0 0;
+
+    &::before {
+      content: "";
+      display: block;
+      height: .5rem;
+    }
 
     &__cancel {
       padding: .5rem 1rem;
