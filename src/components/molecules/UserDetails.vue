@@ -64,19 +64,15 @@
               color="twitter"
               space="small"
               )
-      .user-profile__status.user-profile-status
-        router-link.user-profile-status__following(
-          :to="screenName | convertUserStatusPath('following')"
-          )
+      .user-profile-status
+        .user-profile-status__following
           individuality(
             :text="status.following | convertCommaFormat"
             weight="bold"
             mr="025"
             )
           | フォロー中
-        router-link.user-profile-status__followers(
-          :to="screenName | convertUserStatusPath('followers')"
-          )
+        .user-profile-status__followers
           individuality(
             :text="status.followers | convertCommaFormat"
             weight="bold"
@@ -221,25 +217,14 @@ export default {
       white-space: pre-wrap;
       word-wrap: break-word;
     }
-
-    &__status {
-      display: flex;
-    }
   }
 
   .user-profile-status {
-    %common-style {
-      color: rgba(26, 26, 26, .75);
-      text-decoration: none;
-    }
+    display: flex;
+    color: rgba(26, 26, 26, .75);
 
     &__following {
-      @extend %common-style;
       margin-right: 1rem;
-    }
-
-    &__followers {
-      @extend %common-style;
     }
   }
 </style>

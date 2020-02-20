@@ -33,20 +33,6 @@ export default new Router({
       ]
     },
     {
-      path: '/:screenName',
-      component: () => import('@/views/FollowState'),
-      children: [
-        {
-          path: 'following',
-          component: () => import('@/views/FollowState/children/Following.vue')
-        },
-        {
-          path: 'followers',
-          component: () => import('@/views/FollowState/children/Followers.vue')
-        }
-      ]
-    },
-    {
       path: '/:pickupUser/media/:id',
       component: () => import('@/views/PickupDetail'),
       props: route => ({
