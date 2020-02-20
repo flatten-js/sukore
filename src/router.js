@@ -33,15 +33,15 @@ export default new Router({
       ]
     },
     {
-      path: '/:pickupUser/media/:id',
-      component: () => import('@/views/PickupDetail'),
+      path: '/:screenName/media/:id',
+      component: () => import('@/views/Thread'),
       props: route => ({
         id: route.params.id
       }),
       children: [
         {
           path: 'photo/:count',
-          component: () => import('@/views/PickupDetail/children/PhotoZoomableContent.vue'),
+          component: () => import('@/views/Thread/children/PhotoZoomableContent.vue'),
           props: route => ({
             id: route.params.id,
             count: route.params.count

@@ -1,13 +1,13 @@
 <template lang="pug">
-  .pickup-detail-layout
-    .pickup-detail-layout__photo-zoomable-content
+  .thread-layout
+    .thread-layout__photo-zoomable-content
       slot(name="photo-zoomable-content")
-    .pickup-detail-layout__pickup-card
+    .thread-layout__pickup-card
       slot(name="pickup-card")
 </template>
 
 <style lang="scss" scoped>
-  .pickup-detail-layout {
+  .thread-layout {
     &__photo-zoomable-content {
       position: fixed;
       top: 0;
