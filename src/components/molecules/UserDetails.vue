@@ -44,7 +44,7 @@
         extract-text(
           :text="description | convertCustomUrlText(urlObject.description)"
           )
-      .user-profile__remarks.user-profile-remarks
+      .user-profile-remarks
         template(v-if="remarks.location")
           span.user-profile-remarks__location
             inline-icon-text(
@@ -209,14 +209,14 @@ export default {
     }
 
     &__screen-name, &__description {
-      margin: 0 0 1rem 0;
-    }
-
-    &__remarks {
       margin: 0 0 1rem;
-      white-space: pre-wrap;
-      word-wrap: break-word;
     }
+  }
+
+  .user-profile-remarks {
+    margin: 0 0 1rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
   }
 
   .user-profile-status {
