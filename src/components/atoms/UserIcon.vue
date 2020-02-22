@@ -45,8 +45,8 @@ export default {
     box-sizing: border-box;
 
     &.-size-small {
-      width: 2.125rem;
-      height: 2.125rem;
+      width: 2.25rem;
+      height: 2.25rem;
     }
 
     &.-size-default {
