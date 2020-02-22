@@ -1,9 +1,11 @@
 <template lang="pug">
   .thread-layout
-    .thread-layout__photo-zoomable-content
-      slot(name="photo-zoomable-content")
+    .thread-layout__header-area
+      slot(name="header-area")
     .thread-layout__pickup-card
       slot(name="pickup-card")
+    .thread-layout__photo-zoomable-content
+      slot(name="photo-zoomable-content")
 </template>
 
 <style lang="scss" scoped>
