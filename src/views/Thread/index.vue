@@ -1,7 +1,12 @@
 <template lang="pug">
   thread-layout
-    template(#photo-zoomable-content)
-      router-view
+    template(#header-area)
+      header-area
+        user-details-bar(
+          type="simple"
+          name="スレッド"
+          option="none"
+          )
     template(#pickup-card)
       pickup-card
         template(#head)
@@ -9,7 +14,6 @@
             :icon="foundMedia.icon"
             :name="foundMedia.name"
             :screen-name="foundMedia.screenName"
-            option="twitter"
             )
         template(#media)
           card-details-box(
@@ -29,6 +33,8 @@
             :state="foundMedia.state"
             @like-click="updateLike"
             )
+    template(#photo-zoomable-content)
+      router-view
 </template>
 
 <script>
@@ -36,16 +42,18 @@ import { mapGetters } from 'vuex'
 import { shareUpdateLike } from '@/apollo/graphql/used/shares'
 
 import ThreadLayout from '@/components/templates/ThreadLayout.vue'
-import PickupCard from '@/components/organisms/PickupCard.vue'
+import HeaderArea from '@/components/organisms/HeaderArea.vue'
 import UserDetailsBar from '@/components/molecules/UserDetailsBar.vue'
+import PickupCard from '@/components/organisms/PickupCard.vue'
 import CardDetailsBox from '@/components/molecules/CardDetailsBox.vue'
 import CardDetails from '@/components/molecules/CardDetails.vue'
 
 export default {
   components: {
     ThreadLayout,
-    PickupCard,
+    HeaderArea,
     UserDetailsBar,
+    PickupCard,
     CardDetailsBox,
     CardDetails
   },
