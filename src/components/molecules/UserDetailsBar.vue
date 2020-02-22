@@ -61,6 +61,8 @@
               :text="toggleFaveSettingText"
               @click.native="emmitingFave"
               )
+      template(v-else-if="option === 'none'")
+        //- none
       template(v-else)
         .user-details-bar-options__menu
           material-button(
@@ -107,13 +109,13 @@ export default {
     },
     screenName: {
       type: String,
-      required: true
+      default: ''
     },
     option: {
       type: String,
       default: 'menu',
       validator(val) {
-        return ['menu', 'twitter', 'fave'].includes(val)
+        return ['menu', 'twitter', 'fave', 'none'].includes(val)
       }
     },
     adjust: {
