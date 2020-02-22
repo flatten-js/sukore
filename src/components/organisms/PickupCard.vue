@@ -12,12 +12,9 @@
   .pickup-card {
     background-color: white;
 
-    &__head, &__body {
-      border-bottom: 1px solid #dfdfdf;
-    }
-
     &__body {
       margin: 0;
+      border-bottom: 1px solid #dfdfdf;
     }
   }
 </style>

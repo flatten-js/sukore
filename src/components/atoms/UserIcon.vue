@@ -45,13 +45,13 @@ export default {
     box-sizing: border-box;
 
     &.-size-small {
-      width: 40px;
-      height: 40px;
+      width: 2.125rem;
+      height: 2.125rem;
     }
 
     &.-size-default {
-      width: 90px;
-      height: 90px;
+      width: 5.5rem;
+      height: 5.5rem;
 
       &.-border {
         border: 3px solid #fff;
