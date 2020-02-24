@@ -112,6 +112,9 @@ export default new Vuex.Store({
     },
     retweetFilter: (state, { noMediaListDuplicate }) => {
       return noMediaListDuplicate.filter(media => media.retweeted)
+    },
+    stockAllMediaList: ({ stock }) => {
+      return stock.flatMap(media => media.list)
     }
   },
   actions: {

@@ -66,10 +66,14 @@ export default {
   computed: {
     ...mapGetters([
       'oauth',
+      'stockAllMediaList',
       'noMediaListDuplicate'
     ]),
     foundMedia() {
-      return this.noMediaListDuplicate.find(media => media.id == this.id)
+      const handle = media => media.id == this.id
+      const normal = this.noMediaListDuplicate.find(handle)
+      const stock = this.stockAllMediaList.find(handle)
+      return normal || stock
     }
   },
   watch: {
