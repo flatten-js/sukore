@@ -34,7 +34,7 @@ export default new Vuex.Store({
       sender: '',
       list: []
     },
-    mediaList: [],
+    stock: [],
     currentId: ''
   },
   mutations: {
@@ -62,7 +62,9 @@ export default new Vuex.Store({
     addMedia(state, payload) {
       state.media = {
         sender: payload.sender,
-        list: payload.mediaList
+        list: payload.stock
+        ? payload.mediaList.concat(payload.stock.list)
+        : payload.mediaList
       }
     },
     updateMedia(state, payload) {
@@ -83,12 +85,22 @@ export default new Vuex.Store({
     updateMediaListState({ media }, payload) {
       const i = media.list.findIndex(media => media.id === payload.tid)
       media.list.splice(i, 1, { ...media.list[i], state: !media.list[i].state })
+    },
+    updateStock({ stock, media }, payload) {
+      if (payload.stock) {
+        if (!payload.mediaList.length) return
+        const i = stock.findIndex(media => media.sender === payload.screenName)
+        stock.splice(i, 1, media)
+      } else {
+        stock.push(media)
+      }
     }
   },
   getters: {
     oauth: ({ oauth }) => oauth,
     user: ({ user }) => user,
     media: ({ media }) => media,
+    stock: ({ stock }) => stock,
     currentId: ({ currentId }) => currentId,
     noMediaListDuplicate: ({ media }) => {
       return media.list.filter((media, i, self) => {
@@ -199,15 +211,22 @@ export default new Vuex.Store({
         commit('setUser', payload)
       })
     },
-    async userTimelineSearch({ commit }, { screenName, count, excludeReplies }) {
+    async userTimelineSearch({ commit, getters }, { screenName, count, excludeReplies }) {
       const payload = {
         sender: screenName,
-        mediaList: []
+        mediaList: [],
+        stock: {}
       }
+
+      const stock = getters.stock.find(media => media.sender === screenName)
+      payload.stock = stock || null
 
       await axios.get('/api/twitter/statuses/user/timeline', {
         params: {
           screen_name: screenName,
+          since_id: stock
+          ? stock.list[0]._id
+          : null,
           count: count,
           exclude_replies: excludeReplies
         }
@@ -217,6 +236,7 @@ export default new Vuex.Store({
           if (!obj.extended_entities) return
 
           let mediaObjectTemplate = {
+            _id: obj.id_str,
             id: obj.id_str,
             icon: obj.user.profile_image_url_https.replace('normal', '400x400'),
             name: obj.user.name,
@@ -257,6 +277,7 @@ export default new Vuex.Store({
         })
 
         commit('addMedia', payload)
+        commit('updateStock', payload)
       })
     },
     async tweetsSearch({ getters, commit }, { type = 'add', query, count, maxId }) {
