@@ -4,6 +4,50 @@ import axios from 'axios'
 
 Vue.use(Vuex)
 
+const mediaTemplate = (data, screenName) => {
+  if (!data.extended_entities) return
+
+  let mediaObjectTemplate = {
+    _id: data.id_str,
+    id: data.id_str,
+    icon: data.user.profile_image_url_https.replace('normal', '400x400'),
+    name: data.user.name,
+    screenName: data.user.screen_name,
+    urlList: data.entities.urls,
+    text: data.text,
+    created: data.created_at,
+    entities: {
+      type: data.extended_entities.media[0].type,
+      thumbnail: {
+        src: data.extended_entities.media[0].media_url_https,
+        size: data.extended_entities.media[0].sizes.small
+      },
+      src: data.extended_entities.media[0].type.match('photo')
+      ? data.extended_entities.media.map(media => media.media_url_https)
+      : [data.extended_entities.media[0].video_info.variants.filter(variant => variant.content_type === 'video/mp4')[0].url],
+      sizes: data.extended_entities.media.map(media => media.sizes),
+      length: data.extended_entities.media.length
+    },
+    retweeted: false,
+    state: false
+  }
+
+  if (data.retweeted_status) {
+    const updateMediaObject = {
+      id: data.retweeted_status.id_str,
+      icon: data.retweeted_status.user.profile_image_url_https.replace('normal', '400x400'),
+      name: data.retweeted_status.user.name,
+      screenName: data.retweeted_status.user.screen_name,
+      text: data.retweeted_status.text,
+      retweeted: data.retweeted_status.user.screen_name !== screenName
+    }
+
+    mediaObjectTemplate = { ...mediaObjectTemplate, ...updateMediaObject }
+  }
+
+  return mediaObjectTemplate
+}
+
 export default new Vuex.Store({
   state: {
     oauth: {
@@ -127,46 +171,9 @@ export default new Vuex.Store({
       })
       .then(res => {
         res.data.forEach(obj => {
-          if (!obj.extended_entities) return
-
-          let mediaObjectTemplate = {
-            id: obj.id_str,
-            icon: obj.user.profile_image_url_https.replace('normal', '400x400'),
-            name: obj.user.name,
-            screenName: obj.user.screen_name,
-            urlList: obj.entities.urls,
-            text: obj.text,
-            created: obj.created_at,
-            entities: {
-              type: obj.extended_entities.media[0].type,
-              thumbnail: {
-                src: obj.extended_entities.media[0].media_url_https,
-                size: obj.extended_entities.media[0].sizes.small
-              },
-              src: obj.extended_entities.media[0].type.match('photo')
-              ? obj.extended_entities.media.map(media => media.media_url_https)
-              : [obj.extended_entities.media[0].video_info.variants.filter(variant => variant.content_type === 'video/mp4')[0].url],
-              sizes: obj.extended_entities.media.map(media => media.sizes),
-              length: obj.extended_entities.media.length
-            },
-            retweeted: false,
-            state: false
-          }
-
-          if (obj.retweeted_status) {
-            const updateMediaObject = {
-              id: obj.retweeted_status.id_str,
-              icon: obj.retweeted_status.user.profile_image_url_https.replace('normal', '400x400'),
-              name: obj.retweeted_status.user.name,
-              screenName: obj.retweeted_status.user.screen_name,
-              text: obj.retweeted_status.text,
-              retweeted: obj.retweeted_status.user.screen_name
-            }
-
-            mediaObjectTemplate = { ...mediaObjectTemplate, ...updateMediaObject }
-          }
-
-          payload.mediaList.push(mediaObjectTemplate)
+          const media = mediaTemplate(obj)
+          if (!media) return
+          payload.mediaList.push(media)
         })
 
         commit('addMedia', payload)
@@ -174,7 +181,7 @@ export default new Vuex.Store({
     },
     async userSearch({ commit }, { screenName }) {
       const payload = {
-        user: null
+        user: {}
       }
 
       await axios.get('/api/twitter/users/show', {
@@ -231,47 +238,9 @@ export default new Vuex.Store({
       })
       .then(res => {
         res.data.forEach(obj => {
-          if (!obj.extended_entities) return
-
-          let mediaObjectTemplate = {
-            _id: obj.id_str,
-            id: obj.id_str,
-            icon: obj.user.profile_image_url_https.replace('normal', '400x400'),
-            name: obj.user.name,
-            screenName: obj.user.screen_name,
-            urlList: obj.entities.urls,
-            text: obj.text,
-            created: obj.created_at,
-            entities: {
-              type: obj.extended_entities.media[0].type,
-              thumbnail: {
-                src: obj.extended_entities.media[0].media_url_https,
-                size: obj.extended_entities.media[0].sizes.small
-              },
-              src: obj.extended_entities.media[0].type.match('photo')
-              ? obj.extended_entities.media.map(media => media.media_url_https)
-              : [obj.extended_entities.media[0].video_info.variants.filter(variant => variant.content_type === 'video/mp4')[0].url],
-              sizes: obj.extended_entities.media.map(media => media.sizes),
-              length: obj.extended_entities.media.length
-            },
-            retweeted: false,
-            state: false
-          }
-
-          if (obj.retweeted_status) {
-            const updateMediaObject = {
-              id: obj.retweeted_status.id_str,
-              icon: obj.retweeted_status.user.profile_image_url_https.replace('normal', '400x400'),
-              name: obj.retweeted_status.user.name,
-              screenName: obj.retweeted_status.user.screen_name,
-              text: obj.retweeted_status.text,
-              retweeted: obj.retweeted_status.user.screen_name !== screenName
-            }
-
-            mediaObjectTemplate = { ...mediaObjectTemplate, ...updateMediaObject }
-          }
-
-          payload.mediaList.push(mediaObjectTemplate)
+          const media = mediaTemplate(obj, screenName)
+          if (!media) return
+          payload.mediaList.push(media)
         })
 
         commit('addMedia', payload)
@@ -295,47 +264,9 @@ export default new Vuex.Store({
       })
       .then(res => {
         res.data.statuses.forEach(obj => {
-          if (!obj.extended_entities) return
-
-          let mediaObjectTemplate = {
-            _id: obj.id_str,
-            id: obj.id_str,
-            icon: obj.user.profile_image_url_https.replace('normal', '400x400'),
-            name: obj.user.name,
-            screenName: obj.user.screen_name,
-            urlList: obj.entities.urls,
-            text: obj.text,
-            created: obj.created_at,
-            entities: {
-              type: obj.extended_entities.media[0].type,
-              thumbnail: {
-                src: obj.extended_entities.media[0].media_url_https,
-                size: obj.extended_entities.media[0].sizes.small
-              },
-              src: obj.extended_entities.media[0].type.match('photo')
-              ? obj.extended_entities.media.map(media => media.media_url_https)
-              : [obj.extended_entities.media[0].video_info.variants.filter(variant => variant.content_type === 'video/mp4')[0].url],
-              sizes: obj.extended_entities.media.map(media => media.sizes),
-              length: obj.extended_entities.media.length
-            },
-            retweeted: false,
-            state: false
-          }
-
-          if (obj.retweeted_status) {
-            const updateMediaObject = {
-              id: obj.retweeted_status.id_str,
-              icon: obj.retweeted_status.user.profile_image_url_https.replace('normal', '400x400'),
-              name: obj.retweeted_status.user.name,
-              screenName: obj.retweeted_status.user.screen_name,
-              text: obj.retweeted_status.text,
-              retweeted: obj.retweeted_status.user.screen_name !== getters.user.screenName
-            }
-
-            mediaObjectTemplate = { ...mediaObjectTemplate, ...updateMediaObject }
-          }
-
-          payload.mediaList.push(mediaObjectTemplate)
+          const media = mediaTemplate(obj)
+          if (!media) return
+          payload.mediaList.push(media)
         })
 
         const mediaSaveFormat = {
