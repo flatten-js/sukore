@@ -34,8 +34,7 @@ export default new Vuex.Store({
       sender: '',
       list: []
     },
-    stock: [],
-    currentId: ''
+    stock: []
   },
   mutations: {
     setUser(state, payload) {
@@ -49,9 +48,6 @@ export default new Vuex.Store({
     },
     updateFave(state) {
       state.user = { ...state.user, fave: !state.user.fave }
-    },
-    updateCurrentId(state, payload) {
-      state.currentId = payload.currentId
     },
     initMedia(state) {
       state.media = {
@@ -101,7 +97,6 @@ export default new Vuex.Store({
     user: ({ user }) => user,
     media: ({ media }) => media,
     stock: ({ stock }) => stock,
-    currentId: ({ currentId }) => currentId,
     noMediaListDuplicate: ({ media }) => {
       return media.list.filter((media, i, self) => {
         return self.findIndex(findMedia => findMedia.id === media.id) === i
@@ -283,18 +278,19 @@ export default new Vuex.Store({
         commit('updateStock', payload)
       })
     },
-    async tweetsSearch({ getters, commit }, { type = 'add', query, count, maxId }) {
+    async multiTweetSearch({ getters, commit }, { type = 'add', query, count }) {
       const payload = {
         sender: '',
-        mediaList: [],
-        currentId: ''
+        mediaList: []
       }
 
       await axios.get('/api/twitter/search/tweets', {
         params: {
           q: query,
           count,
-          max_id: maxId
+          max_id: type === 'update'
+          ? getters.media.list.slice(-1)[0]._id
+          : null
         }
       })
       .then(res => {
@@ -302,6 +298,7 @@ export default new Vuex.Store({
           if (!obj.extended_entities) return
 
           let mediaObjectTemplate = {
+            _id: obj.id_str,
             id: obj.id_str,
             icon: obj.user.profile_image_url_https.replace('normal', '400x400'),
             name: obj.user.name,
@@ -339,20 +336,14 @@ export default new Vuex.Store({
           }
 
           payload.mediaList.push(mediaObjectTemplate)
-          payload.currentId = mediaObjectTemplate.id
         })
 
-        const typeSwitch = {
-          add() {
-            commit('addMedia', payload)
-          },
-          update() {
-            commit('updateMedia', payload)
-          }
+        const mediaSaveFormat = {
+          add: () => commit('addMedia', payload),
+          update: ()  => commit('updateMedia', payload)
         }
 
-        typeSwitch[type]()
-        commit('updateCurrentId', payload)
+        mediaSaveFormat[type]()
       })
     }
   }

@@ -74,19 +74,20 @@ export default {
       skip() {
         return this.init.likes
       },
-      async result({ data }, key) {
+      result({ data }, key) {
         this.init = { ...this.init, [key]: true }
-
-        await this.$nextTick()
-        await this.initTweetMediaLisDatat(this.query, 100, data.likes)
+        this.initSearchMediaData({
+          query: this.query,
+          count: 100,
+          likes: data.likes
+        })
       }
     }
   },
   computed: {
     ...mapGetters([
       'oauth',
-      'noMediaListDuplicate',
-      'currentId'
+      'noMediaListDuplicate'
     ]),
     searchMedia() {
       const [masthead, ...body] = this.noMediaListDuplicate
@@ -104,8 +105,8 @@ export default {
     this.$el.addEventListener('scroll', this.swaipToRefresh)
   },
   methods: {
-    async initTweetMediaLisDatat(query, count, likes) {
-      await this.$store.dispatch('tweetsSearch', { query, count })
+    async initSearchMediaData({ type, query, count, likes }) {
+      await this.$store.dispatch('multiTweetSearch', { type, query, count })
       await this.$store.commit('initMediaListState', { likes })
     },
     async swaipToRefresh() {
@@ -115,13 +116,10 @@ export default {
             scrollY = el.scrollTop
 
       if (elHeight === Math.round(windowHeight + scrollY)) {
-        await this.$store.dispatch('tweetsSearch', {
+        this.initSearchMediaData({
           type: 'update',
           query: this.query,
-          count: 200,
-          maxId: this.currentId
-        })
-        await this.$store.commit('initMediaListState', {
+          count: 100,
           likes: this.likes
         })
       }
