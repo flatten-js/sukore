@@ -25,7 +25,7 @@
           text-tab-bar(:tab-items="userTabItems")
         template(#loading)
           template(v-if="loading.likes")
-            loader-box
+            absolute-territory
         template(#content)
           transition(:name="transitionName")
             keep-alive
@@ -63,7 +63,7 @@ import UserDetailsArea from '@/components/organisms/UserDetailsArea.vue'
 import UserDetails from '@/components/molecules/UserDetails.vue'
 import ThumbnailBoxArea from '@/components/organisms/ThumbnailBoxArea.vue'
 import TextTabBar from '@/components/molecules/TextTabBar.vue'
-import LoaderBox from '@/components/molecules/LoaderBox.vue'
+import AbsoluteTerritory from '@/components/molecules/AbsoluteTerritory.vue'
 import Popup from '@/components/organisms/Popup.vue'
 import PopupContent from '@/components/molecules/PopupContent.vue'
 
@@ -76,7 +76,7 @@ export default {
     UserDetails,
     ThumbnailBoxArea,
     TextTabBar,
-    LoaderBox,
+    AbsoluteTerritory,
     Popup,
     PopupContent
   },

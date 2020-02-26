@@ -4,7 +4,7 @@
       timeline-area
         template(#loading)
           template(v-if="loading.likes")
-            loader-box
+            absolute-territory
         template(#stream)
           template(v-for="media in noMediaListDuplicate")
             timeline-card
@@ -40,7 +40,7 @@ import { shareUpdateLike } from '@/apollo/graphql/used/shares'
 
 import HomeLayout from '@/components/templates/HomeLayout.vue'
 import TimelineArea from '@/components/organisms/TimelineArea.vue'
-import LoaderBox from '@/components/molecules/LoaderBox.vue'
+import AbsoluteTerritory from '@/components/molecules/AbsoluteTerritory.vue'
 import TimelineCard from '@/components/organisms/TimelineCard.vue'
 import UserDetailsBar from '@/components/molecules/UserDetailsBar.vue'
 import CardThumbnailBox from '@/components/molecules/CardThumbnailBox.vue'
@@ -50,7 +50,7 @@ export default {
   components: {
     HomeLayout,
     TimelineArea,
-    LoaderBox,
+    AbsoluteTerritory,
     TimelineCard,
     CardThumbnailBox,
     UserDetailsBar,
