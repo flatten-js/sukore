@@ -25,6 +25,7 @@
           :text="name"
           size="large"
           weight="bold"
+          @click.native="scrollToTop"
           )
       template(v-else)
         router-link.user-details-bar-name__link(
@@ -135,6 +136,12 @@ export default {
   methods: {
     back() {
       this.$router.back()
+    },
+    scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      })
     },
     emmitingFave() {
       this.$emit('fave-click')
