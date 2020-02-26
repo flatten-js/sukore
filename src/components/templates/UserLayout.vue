@@ -6,6 +6,8 @@
       slot(name="user-details-area")
     .user-layout__thumbnail-box-area
       slot(name="thumbnail-box-area")
+    .user-layout__update-area
+      slot(name="update-area")
     .user-layout-options-area
       .user-layout-options-area__menu-popup
         slot(name="option-menu-popup")
