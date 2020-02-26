@@ -175,9 +175,9 @@ export default new Vuex.Store({
           if (!media) return
           payload.mediaList.push(media)
         })
-
-        commit('addMedia', payload)
       })
+
+      commit('addMedia', payload)
     },
     async userSearch({ commit }, { screenName }) {
       const payload = {
@@ -212,9 +212,9 @@ export default new Vuex.Store({
             link: user.url
           }
         }
-
-        commit('setUser', payload)
       })
+
+      commit('setUser', payload)
     },
     async userTimelineSearch({ commit, getters }, { screenName, count, excludeReplies }) {
       const payload = {
@@ -242,10 +242,34 @@ export default new Vuex.Store({
           if (!media) return
           payload.mediaList.push(media)
         })
-
-        commit('addMedia', payload)
-        commit('updateStock', payload)
       })
+
+      commit('addMedia', payload)
+      commit('updateStock', payload)
+    },
+    async singleTweetSearch({ commit, getters }, { id }) {
+      const payload = {
+        sender: 'option:mix',
+        mediaList: [],
+        stock: {}
+      }
+
+      const stock = getters.stock.find(media => media.sender === payload.sender)
+      payload.stock = stock || null
+
+      await axios.get('/api/twitter/statuses/show', {
+        params: {
+          id
+        }
+      })
+      .then(res => {
+        const media = mediaTemplate(res.data)
+        if (!media) return
+        payload.mediaList.push(media)
+      })
+
+      commit('addMedia', payload)
+      commit('updateStock', payload)
     },
     async multiTweetSearch({ getters, commit }, { type = 'add', query, count }) {
       const payload = {
@@ -268,14 +292,14 @@ export default new Vuex.Store({
           if (!media) return
           payload.mediaList.push(media)
         })
-
-        const mediaSaveFormat = {
-          add: () => commit('addMedia', payload),
-          update: ()  => commit('updateMedia', payload)
-        }
-
-        mediaSaveFormat[type]()
       })
+
+      const mediaSaveFormat = {
+        add: () => commit('addMedia', payload),
+        update: ()  => commit('updateMedia', payload)
+      }
+
+      mediaSaveFormat[type]()
     }
   }
 })
