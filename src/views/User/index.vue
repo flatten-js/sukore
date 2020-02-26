@@ -241,10 +241,13 @@ export default {
 
 <style lang="scss" scoped>
   @mixin parry-transition($type, $orders: ()) {
+    $leaves: 'leave', 'leave-to';
+
     @each $e, $order in $orders {
       .#{$type}-parry-#{$e} {
-        position: absolute;
-        width: 100%;
+        @if index($leaves, $e) != null {
+          position: absolute;
+        }
         @extend %#{$order};
       }
     }

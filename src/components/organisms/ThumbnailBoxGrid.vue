@@ -6,6 +6,7 @@
 <style lang="scss" scoped>
   .thumbnail-box-grid {
     display: flex;
+    width: 100%;
     flex-wrap: wrap;
     align-items: center;
 
