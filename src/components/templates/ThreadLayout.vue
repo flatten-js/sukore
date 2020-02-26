@@ -2,8 +2,8 @@
   .thread-layout
     .thread-layout__header-area
       slot(name="header-area")
-    .thread-layout__pickup-card
-      slot(name="pickup-card")
+    .thread-layout__pickup-area
+      slot(name="pickup-area")
     .thread-layout__photo-zoomable-content
       slot(name="photo-zoomable-content")
 </template>
