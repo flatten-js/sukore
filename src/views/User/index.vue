@@ -27,9 +27,23 @@
           template(v-if="loading.likes")
             absolute-territory
         template(#content)
-          transition(:name="transitionName")
+          transition(
+            :name="transitionName"
+            @enter="callTabTransitionHook"
+            @after-leave="callTabTransitionHook"
+            )
             keep-alive
               router-view
+    template(#update-area)
+      update-area
+        template(v-if="!loading.likes && !tabTransition")
+          template(v-if="scrollable")
+            absolute-territory
+          template(v-else)
+            absolute-territory(
+              type="button"
+              text="さらに前のメディアを表示"
+              )
     template(#option-menu-popup)
       transition(
         name="fade"
@@ -64,6 +78,7 @@ import UserDetails from '@/components/molecules/UserDetails.vue'
 import ThumbnailBoxArea from '@/components/organisms/ThumbnailBoxArea.vue'
 import TextTabBar from '@/components/molecules/TextTabBar.vue'
 import AbsoluteTerritory from '@/components/molecules/AbsoluteTerritory.vue'
+import UpdateArea from '@/components/organisms/UpdateArea.vue'
 import Popup from '@/components/organisms/Popup.vue'
 import PopupContent from '@/components/molecules/PopupContent.vue'
 
@@ -77,6 +92,7 @@ export default {
     ThumbnailBoxArea,
     TextTabBar,
     AbsoluteTerritory,
+    UpdateArea,
     Popup,
     PopupContent
   },
@@ -91,6 +107,9 @@ export default {
       lifecycle: {
         created: true
       },
+      el: {
+        height: ''
+      },
       init: {
         faves: false,
         likes: false
@@ -101,6 +120,7 @@ export default {
       faves: [],
       likes: [],
       transitionName: '',
+      tabTransition: false,
       faveOffset: 0,
       pageOffset: 0,
       popup: {
@@ -139,7 +159,8 @@ export default {
         this.queryInitReady(key)
 
         await this.initUserMediaData(this.screenName, 200, true, data.likes)
-        this.queryLoadingReady(key)
+        await this.queryLoadingReady(key)
+        this.fetchElHeight()
       }
     }
   },
@@ -163,9 +184,6 @@ export default {
         }
       ]
     },
-    isFaveOverlap() {
-      return this.pageOffset > this.faveOffset
-    },
     options() {
       const { screenName } = this
 
@@ -176,6 +194,13 @@ export default {
           text: `@${screenName}さんのTwitterを表示`
         }
       ]
+    },
+    isFaveOverlap() {
+      return this.pageOffset > this.faveOffset
+    },
+    scrollable() {
+      // 96: Height of AbsoluteTerritory
+      return (this.el.height - 96) > window.innerHeight
     }
   },
   watch: {
@@ -231,6 +256,15 @@ export default {
     },
     scroll() {
       this.pageOffset = window.pageYOffset
+    },
+    fetchElHeight() {
+      this.el = { height: this.$el.clientHeight }
+    },
+    callTabTransitionHook() {
+      if (!this.tabTransition) {
+        this.fetchElHeight()
+      }
+      this.tabTransition = !this.tabTransition
     },
   	graduallyPopup(key) {
       this.popup = { ...this.popup, [key]: !this.popup[key] }
