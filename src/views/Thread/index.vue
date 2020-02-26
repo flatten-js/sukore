@@ -8,37 +8,39 @@
           option="none"
           )
     template(#pickup-card)
-      pickup-card
-        template(#head)
-          user-details-bar(
-            :icon="foundMedia.icon"
-            :name="foundMedia.name"
-            :screen-name="foundMedia.screenName"
-            )
-        template(#media)
-          card-details-box(
-            :id="foundMedia.id"
-            :screenName="foundMedia.screenName"
-            :type="foundMedia.entities.type"
-            :src="foundMedia.entities.src"
-            :src-size="foundMedia.entities.thumbnail.size"
-            :length="foundMedia.entities.length"
-            )
-        template(#details)
-          card-details(
-            :id="foundMedia.id"
-            :comment="foundMedia.text"
-            :url-list="foundMedia.urlList"
-            :created="foundMedia.created"
-            :state="foundMedia.state"
-            @like-click="updateLike"
-            )
+      template(v-if="findMedia")
+        pickup-card
+          template(#head)
+            user-details-bar(
+              :icon="findMedia.icon"
+              :name="findMedia.name"
+              :screen-name="findMedia.screenName"
+              )
+          template(#media)
+            card-details-box(
+              :id="findMedia.id"
+              :screenName="findMedia.screenName"
+              :type="findMedia.entities.type"
+              :src="findMedia.entities.src"
+              :src-size="findMedia.entities.thumbnail.size"
+              :length="findMedia.entities.length"
+              )
+          template(#details)
+            card-details(
+              :id="findMedia.id"
+              :comment="findMedia.text"
+              :url-list="findMedia.urlList"
+              :created="findMedia.created"
+              :state="findMedia.state"
+              @like-click="updateLike"
+              )
     template(#photo-zoomable-content)
       router-view
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import { LIKE } from '@/apollo/graphql'
 import { shareUpdateLike } from '@/apollo/graphql/used/shares'
 
 import ThreadLayout from '@/components/templates/ThreadLayout.vue'
@@ -63,17 +65,42 @@ export default {
       reqired: true
     }
   },
+  data() {
+    return {
+      init: {
+        likes: false
+      },
+      likes: []
+    }
+  },
+  apollo: {
+    likes: {
+      query: LIKE.ALL,
+      variables() {
+        return {
+          iid: this.oauth.iid
+        }
+      },
+      skip() {
+        return this.findMedia || this.init.likes
+      },
+      result({ data }, key) {
+        this.init = { [key]: true }
+        this.initThreadMediaData(this.id, data.likes)
+      }
+    }
+  },
   computed: {
     ...mapGetters([
       'oauth',
-      'stockAllMediaList',
-      'noMediaListDuplicate'
+      'noMediaListDuplicate',
+      'stockAllMediaList'
     ]),
-    foundMedia() {
+    findMedia() {
       const handle = media => media.id == this.id
-      const normal = this.noMediaListDuplicate.find(handle)
+      const media = this.noMediaListDuplicate.find(handle)
       const stock = this.stockAllMediaList.find(handle)
-      return normal || stock
+      return media || stock
     }
   },
   watch: {
@@ -86,6 +113,10 @@ export default {
     }
   },
   methods: {
+    async initThreadMediaData(id, likes) {
+      await this.$store.dispatch('singleTweetSearch', { id })
+      await this.$store.commit('initMediaListState', { likes })
+    },
     updateLike(id) {
       const media = this.noMediaListDuplicate.find(media => media.id === id)
       shareUpdateLike(this.$store, this.$apollo, this.oauth.iid, media)
