@@ -232,8 +232,11 @@ export default {
 
     this.$store.commit('initMedia')
   },
-  mounted() {
-    window.addEventListener('scroll', this.scroll)
+  beforeMount() {
+    window.addEventListener('scroll', this.scroll, false)
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.scroll, false)
   },
   methods: {
     async initUserData(screenName, faves) {
