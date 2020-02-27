@@ -35,7 +35,7 @@
             keep-alive
               router-view
     template(#update-area)
-      update-area
+      update-area(ref="updateArea")
         template(v-if="!loading.likes && !tabTransition")
           template(v-if="scrollable")
             absolute-territory
@@ -43,6 +43,7 @@
             absolute-territory(
               type="button"
               text="さらに前のメディアを表示"
+              @click.native="updateUserMediaData"
               )
     template(#option-menu-popup)
       transition(
@@ -107,6 +108,9 @@ export default {
       lifecycle: {
         created: true
       },
+      window: {
+        height: 0
+      },
       el: {
         height: ''
       },
@@ -124,6 +128,7 @@ export default {
       faves: [],
       likes: [],
       style: '',
+      updating: false,
       transitionName: '',
       tabTransition: false,
       popup: {
@@ -161,7 +166,11 @@ export default {
       async result({ data }, key) {
         this.queryInitReady(key)
 
-        await this.initUserMediaData(this.screenName, 200, true, data.likes)
+        await this.initUserMediaData({
+          screenName: this.screenName,
+          count: 10,
+          likes: data.likes
+        })
         await this.queryLoadingReady(key)
         this.fetchElHeight()
       }
@@ -224,12 +233,16 @@ export default {
       this.initUserData(to, this.faves)
       this.initUserMediaData(to, 100, true, this.likes)
     },
+    'el.height'() {
+      this.updateOffset('updateArea', this.$refs.updateArea.$el.offsetTop)
+    },
     'popup.start'(to) {
       document.body.style.overflow = to ? 'hidden' : ''
     }
   },
   created() {
     this.lifecycle = { created: false }
+    this.window = { height: window.innerHeight }
 
     if (this.media.sender === this.screenName) {
       this.queryInitReady('likes')
@@ -250,9 +263,23 @@ export default {
       await this.$store.dispatch('userSearch', { screenName })
       await this.$store.commit('initFave', { faves })
     },
-    async initUserMediaData(screenName, count, excludeReplies, likes) {
-      await this.$store.dispatch('userTimelineSearch', { screenName, count, excludeReplies })
+    async initUserMediaData({ type, style, screenName, count, excludeReplies, likes }) {
+      await this.$store.dispatch('userTimelineSearch', { type, style, screenName, count, excludeReplies })
       await this.$store.commit('initMediaListState', { likes })
+    },
+    async updateUserMediaData() {
+      if (this.media.refill[this.style].length) {
+        await this.$store.commit('setRefill', { style: this.style })
+      } else {
+        await this.initUserMediaData({
+          type: 'update',
+          style: this.style,
+          screenName: this.screenName,
+          count: 200,
+          likes: this.likes
+        })
+      }
+      await this.fetchElHeight()
     },
     updateFave() {
       shareUpdateFave(this.$store, this.$apollo, this.oauth.iid, this.user)
@@ -269,8 +296,17 @@ export default {
     fetchFaveOffset(offset) {
       this.updateOffset('fave', offset)
     },
-    scroll() {
+    async scroll() {
       this.updateOffset('page', window.pageYOffset)
+
+      if (!this.scrollable) return
+      if (this.updating) return
+
+      if (this.offset.page + this.window.height > this.offset.updateArea) {
+        this.updating = true
+        await this.updateUserMediaData()
+        this.updating = false
+      }
     },
     fetchElHeight() {
       this.el = { height: this.$el.clientHeight }
