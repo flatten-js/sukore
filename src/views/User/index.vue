@@ -117,12 +117,14 @@ export default {
       loading: {
         likes: true
       },
+      offset: {
+        page: 0,
+        fave: 0
+      },
       faves: [],
       likes: [],
       transitionName: '',
       tabTransition: false,
-      faveOffset: 0,
-      pageOffset: 0,
       popup: {
         start: false,
         content: false
@@ -196,7 +198,7 @@ export default {
       ]
     },
     isFaveOverlap() {
-      return this.pageOffset > this.faveOffset
+      return this.offset.page > this.offset.fave
     },
     scrollable() {
       // 96: Height of AbsoluteTerritory
@@ -251,11 +253,14 @@ export default {
     queryLoadingReady(key) {
       this.loading = { [key]: false }
     },
+    updateOffset(key, val) {
+      this.offset = { ...this.offset, [key]: val }
+    },
     fetchFaveOffset(offset) {
-      this.faveOffset = offset
+      this.updateOffset('fave', offset)
     },
     scroll() {
-      this.pageOffset = window.pageYOffset
+      this.updateOffset('page', window.pageYOffset)
     },
     fetchElHeight() {
       this.el = { height: this.$el.clientHeight }
@@ -266,7 +271,7 @@ export default {
       }
       this.tabTransition = !this.tabTransition
     },
-  	graduallyPopup(key) {
+    graduallyPopup(key) {
       this.popup = { ...this.popup, [key]: !this.popup[key] }
     }
   }
