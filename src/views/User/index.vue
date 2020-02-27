@@ -123,6 +123,7 @@ export default {
       },
       faves: [],
       likes: [],
+      style: '',
       transitionName: '',
       tabTransition: false,
       popup: {
@@ -206,19 +207,25 @@ export default {
     }
   },
   watch: {
-    'popup.start'(to) {
-      document.body.style.overflow = to ? 'hidden' : ''
-    },
-    '$route.path'(to, from) {
-      const toDepth = to.split('/')
-      const fromDepth = from.split('/')
-      this.transitionName = toDepth > fromDepth ? 'left-parry' : 'right-parry'
-    },
+    '$route.path': {
+      handler: function(to, from) {
+        const toDepth = to.split('/')
+        this.style = toDepth.length > 2 ? 'retweet' : 'tweet'
+
+        if (!from) return
+        const fromDepth = from.split('/')
+        this.transitionName = toDepth > fromDepth ? 'left-parry' : 'right-parry'
+      },
+      immediate: true
+     },
     '$route.params.screenName'(to, from) {
       if (to === from) return
 
       this.initUserData(to, this.faves)
       this.initUserMediaData(to, 100, true, this.likes)
+    },
+    'popup.start'(to) {
+      document.body.style.overflow = to ? 'hidden' : ''
     }
   },
   created() {
