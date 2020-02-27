@@ -76,7 +76,11 @@ export default new Vuex.Store({
     },
     media: {
       sender: '',
-      list: []
+      list: [],
+      refill: {
+        tweet: [],
+        retweet: []
+      }
     },
     stock: []
   },
@@ -96,7 +100,11 @@ export default new Vuex.Store({
     initMedia(state) {
       state.media = {
         sender: '',
-        list: []
+        list: [],
+        refill: {
+          tweet: [],
+          retweet: []
+        }
       }
     },
     addMedia(state, payload) {
@@ -104,7 +112,10 @@ export default new Vuex.Store({
         sender: payload.sender,
         list: payload.stock
         ? payload.mediaList.concat(payload.stock.list)
-        : payload.mediaList
+        : payload.mediaList,
+        refill: payload.stock
+        ? payload.stock.refill
+        : { tweet: [], retweet: [] }
       }
     },
     updateMedia(state, payload) {
@@ -125,6 +136,18 @@ export default new Vuex.Store({
     updateMediaListState({ media }, payload) {
       const i = media.list.findIndex(media => media.id === payload.tid)
       media.list.splice(i, 1, { ...media.list[i], state: !media.list[i].state })
+    },
+    addMediaRefill(state, payload) {
+      state.media.refill.tweet
+      .push(payload.mediaList.filter(media => !media.retweeted))
+      state.media.refill.retweet
+      .push(payload.mediaList.filter(media => media.retweeted))
+    },
+    setRefill(state, payload) {
+      state.media = {
+        ...state.media,
+        list: state.media.list.concat(state.media.refill[payload.style].shift())
+      }
     },
     updateStock({ stock, media }, payload) {
       if (payload.stock) {
@@ -216,11 +239,12 @@ export default new Vuex.Store({
 
       commit('setUser', payload)
     },
-    async userTimelineSearch({ commit, getters }, { screenName, count, excludeReplies }) {
+    async userTimelineSearch({ commit, getters }, { type = 'add', style, screenName, count, excludeReplies = true }) {
       const payload = {
         sender: screenName,
         mediaList: [],
-        stock: {}
+        stock: {},
+        style
       }
 
       const stock = getters.stock.find(media => media.sender === screenName)
@@ -229,8 +253,11 @@ export default new Vuex.Store({
       await axios.get('/api/twitter/statuses/user/timeline', {
         params: {
           screen_name: screenName,
-          since_id: stock
+          since_id: type === 'add' && stock
           ? stock.list[0]._id
+          : null,
+          max_id: type === 'update'
+          ? getters.media.list.slice(-1)[0]._id
           : null,
           count: count,
           exclude_replies: excludeReplies
@@ -244,7 +271,15 @@ export default new Vuex.Store({
         })
       })
 
-      commit('addMedia', payload)
+      const mediaSaveFormat = {
+        add: () => commit('addMedia', payload),
+        update: async () => {
+          await commit('addMediaRefill', payload)
+          await commit('setRefill', payload)
+        }
+      }
+
+      await mediaSaveFormat[type]()
       commit('updateStock', payload)
     },
     async singleTweetSearch({ commit, getters }, { id }) {
