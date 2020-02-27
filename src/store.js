@@ -274,7 +274,9 @@ export default new Vuex.Store({
       const mediaSaveFormat = {
         add: () => commit('addMedia', payload),
         update: async () => {
-          await commit('addMediaRefill', payload)
+          if (!getters.media.refill[style].length) {
+            await commit('addMediaRefill', payload)
+          }
           await commit('setRefill', payload)
         }
       }

@@ -268,17 +268,13 @@ export default {
       await this.$store.commit('initMediaListState', { likes })
     },
     async updateUserMediaData() {
-      if (this.media.refill[this.style].length) {
-        await this.$store.commit('setRefill', { style: this.style })
-      } else {
-        await this.initUserMediaData({
-          type: 'update',
-          style: this.style,
-          screenName: this.screenName,
-          count: 200,
-          likes: this.likes
-        })
-      }
+      await this.initUserMediaData({
+        type: 'update',
+        style: this.style,
+        screenName: this.screenName,
+        count: 200,
+        likes: this.likes
+      })
       await this.fetchElHeight()
     },
     updateFave() {
