@@ -129,7 +129,7 @@ export default new Vuex.Store({
     updateStock({ stock, media }, payload) {
       if (payload.stock) {
         if (!payload.mediaList.length) return
-        const i = stock.findIndex(media => media.sender === payload.screenName)
+        const i = stock.findIndex(media => media.sender === payload.sender)
         stock.splice(i, 1, media)
       } else {
         stock.push(media)
