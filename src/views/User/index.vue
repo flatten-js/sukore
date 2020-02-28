@@ -168,7 +168,7 @@ export default {
 
         await this.initUserMediaData({
           screenName: this.screenName,
-          count: 10,
+          count: 100,
           likes: data.likes
         })
         await this.queryLoadingReady(key)
@@ -298,7 +298,8 @@ export default {
       if (!this.scrollable) return
       if (this.updating) return
 
-      if (this.offset.page + this.window.height > this.offset.updateArea) {
+      // 250: preload
+      if (this.offset.page + this.window.height > this.offset.updateArea - 250) {
         this.updating = true
         await this.updateUserMediaData()
         this.updating = false
