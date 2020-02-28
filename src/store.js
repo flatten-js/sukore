@@ -138,10 +138,30 @@ export default new Vuex.Store({
       media.list.splice(i, 1, { ...media.list[i], state: !media.list[i].state })
     },
     addMediaRefill(state, payload) {
-      state.media.refill.tweet
-      .push(payload.mediaList.filter(media => !media.retweeted))
-      state.media.refill.retweet
-      .push(payload.mediaList.filter(media => media.retweeted))
+      const { tweet, retweet } = state.media.refill
+      const newTweetRefill = payload.mediaList.filter(media => !media.retweeted)
+      const newRetweetRefill = payload.mediaList.filter(media => media.retweeted)
+
+      const filling = (to, from) => {
+        const refill = []
+        if (from) {
+          refill.push(from.concat(to.splice(0, 50 - from.length)))
+        }
+        while(to.length) {
+          refill.push(to.splice(0, 50))
+        }
+        return refill
+      }
+
+      state.media = {
+        ...state.media,
+        refill: {
+          tweet: state.media.refill.tweet
+          .concat(filling(newTweetRefill, tweet.pop())),
+          retweet: state.media.refill.retweet
+          .concat(filling(newRetweetRefill, retweet.pop()))
+        }
+      }
     },
     setRefill(state, payload) {
       state.media = {
