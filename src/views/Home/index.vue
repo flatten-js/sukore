@@ -9,7 +9,7 @@
           template(v-for="media in noMediaListDuplicate")
             timeline-card
               template(#head)
-                user-details-bar(
+                details-bar(
                   :icon="media.icon"
                   :name="media.name"
                   :screen-name="media.screenName"
@@ -42,7 +42,7 @@ import HomeLayout from '@/components/templates/HomeLayout.vue'
 import TimelineArea from '@/components/organisms/TimelineArea.vue'
 import AbsoluteTerritory from '@/components/molecules/AbsoluteTerritory.vue'
 import TimelineCard from '@/components/organisms/TimelineCard.vue'
-import UserDetailsBar from '@/components/molecules/UserDetailsBar.vue'
+import DetailsBar from '@/components/molecules/DetailsBar.vue'
 import CardThumbnailBox from '@/components/molecules/CardThumbnailBox.vue'
 import CardDetails from '@/components/molecules/CardDetails.vue'
 
@@ -53,7 +53,7 @@ export default {
     AbsoluteTerritory,
     TimelineCard,
     CardThumbnailBox,
-    UserDetailsBar,
+    DetailsBar,
     CardDetails
   },
   data() {

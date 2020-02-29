@@ -1,8 +1,8 @@
 <template lang="pug">
-  .user-details-bar
-    .user-details-bar-icon
+  .details-bar
+    .details-bar-icon
       template(v-if="type === 'simple'")
-        .user-details-bar-icon__back
+        .details-bar-icon__back
           material-button(
             name="chevron-left"
             color="twitter"
@@ -11,14 +11,14 @@
             @click.native="back"
             )
       template(v-else)
-        router-link.user-details-bar-icon__link(
+        router-link.details-bar-icon__link(
           :to="screenName | convertUserPath"
           )
           user-icon(
             size="small"
             :url="icon"
             )
-    .user-details-bar__name
+    .details-bar__content
       template(v-if="type === 'simple'")
         single-line-text(
           tag="h2"
@@ -28,7 +28,7 @@
           @click.native="scrollToTop"
           )
       template(v-else)
-        router-link.user-details-bar-name__link(
+        router-link.details-bar-content__link(
           :to="screenName | convertUserPath"
           )
           single-line-text(
@@ -36,9 +36,9 @@
             size="small"
             weight="bold"
             )
-    .user-details-bar__options
+    .details-bar__options
       template(v-if="option === 'twitter'")
-        .user-details-bar-options__button
+        .details-bar-options__button
           material-button(
             v-show="adjust"
             type="simple"
@@ -51,7 +51,7 @@
             text="Twitterを見る"
             )
       template(v-else-if="option === 'fave'")
-        .user-details-bar-options__button
+        .details-bar-options__button
           transition(name="fade")
             material-button(
               v-show="adjust"
@@ -65,7 +65,7 @@
       template(v-else-if="option === 'none'")
         //- none
       template(v-else)
-        .user-details-bar-options__menu
+        .details-bar-options__menu
           material-button(
             name="dots-horizontal"
             color="twitter"
@@ -151,21 +151,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .user-details-bar {
+  .details-bar {
     display: flex;
     height: 50px;
     padding: .5rem 1rem;
     align-items: center;
     box-sizing: border-box;
 
-    &__name {
+    &__content {
       margin-right: 1rem;
       flex: 1 1 100%;
       overflow: hidden;
     }
   }
 
-  .user-details-bar-icon {
+  .details-bar-icon {
     margin-right: .5rem;
 
     &__back {
@@ -173,13 +173,13 @@ export default {
     }
   }
 
-  .user-details-bar-icon, .user-details-bar-name {
+  .details-bar-icon, .details-bar-content {
     &__link {
       text-decoration: none;
     }
   }
 
-  .user-details-bar-options {
+  .details-bar-options {
     &__menu {
       margin-right: -.5rem;
     }

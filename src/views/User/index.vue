@@ -2,7 +2,7 @@
   user-layout
     template(#header-area)
       header-area
-        user-details-bar(
+        details-bar(
           type="simple"
           :name="user.name"
           :screen-name="user.screenName"
@@ -73,7 +73,7 @@ import { shareUpdateFave } from '@/apollo/graphql/used/shares'
 
 import UserLayout from '@/components/templates/UserLayout.vue'
 import HeaderArea from '@/components/organisms/HeaderArea.vue'
-import UserDetailsBar from '@/components/molecules/UserDetailsBar.vue'
+import DetailsBar from '@/components/molecules/DetailsBar.vue'
 import UserDetailsArea from '@/components/organisms/UserDetailsArea.vue'
 import UserDetails from '@/components/molecules/UserDetails.vue'
 import ThumbnailBoxArea from '@/components/organisms/ThumbnailBoxArea.vue'
@@ -87,7 +87,7 @@ export default {
   components: {
     UserLayout,
     HeaderArea,
-    UserDetailsBar,
+    DetailsBar,
     UserDetailsArea,
     UserDetails,
     ThumbnailBoxArea,

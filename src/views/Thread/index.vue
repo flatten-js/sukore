@@ -2,7 +2,7 @@
   thread-layout
     template(#header-area)
       header-area
-        user-details-bar(
+        details-bar(
           type="simple"
           name="スレッド"
           option="none"
@@ -50,7 +50,7 @@ import { shareUpdateLike } from '@/apollo/graphql/used/shares'
 
 import ThreadLayout from '@/components/templates/ThreadLayout.vue'
 import HeaderArea from '@/components/organisms/HeaderArea.vue'
-import UserDetailsBar from '@/components/molecules/UserDetailsBar.vue'
+import DetailsBar from '@/components/molecules/DetailsBar.vue'
 import PickupArea from '@/components/organisms/PickupArea.vue'
 import AbsoluteTerritory from '@/components/molecules/AbsoluteTerritory.vue'
 import PickupCard from '@/components/organisms/PickupCard.vue'
@@ -61,7 +61,7 @@ export default {
   components: {
     ThreadLayout,
     HeaderArea,
-    UserDetailsBar,
+    DetailsBar,
     PickupArea,
     AbsoluteTerritory,
     PickupCard,
