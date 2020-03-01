@@ -164,14 +164,13 @@ export default {
       },
       async result({ data }, key) {
         this.queryInitReady(key)
-
-        await this.initUserMediaData({
+        this.addUserMediaData({
+          style: this.style,
           screenName: this.screenName,
           count: 100,
-          likes: data.likes
+          likes: data.likes,
+          key
         })
-        await this.queryLoadingReady(key)
-        this.fetchElHeight()
       }
     }
   },
@@ -220,22 +219,32 @@ export default {
         const toDepth = to.split('/')
         this.style = toDepth.length > 2 ? 'retweet' : 'tweet'
 
-        if (!from) return
-        const fromDepth = from.split('/')
-        this.transitionName = toDepth > fromDepth ? 'left-parry' : 'right-parry'
+        if (from) {
+          const fromDepth = from.split('/')
+          this.transitionName = toDepth > fromDepth ? 'left-parry' : 'right-parry'
+        }
       },
       immediate: true
      },
-    '$route.params.screenName'(to, from) {
-      if (to === from) return
+    '$route.params.screenName': {
+      handler: async function(to, from) {
+        if (to === from) return
 
-      this.initUserData(to, this.faves)
-      this.initUserMediaData({
-        style: this.style,
-        screenName: to,
-        count: 100,
-        likes: this.likes
-      })
+        this.$store.commit('initMedia')
+
+        if (from) {
+          this.queryLoadingReady('likes')
+          this.initUserData(to, this.faves)
+          this.addUserMediaData({
+            style: this.style,
+            screenName: to,
+            count: 100,
+            likes: this.likes,
+            key: 'likes'
+          })
+        }
+      },
+      immediate: true
     },
     'el.height'() {
       this.updateOffset('updateArea', this.$refs.updateArea.$el.offsetTop)
@@ -253,8 +262,6 @@ export default {
       this.queryLoadingReady('likes')
       return
     }
-
-    this.$store.commit('initMedia')
   },
   beforeMount() {
     window.addEventListener('scroll', this.scroll, { passive: true })
@@ -270,16 +277,20 @@ export default {
     async initUserMediaData({ type, style, screenName, count, excludeReplies, likes }) {
       await this.$store.dispatch('userTimelineSearch', { type, style, screenName, count, excludeReplies })
       await this.$store.commit('initMediaListState', { likes })
+      await this.fetchElHeight()
     },
-    async updateUserMediaData() {
-      await this.initUserMediaData({
+    async addUserMediaData({ style, screenName, count, likes, key }) {
+      await this.initUserMediaData({ style, screenName, count, likes })
+      await this.queryLoadingReady(key)
+    },
+    updateUserMediaData() {
+      this.initUserMediaData({
         type: 'update',
         style: this.style,
         screenName: this.screenName,
         count: 200,
         likes: this.likes
       })
-      await this.fetchElHeight()
     },
     updateFave() {
       shareUpdateFave(this.$store, this.$apollo, this.oauth.iid, this.user)
@@ -288,7 +299,7 @@ export default {
       this.init = { ...this.init, [key]: true }
     },
     queryLoadingReady(key) {
-      this.loading = { [key]: false }
+      this.loading = { [key]: !this.loading[key] }
     },
     updateOffset(key, val) {
       this.offset = { ...this.offset, [key]: val }
