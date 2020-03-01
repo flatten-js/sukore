@@ -1,44 +1,37 @@
 <template lang="pug">
   explore-layout
-    template(#search-area)
-      search-area
-        search-form(
+    template(#header-area)
+      header-area
+        details-bar(
+          icon-type="user"
+          content-type="search"
           v-model="inputText"
-          @enter-submit="search"
-          @clear-click="clear"
+          :icon="oauth.icon"
           )
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import ExploreLayout from '@/components/templates/ExploreLayout.vue'
-import SearchArea from '@/components/organisms/SearchArea.vue'
-import SearchForm from '@/components/molecules/SearchForm.vue'
+import HeaderArea from '@/components/organisms/HeaderArea.vue'
+import DetailsBar from '@/components/molecules/DetailsBar.vue'
 
 export default {
   components: {
     ExploreLayout,
-    SearchArea,
-    SearchForm
+    HeaderArea,
+    DetailsBar
   },
   data() {
     return {
       inputText: ''
     }
   },
-  methods: {
-    search() {
-      const { inputText } = this
-      if (!inputText) return
-
-      if (inputText.match(/^@.+?/)) {
-        this.$router.push({ path: `/${inputText.replace('@', '')}` })
-      } else {
-        this.$router.push({ path: `/search/${encodeURIComponent(inputText)}` })
-      }
-    },
-    clear() {
-      this.inputText = ''
-    }
+  computed: {
+    ...mapGetters([
+      'oauth'
+    ])
   }
 }
 </script>

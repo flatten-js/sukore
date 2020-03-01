@@ -141,7 +141,7 @@ export default {
     },
     name: {
       type: String,
-      required: true
+      default: ''
     },
     screenName: {
       type: String,
