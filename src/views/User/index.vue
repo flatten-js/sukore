@@ -230,7 +230,12 @@ export default {
       if (to === from) return
 
       this.initUserData(to, this.faves)
-      this.initUserMediaData(to, 100, true, this.likes)
+      this.initUserMediaData({
+        style: this.style,
+        screenName: to,
+        count: 100,
+        likes: this.likes
+      })
     },
     'el.height'() {
       this.updateOffset('updateArea', this.$refs.updateArea.$el.offsetTop)
