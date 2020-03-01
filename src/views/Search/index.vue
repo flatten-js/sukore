@@ -93,14 +93,14 @@ export default {
       skip() {
         return this.init.likes
       },
-      async result({ data }, key) {
+      result({ data }, key) {
         this.queryInitReady(key)
-        await this.initSearchMediaData({
+        this.addSearchMediaDataSet({
           query: this.query,
           count: 100,
-          likes: data.likes
+          likes: data.likes,
+          key
         })
-        this.queryLoadingReady(key)
       }
     }
   },
@@ -119,22 +119,25 @@ export default {
     }
   },
   watch: {
-    async '$route.params.query'(to, from) {
-      if (to === from) return
+    '$route.params.query': {
+      handler: function(to, from) {
+        if (to === from) return
 
-      this.queryLoadingReady('likes')
-      this.$store.commit('initMedia')
-      await this.initSearchMediaData({
-        query: to,
-        count: 100,
-        likes: this.likes
-      })
-      this.queryLoadingReady('likes')
+        this.inputText = to
+        this.$store.commit('initMedia')
+
+        if (from) {
+          this.queryLoadingReady('likes')
+          this.addSearchMediaDataSet({
+            query: to,
+            count: 100,
+            likes: this.likes,
+            key: 'likes'
+          })
+        }
+      },
+      immediate: true
     }
-  },
-  created() {
-    this.inputText = this.query
-    this.$store.commit('initMedia')
   },
   mounted() {
     this.$el.addEventListener('scroll', this.swaipToRefresh)
@@ -143,6 +146,10 @@ export default {
     async initSearchMediaData({ type, query, count, likes }) {
       await this.$store.dispatch('multiTweetSearch', { type, query, count })
       await this.$store.commit('initMediaListState', { likes })
+    },
+    async addSearchMediaDataSet({ query, count, likes, key }) {
+      await this.initSearchMediaData({ query, count, likes })
+      this.queryLoadingReady(key)
     },
     queryInitReady(key) {
       this.init = { [key]: !this.init[key] }
