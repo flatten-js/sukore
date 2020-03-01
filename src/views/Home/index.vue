@@ -10,6 +10,8 @@
             timeline-card
               template(#head)
                 details-bar(
+                  icon-type="user"
+                  content-type="user"
                   :icon="media.icon"
                   :name="media.name"
                   :screen-name="media.screenName"

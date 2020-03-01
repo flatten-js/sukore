@@ -3,7 +3,6 @@
     template(#header-area)
       header-area
         details-bar(
-          type="simple"
           name="スレッド"
           option="none"
           )
@@ -16,7 +15,9 @@
           template(v-if="findMedia")
             pickup-card
               template(#head)
-                user-details-bar(
+                details-bar(
+                  icon-type="user"
+                  content-type="user"
                   :icon="findMedia.icon"
                   :name="findMedia.name"
                   :screen-name="findMedia.screenName"

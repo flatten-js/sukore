@@ -1,7 +1,15 @@
 <template lang="pug">
   .details-bar
     .details-bar-icon
-      template(v-if="type === 'simple'")
+      template(v-if="iconType === 'user'")
+        router-link.details-bar-icon__link(
+          :to="screenName | convertUserPath"
+          )
+          user-icon(
+            size="small"
+            :url="icon"
+            )
+      template(v-else)
         .details-bar-icon__back
           material-button(
             name="chevron-left"
@@ -10,24 +18,8 @@
             :state="true"
             @click.native="back"
             )
-      template(v-else)
-        router-link.details-bar-icon__link(
-          :to="screenName | convertUserPath"
-          )
-          user-icon(
-            size="small"
-            :url="icon"
-            )
-    .details-bar__content
-      template(v-if="type === 'simple'")
-        single-line-text(
-          tag="h2"
-          :text="name"
-          size="large"
-          weight="bold"
-          @click.native="scrollToTop"
-          )
-      template(v-else)
+    .details-bar-content
+      template(v-if="contentType === 'user'")
         router-link.details-bar-content__link(
           :to="screenName | convertUserPath"
           )
@@ -36,6 +28,14 @@
             size="small"
             weight="bold"
             )
+      template(v-else)
+        single-line-text(
+          tag="h2"
+          :text="name"
+          size="large"
+          weight="bold"
+          @click.native="scrollToTop"
+          )
     .details-bar__options
       template(v-if="option === 'twitter'")
         .details-bar-options__button
@@ -74,9 +74,9 @@
 </template>
 
 <script>
+import MaterialButton from '@/components/atoms/MaterialButton.vue'
 import UserIcon from '@/components/atoms/UserIcon.vue'
 import SingleLineText from '@/components/atoms/SingleLineText.vue'
-import MaterialButton from '@/components/atoms/MaterialButton.vue'
 
 export default {
   components: {
@@ -93,11 +93,18 @@ export default {
     }
   },
   props: {
-    type: {
+    iconType: {
       type: String,
       default: 'default',
       validator(val) {
-        return ['default', 'simple'].includes(val)
+        return ['default', 'user'].includes(val)
+      }
+    },
+    contentType: {
+      type: String,
+      default: 'default',
+      validator(val) {
+        return ['default', 'user'].includes(val)
       }
     },
     icon: {
@@ -157,12 +164,6 @@ export default {
     padding: .5rem 1rem;
     align-items: center;
     box-sizing: border-box;
-
-    &__content {
-      margin-right: 1rem;
-      flex: 1 1 100%;
-      overflow: hidden;
-    }
   }
 
   .details-bar-icon {
@@ -171,6 +172,12 @@ export default {
     &__back {
       margin-left: -.5rem;
     }
+  }
+
+  .details-bar-content {
+    margin-right: 1rem;
+    flex: 1 1 100%;
+    overflow: hidden;
   }
 
   .details-bar-icon, .details-bar-content {

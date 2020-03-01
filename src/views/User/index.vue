@@ -3,7 +3,6 @@
     template(#header-area)
       header-area
         details-bar(
-          type="simple"
           :name="user.name"
           :screen-name="user.screenName"
           option="fave"
