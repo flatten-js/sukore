@@ -28,6 +28,26 @@
             size="small"
             weight="bold"
             )
+      template(v-else-if="contentType === 'search'")
+        form.details-bar-content-search(
+          :class="{ '-focus': focused }"
+          @submit.prevent="search"
+          )
+          .details-bar-content-search__icon
+            svg-sprite(name="search")
+          .details-bar-content-search__input
+            input-text(
+              placeholder="キーワードを入力"
+              v-model="innerInputText"
+              @focus.native="isFocused"
+              @blur.native="isFocused"
+              )
+          .details-bar-content-search__clear
+            svg-sprite(
+              v-show="innerInputText"
+              name="clear"
+              @click.native="clear"
+              )
       template(v-else)
         single-line-text(
           tag="h2"
@@ -77,12 +97,16 @@
 import MaterialButton from '@/components/atoms/MaterialButton.vue'
 import UserIcon from '@/components/atoms/UserIcon.vue'
 import SingleLineText from '@/components/atoms/SingleLineText.vue'
+import SvgSprite from '@/components/atoms/SvgSprite.vue'
+import InputText from '@/components/atoms/InputText.vue'
 
 export default {
   components: {
     UserIcon,
     SingleLineText,
-    MaterialButton
+    MaterialButton,
+    SvgSprite,
+    InputText
   },
   filters: {
     convertTwitterPath(screenName) {
@@ -91,6 +115,10 @@ export default {
     convertUserPath(screenName) {
       return `/${screenName}`
     }
+  },
+  model: {
+    prop: 'inputText',
+    event: 'input'
   },
   props: {
     iconType: {
@@ -104,7 +132,7 @@ export default {
       type: String,
       default: 'default',
       validator(val) {
-        return ['default', 'user'].includes(val)
+        return ['default', 'user', 'search'].includes(val)
       }
     },
     icon: {
@@ -116,6 +144,10 @@ export default {
       required: true
     },
     screenName: {
+      type: String,
+      default: ''
+    },
+    inputText: {
       type: String,
       default: ''
     },
@@ -135,7 +167,20 @@ export default {
       default: false
     }
   },
+  data() {
+    return {
+      focused: false
+    }
+  },
   computed: {
+    innerInputText: {
+      get() {
+        return this.inputText
+      },
+      set(val) {
+        this.$emit('input', val)
+      }
+    },
     toggleFaveSettingText() {
       return this.fave ? '推しに設定中' : '推しに設定'
     }
@@ -149,6 +194,22 @@ export default {
         top: 0,
         behavior: 'smooth'
       })
+    },
+    isFocused() {
+      this.focused = !this.focused
+    },
+    search() {
+      const { innerInputText } = this
+      if (!innerInputText) return
+
+      if (innerInputText.match(/^@.+?/)) {
+        this.$router.push({ path: `/${innerInputText.replace('@', '')}` })
+      } else {
+        this.$router.push({ path: `/search/${encodeURIComponent(innerInputText)}` })
+      }
+    },
+    clear() {
+      this.innerInputText = ''
     },
     emmitingFave() {
       this.$emit('fave-click')
@@ -183,6 +244,28 @@ export default {
   .details-bar-icon, .details-bar-content {
     &__link {
       text-decoration: none;
+    }
+  }
+
+  .details-bar-content-search {
+    display: flex;
+    padding: 0 .5rem;
+    align-items: center;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    background-color: #f7f7f7;
+
+    &.-active {
+      border-color: rgba(26, 161, 242, .5);
+    }
+
+    &__icon , &__clear {
+      height: 100%;
+      font-size: 0;
+    }
+
+    &__input {
+      width: 100%;
     }
   }
 
