@@ -257,10 +257,10 @@ export default {
     this.$store.commit('initMedia')
   },
   beforeMount() {
-    window.addEventListener('scroll', this.scroll, false)
+    window.addEventListener('scroll', this.scroll, { passive: true })
   },
   beforeDestroy() {
-    window.removeEventListener('scroll', this.scroll, false)
+    window.removeEventListener('scroll', this.scroll, { passive: true })
   },
   methods: {
     async initUserData(screenName, faves) {
@@ -297,16 +297,27 @@ export default {
       this.updateOffset('fave', offset)
     },
     async scroll() {
-      this.updateOffset('page', window.pageYOffset)
+      let ticking = false
 
-      if (!this.scrollable) return
-      if (this.updating) return
+      const update = async () => {
+        ticking = false
 
-      // 250: preload
-      if (this.offset.page + this.window.height > this.offset.updateArea - 250) {
-        this.updating = true
-        await this.updateUserMediaData()
-        this.updating = false
+        this.updateOffset('page', window.pageYOffset)
+
+        if (!this.scrollable) return
+        if (this.updating) return
+
+        // 250: preload
+        if (this.offset.page + this.window.height > this.offset.updateArea - 250) {
+          this.updating = true
+          await this.updateUserMediaData()
+          this.updating = false
+        }
+      }
+
+      if (!ticking) {
+        requestAnimationFrame(update)
+        ticking = true
       }
     },
     fetchElHeight() {
