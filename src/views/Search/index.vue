@@ -1,5 +1,11 @@
 <template lang="pug">
   search-layout
+    template(#header-area)
+      header-area
+        details-bar(
+          content-type="search"
+          v-model="inputText"
+          )
     thumbnail-area
       template(#masthead)
         //- ToDo: ifを使わず初期化処理
@@ -36,6 +42,8 @@ import { LIKE } from '@/apollo/graphql'
 import { shareUpdateLike } from '@/apollo/graphql/used/shares'
 
 import SearchLayout from '@/components/templates/SearchLayout.vue'
+import HeaderArea from '@/components/organisms/HeaderArea.vue'
+import DetailsBar from '@/components/molecules/DetailsBar.vue'
 import ThumbnailArea from '@/components/organisms/ThumbnailArea.vue'
 import ThumbnailHead from '@/components/molecules/ThumbnailHead.vue'
 import ThumbnailBoxGrid from '@/components/organisms/ThumbnailBoxGrid.vue'
@@ -44,6 +52,8 @@ import ThumbnailBox from '@/components/molecules/ThumbnailBox.vue'
 export default {
   components: {
     SearchLayout,
+    HeaderArea,
+    DetailsBar,
     ThumbnailArea,
     ThumbnailHead,
     ThumbnailBoxGrid,
@@ -60,7 +70,8 @@ export default {
       init: {
         likes: false
       },
-      likes: []
+      likes: [],
+      inputText: ''
     }
   },
   apollo: {
@@ -99,6 +110,7 @@ export default {
     }
   },
   created() {
+    this.inputText = this.query
     this.$store.commit('initMedia')
   },
   mounted() {
