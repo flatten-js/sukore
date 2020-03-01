@@ -6,7 +6,7 @@
 
 <style lang="scss" scoped>
   .header-area {
-    height: 50px;
+    height: 3.25rem;
 
     &__content {
       position: fixed;

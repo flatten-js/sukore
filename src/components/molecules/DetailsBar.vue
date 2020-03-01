@@ -1,6 +1,8 @@
 <template lang="pug">
   .details-bar
-    .details-bar-icon
+    .details-bar-icon(
+      :class="{ '-adjust': isAdjust }"
+      )
       template(v-if="iconType === 'user'")
         router-link.details-bar-icon__link(
           :to="screenName | convertUserPath"
@@ -173,6 +175,9 @@ export default {
     }
   },
   computed: {
+    isAdjust() {
+      return this.iconType === 'user' && this.contentType !== 'user'
+    },
     innerInputText: {
       get() {
         return this.inputText
@@ -221,7 +226,7 @@ export default {
 <style lang="scss" scoped>
   .details-bar {
     display: flex;
-    height: 50px;
+    height: 3.25rem;
     padding: .5rem 1rem;
     align-items: center;
     box-sizing: border-box;
@@ -229,6 +234,10 @@ export default {
 
   .details-bar-icon {
     margin-right: .5rem;
+
+    &.-adjust {
+      margin-right: 1rem;
+    }
 
     &__back {
       margin-left: -.5rem;
@@ -255,7 +264,7 @@ export default {
     border-radius: 5px;
     background-color: #f7f7f7;
 
-    &.-active {
+    &.-focus {
       border-color: rgba(26, 161, 242, .5);
     }
 
@@ -271,7 +280,7 @@ export default {
 
   .details-bar-options {
     &__menu {
-      margin-right: -.5rem;
+      margin: 0 -.5rem;
     }
 
     &__button {
