@@ -51,7 +51,8 @@ const mediaTemplate = (data, screenName) => {
 export default new Vuex.Store({
   state: {
     oauth: {
-      iid: '1035366824412471296'
+      iid: '1035366824412471296',
+      icon: 'https://pbs.twimg.com/profile_images/1070549353381560320/a8ubDIpA_400x400.jpg'
     },
     user: {
       id: '',
