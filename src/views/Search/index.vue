@@ -72,6 +72,9 @@ export default {
   },
   data() {
     return {
+      el: {
+        height: 0
+      },
       init: {
         likes: false
       },
@@ -139,8 +142,11 @@ export default {
       immediate: true
     }
   },
-  mounted() {
-    this.$el.addEventListener('scroll', this.swaipToRefresh)
+  beforeMount() {
+    window.addEventListener('scroll', this.swaipToRefresh, { passive: true })
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.swaipToRefresh, { passive: true })
   },
   methods: {
     async initSearchMediaData({ type, query, count, likes }) {
