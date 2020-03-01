@@ -6,37 +6,42 @@
           content-type="search"
           v-model="inputText"
           )
-    thumbnail-area
-      template(#loading)
-        template(v-if="loading.likes")
-          absolute-territory
-      template(#masthead)
-        //- ToDo: ifを使わず初期化処理
-        template(v-if="searchMedia.masthead")
-          thumbnail-head(
-            :id="searchMedia.masthead.id"
-            :url="searchMedia.masthead.entities.thumbnail.src"
-            :screenName="searchMedia.masthead.screenName"
-            :query="query"
-            :text="searchMedia.masthead.text"
-            :image-count="searchMedia.masthead.entities.length"
-            :state="searchMedia.masthead.state"
-            @like-click="updateLike"
-            )
-      template(#contents)
-        thumbnail-box-grid
-          template(v-for="media in searchMedia.body")
-            thumbnail-box(
-              :key="media.id"
-              :id="media.id"
-              :type="media.entities.type"
-              :src="media.entities.thumbnail.src"
-              :screenName="media.screenName"
-              :image-count="media.entities.length"
-              :thumbnail-size="media.entities.thumbnail.size"
-              :state="media.state"
+    template(#thumbnail-area)
+      thumbnail-area
+        template(#loading)
+          template(v-if="loading.likes")
+            absolute-territory
+        template(#masthead)
+          //- ToDo: ifを使わず初期化処理
+          template(v-if="searchMedia.masthead")
+            thumbnail-head(
+              :id="searchMedia.masthead.id"
+              :url="searchMedia.masthead.entities.thumbnail.src"
+              :screenName="searchMedia.masthead.screenName"
+              :query="query"
+              :text="searchMedia.masthead.text"
+              :image-count="searchMedia.masthead.entities.length"
+              :state="searchMedia.masthead.state"
               @like-click="updateLike"
               )
+        template(#contents)
+          thumbnail-box-grid
+            template(v-for="media in searchMedia.body")
+              thumbnail-box(
+                :key="media.id"
+                :id="media.id"
+                :type="media.entities.type"
+                :src="media.entities.thumbnail.src"
+                :screenName="media.screenName"
+                :image-count="media.entities.length"
+                :thumbnail-size="media.entities.thumbnail.size"
+                :state="media.state"
+                @like-click="updateLike"
+                )
+    template(#update-area)
+      update-area(ref="updateArea")
+        template(v-if="!loading.likes")
+          absolute-territory
 </template>
 
 <script>
@@ -52,6 +57,7 @@ import ThumbnailArea from '@/components/organisms/ThumbnailArea.vue'
 import ThumbnailHead from '@/components/molecules/ThumbnailHead.vue'
 import ThumbnailBoxGrid from '@/components/organisms/ThumbnailBoxGrid.vue'
 import ThumbnailBox from '@/components/molecules/ThumbnailBox.vue'
+import UpdateArea from '@/components/organisms/UpdateArea.vue'
 
 export default {
   components: {
@@ -62,7 +68,8 @@ export default {
     ThumbnailArea,
     ThumbnailHead,
     ThumbnailBoxGrid,
-    ThumbnailBox
+    ThumbnailBox,
+    UpdateArea
   },
   props: {
     query: {
@@ -81,8 +88,12 @@ export default {
       loading: {
         likes: true
       },
+      offset: {
+        updateArea: 0
+      },
       likes: [],
-      inputText: ''
+      inputText: '',
+      updating: false
     }
   },
   apollo: {
@@ -130,6 +141,7 @@ export default {
         this.$store.commit('initMedia')
 
         if (from) {
+          document.activeElement.blur()
           this.queryLoadingReady('likes')
           this.addSearchMediaDataSet({
             query: to,
@@ -140,6 +152,9 @@ export default {
         }
       },
       immediate: true
+    },
+    'el.height'() {
+      this.offset = { updateArea: this.$refs.updateArea.$el.offsetTop }
     }
   },
   beforeMount() {
@@ -155,7 +170,8 @@ export default {
     },
     async addSearchMediaDataSet({ query, count, likes, key }) {
       await this.initSearchMediaData({ query, count, likes })
-      this.queryLoadingReady(key)
+      await this.queryLoadingReady(key)
+      this.fetchElHeight()
     },
     queryInitReady(key) {
       this.init = { [key]: !this.init[key] }
@@ -163,19 +179,34 @@ export default {
     queryLoadingReady(key) {
       this.loading = { [key]: !this.loading[key] }
     },
+    fetchElHeight() {
+      this.el = { height: this.$el.clientHeight }
+    },
     async swaipToRefresh() {
-      const el = this.$el,
-            elHeight = el.scrollHeight,
-            windowHeight = el.clientHeight,
-            scrollY = el.scrollTop
+      let ticking = false
 
-      if (elHeight === Math.round(windowHeight + scrollY)) {
-        this.initSearchMediaData({
-          type: 'update',
-          query: this.query,
-          count: 100,
-          likes: this.likes
-        })
+      const update = async () => {
+        ticking = false
+
+        if (this.loading.likes) return
+        if (this.updating) return
+
+        if (window.pageYOffset + window.innerHeight > this.offset.updateArea - 250) {
+          this.updating = true
+          await this.initSearchMediaData({
+            type: 'update',
+            query: this.query,
+            count: 100,
+            likes: this.likes
+          })
+          await this.fetchElHeight()
+          this.updating = false
+        }
+      }
+
+      if (!ticking) {
+        requestAnimationFrame(update)
+        ticking = true
       }
     },
     updateLike(id) {
