@@ -283,8 +283,8 @@ export default {
       await this.initUserMediaData({ style, screenName, count, likes })
       await this.queryLoadingReady(key)
     },
-    updateUserMediaData() {
-      this.initUserMediaData({
+    async updateUserMediaData() {
+      await this.initUserMediaData({
         type: 'update',
         style: this.style,
         screenName: this.screenName,
