@@ -148,7 +148,7 @@ export default {
         return this.init.faves
       },
       result({ data }, key) {
-        this.queryInitReady(key)
+        this.readyQueryInit(key)
         this.initUserData(this.screenName, data.faves)
       }
     },
@@ -163,14 +163,14 @@ export default {
         return this.lifecycle.created || this.init.likes
       },
       async result({ data }, key) {
-        this.queryInitReady(key)
-        this.addUserMediaData({
+        this.readyQueryInit(key)
+        await this.initUserMediaData({
           style: this.style,
           screenName: this.screenName,
           count: 100,
-          likes: data.likes,
-          key
+          likes: data.likes
         })
+        this.readyQueryLoading(key)
       }
     }
   },
@@ -230,18 +230,25 @@ export default {
       handler: async function(to, from) {
         if (to === from) return
 
-        this.$store.commit('initMedia')
+        if (this.media.sender === to) {
+          this.readyQueryInit('likes')
+          this.readyQueryLoading('likes')
+          await this.$nextTick()
+          this.fetchElHeight()
+        } else {
+          this.$store.commit('initMedia')
+        }
 
         if (from) {
-          this.queryLoadingReady('likes')
           this.initUserData(to, this.faves)
-          this.addUserMediaData({
+          this.initQueryLoading('likes')
+          await this.initUserMediaData({
             style: this.style,
-            screenName: to,
+            screenName: this.screenName,
             count: 100,
-            likes: this.likes,
-            key: 'likes'
+            likes: this.likes
           })
+          this.readyQueryLoading('likes')
         }
       },
       immediate: true
@@ -256,12 +263,6 @@ export default {
   created() {
     this.lifecycle = { created: false }
     this.window = { height: window.innerHeight }
-
-    if (this.media.sender === this.screenName) {
-      this.queryInitReady('likes')
-      this.queryLoadingReady('likes')
-      return
-    }
   },
   beforeMount() {
     window.addEventListener('scroll', this.scroll, { passive: true })
@@ -279,10 +280,6 @@ export default {
       await this.$store.commit('initMediaListState', { likes })
       await this.fetchElHeight()
     },
-    async addUserMediaData({ style, screenName, count, likes, key }) {
-      await this.initUserMediaData({ style, screenName, count, likes })
-      await this.queryLoadingReady(key)
-    },
     async updateUserMediaData() {
       await this.initUserMediaData({
         type: 'update',
@@ -295,11 +292,14 @@ export default {
     updateFave() {
       shareUpdateFave(this.$store, this.$apollo, this.oauth.iid, this.user)
     },
-    queryInitReady(key) {
+    readyQueryInit(key) {
       this.init = { ...this.init, [key]: true }
     },
-    queryLoadingReady(key) {
-      this.loading = { [key]: !this.loading[key] }
+    initQueryLoading(key) {
+      this.loading = { [key]: true }
+    },
+    readyQueryLoading(key) {
+      this.loading = { [key]: false }
     },
     updateOffset(key, val) {
       this.offset = { ...this.offset, [key]: val }
@@ -315,6 +315,7 @@ export default {
 
         this.updateOffset('page', window.pageYOffset)
 
+        if (this.loading.likes) return
         if (!this.scrollable) return
         if (this.updating) return
 
