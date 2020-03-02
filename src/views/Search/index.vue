@@ -167,11 +167,11 @@ export default {
     async initSearchMediaData({ type, query, count, likes }) {
       await this.$store.dispatch('multiTweetSearch', { type, query, count })
       await this.$store.commit('initMediaListState', { likes })
+      await this.fetchElHeight()
     },
     async addSearchMediaDataSet({ query, count, likes, key }) {
       await this.initSearchMediaData({ query, count, likes })
       await this.queryLoadingReady(key)
-      this.fetchElHeight()
     },
     queryInitReady(key) {
       this.init = { [key]: !this.init[key] }
@@ -199,7 +199,6 @@ export default {
             count: 100,
             likes: this.likes
           })
-          await this.fetchElHeight()
           this.updating = false
         }
       }
