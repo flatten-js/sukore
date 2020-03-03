@@ -32,6 +32,7 @@
                   name="clear"
                   trigger
                   @click-this="searchFromHistory"
+                  @click-title="searchFromHistory"
                   @click-option-icon="updateSearchHistory"
                   )
 </template>

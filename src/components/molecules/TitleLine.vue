@@ -1,13 +1,14 @@
 <template lang="pug">
   .title-line(
     :class="{ '-trigger': trigger }"
-    @click="$emit('click-this', title)"
+    @click.self="$emit('click-this', title)"
     )
     single-line-text(
       :tag="tag"
       :text="title"
       :size="size"
       weight="bold"
+      @click.native="$emit('click-title', title)"
       )
     .title-line-option
       template(v-if="option === 'text'")
