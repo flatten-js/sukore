@@ -153,6 +153,10 @@ export default {
       type: String,
       default: ''
     },
+    customEvent: {
+      type: Boolean,
+      default: false
+    },
     option: {
       type: String,
       default: 'menu',
@@ -192,7 +196,9 @@ export default {
   },
   methods: {
     back() {
-      this.$router.back()
+      this.customEvent
+      ? this.$emit('click-custom-back')
+      : this.$router.back()
     },
     scrollToTop() {
       window.scrollTo({
@@ -201,11 +207,19 @@ export default {
       })
     },
     isFocused() {
+      this.focused
+      ? this.$emit('blur-input-text')
+      : this.$emit('focus-input-text')
       this.focused = !this.focused
     },
     search() {
       const { innerInputText } = this
       if (!innerInputText) return
+
+      let historys = JSON.parse(localStorage.getItem('search_historys')) || []
+      historys = historys.filter(history => history !== innerInputText)
+      historys.unshift(innerInputText)
+      localStorage.setItem('search_historys', JSON.stringify(historys))
 
       if (innerInputText.match(/^@.+?/)) {
         this.$router.push({ path: `/${innerInputText.replace('@', '')}` })
