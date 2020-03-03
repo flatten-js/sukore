@@ -1,5 +1,8 @@
 <template lang="pug">
-  .title-line
+  .title-line(
+    :class="{ '-trigger': trigger }"
+    @click="$emit('click-this', title)"
+    )
     single-line-text(
       :tag="tag"
       :text="title"
@@ -21,7 +24,7 @@
             :name="name"
             color="twitter"
             horizon="short"
-            @click.native="$emit('click-option-icon')"
+            @click.native="$emit('click-option-icon', title)"
             )
 </template>
 
@@ -41,6 +44,10 @@ export default {
       validator(val) {
         return ['div', 'h1', 'h2', 'h3'].includes(val)
       }
+    },
+    trigger: {
+      type: Boolean,
+      default: false
     },
     title: {
       type: String,
@@ -78,6 +85,12 @@ export default {
     padding: 1rem;
     align-items: center;
     justify-content: space-between;
+
+    &.-trigger {
+      &:active {
+        background-color: #f7f7f7;
+      }
+    }
   }
 
   .title-line-option {
