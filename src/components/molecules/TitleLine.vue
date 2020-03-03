@@ -83,11 +83,13 @@ export default {
 <style lang="scss" scoped>
   .title-line {
     display: flex;
-    padding: 1rem;
+    padding: .5rem 1rem;
     align-items: center;
     justify-content: space-between;
 
     &.-trigger {
+      border-bottom: 1px solid #dfdfdf;
+
       &:active {
         background-color: #f7f7f7;
       }

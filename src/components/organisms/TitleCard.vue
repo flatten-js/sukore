@@ -8,7 +8,12 @@
 
 <style lang="scss" scoped>
   .title-card {
-    background-color: white;
-    border-bottom: 1px solid #dfdfdf;
+    &__title {
+      border-bottom: 1px solid #dfdfdf;
+    }
+
+    &__content {
+      background-color: white;
+    }
   }
 </style>
