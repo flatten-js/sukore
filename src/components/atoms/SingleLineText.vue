@@ -13,7 +13,7 @@ export default {
       type: String,
       default: 'div',
       validator(val) {
-        return ['div', 'h1', 'h2'].includes(val)
+        return ['div', 'h1', 'h2', 'h3'].includes(val)
       }
     },
     text: {
