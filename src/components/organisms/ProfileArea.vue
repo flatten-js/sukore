@@ -1,10 +1,10 @@
 <template lang="pug">
-  section.user-details-area
+  section.profile-area
     slot
 </template>
 
 <style scoped>
-   .user-details-area {
+   .profile-area {
      background-color: white;
    }
 </style>

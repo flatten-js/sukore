@@ -1,16 +1,16 @@
 <template lang="pug">
-  .user-details
-    .user-details__user-head
-      head-banner(:url="masthead")
-    .user-profile
-      .user-profile-head
-        .user-profile-head__icon
+  .profile
+    .profile__head
+      head-banner(:url="head")
+    .profile-details
+      .profile-details-head
+        .profile-details-head__icon
           user-icon(
             :url="icon"
             border
             )
-        .user-profile-head-tools(ref="tools")
-          .user-profile-head-tools__menu
+        .profile-details-head-tools(ref="tools")
+          .profile-details-head-tools__menu
             material-button(
               type="simple"
               name="dots-horizontal"
@@ -19,34 +19,34 @@
               horizon="short"
               @click.native="$emit('menu-click')"
               )
-          .user-profile-head-tools__fave
+          .profile-details-head-tools__fave
             material-button(
               type="simple"
               color="twitter"
               size="small"
               :state="fave"
               :text="toggleFaveSettingText"
-              @click.native="emmitingFave"
+              @click.native="$emit('fave-click')"
               )
-      .user-profile__name
+      .profile-details__name
         multi-line-text(
           :text="name"
           size="xl"
           weight="xb"
           )
-      .user-profile__screen-name
+      .profile-details__screen-name
         single-line-text(
           :text="screenName | convertTwitterScreenName"
           size="small"
           brightness="2"
           )
-      .user-profile__description
+      .profile-details__description
         extract-text(
           :text="description | convertCustomUrlText(urlObject.description)"
           )
-      .user-profile-remarks
+      .profile-details-remarks
         template(v-if="remarks.location")
-          span.user-profile-remarks__location
+          span.profile-details-remarks__location
             inline-icon-text(
               name="map-pin"
               :text="remarks.location"
@@ -55,7 +55,7 @@
               space="small"
               )
         template(v-if="remarks.link")
-          span.user-profile-remarks__link
+          span.profile-details-remarks__link
             inline-icon-text(
               type="link"
               name="link"
@@ -64,15 +64,15 @@
               color="twitter"
               space="small"
               )
-      .user-profile-status
-        .user-profile-status__following
+      .profile-details-status
+        .profile-details-status__following
           individuality(
             :text="status.following | convertCommaFormat"
             weight="bold"
             mr="025"
             )
           | フォロー中
-        .user-profile-status__followers
+        .profile-details-status__followers
           individuality(
             :text="status.followers | convertCommaFormat"
             weight="bold"
@@ -119,7 +119,7 @@ export default {
     }
   },
   props: {
-    masthead: [String, null],
+    head: [String, null],
     icon: {
       type: String,
       required: true
@@ -166,41 +166,16 @@ export default {
   },
   mounted() {
     this.$emit('fave-offset-pass', this.$refs.tools.offsetTop)
-  },
-  methods: {
-    emmitingFave() {
-      this.$emit('fave-click')
-    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .user-details {
+  .profile {
     background-color: #fff;
   }
 
-  .user-profile-head {
-    display: flex;
-    margin: 0 0 1rem;
-    justify-content: space-between;
-
-    &__icon {
-      display: inline-block;
-      margin: -45px 0 0;
-    }
-  }
-
-  .user-profile-head-tools {
-    display: flex;
-    align-items: center;
-
-    &__menu {
-      margin-right: .5rem;
-    }
-  }
-
-  .user-profile {
+  .profile-details {
     padding: 1rem;
     box-sizing: border-box;
 
@@ -213,13 +188,33 @@ export default {
     }
   }
 
-  .user-profile-remarks {
+  .profile-details-head {
+    display: flex;
+    margin: 0 0 1rem;
+    justify-content: space-between;
+
+    &__icon {
+      display: inline-block;
+      margin: -45px 0 0;
+    }
+  }
+
+  .profile-details-head-tools {
+    display: flex;
+    align-items: center;
+
+    &__menu {
+      margin-right: .5rem;
+    }
+  }
+
+  .profile-details-remarks {
     margin: 0 0 1rem;
     white-space: pre-wrap;
     word-wrap: break-word;
   }
 
-  .user-profile-status {
+  .profile-details-status {
     display: flex;
     color: rgba(26, 26, 26, .75);
 

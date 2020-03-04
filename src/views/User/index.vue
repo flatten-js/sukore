@@ -10,9 +10,9 @@
           :adjust="isFaveOverlap"
           @fave-click="updateFave"
           )
-    template(#user-details-area)
-      user-details-area
-        user-details(
+    template(#profile-area)
+      profile-area
+        profile(
           v-bind="user"
           @fave-offset-pass="fetchFaveOffset"
           @menu-click="graduallyPopup('start')"
@@ -73,8 +73,8 @@ import { shareUpdateFave } from '@/apollo/graphql/used/shares'
 import UserLayout from '@/components/templates/UserLayout.vue'
 import HeaderArea from '@/components/organisms/HeaderArea.vue'
 import DetailsBar from '@/components/molecules/DetailsBar.vue'
-import UserDetailsArea from '@/components/organisms/UserDetailsArea.vue'
-import UserDetails from '@/components/molecules/UserDetails.vue'
+import ProfileArea from '@/components/organisms/ProfileArea.vue'
+import Profile from '@/components/molecules/Profile.vue'
 import ThumbnailBoxArea from '@/components/organisms/ThumbnailBoxArea.vue'
 import TextTabBar from '@/components/molecules/TextTabBar.vue'
 import AbsoluteTerritory from '@/components/molecules/AbsoluteTerritory.vue'
@@ -87,8 +87,8 @@ export default {
     UserLayout,
     HeaderArea,
     DetailsBar,
-    UserDetailsArea,
-    UserDetails,
+    ProfileArea,
+    Profile,
     ThumbnailBoxArea,
     TextTabBar,
     AbsoluteTerritory,

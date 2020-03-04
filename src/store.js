@@ -238,7 +238,7 @@ export default new Vuex.Store({
 
         payload.user = {
           id: user.id_str,
-          masthead: user.profile_banner_url,
+          head: user.profile_banner_url,
           icon: user.profile_image_url_https.replace('normal', '400x400'),
           name: user.name,
           screenName: user.screen_name,
