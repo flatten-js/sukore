@@ -49,20 +49,20 @@
         name="fade"
         @enter="graduallyPopup('content')"
         )
-        template(v-if="popup.start")
-          popup(
-            @click.native.self="graduallyPopup('content')"
-            )
-            template(#content)
-              transition(
-                name="slide"
-                @leave="graduallyPopup('start')"
+        popup(
+          v-show="popup.start"
+          @click.native.self="graduallyPopup('content')"
+          )
+          template(#content)
+            transition(
+              name="slide"
+              @leave="graduallyPopup('start')"
+              )
+              popup-content(
+                v-show="popup.content"
+                :items="options"
+                @cancel-click="graduallyPopup('content')"
                 )
-                template(v-if="popup.content")
-                  popup-content(
-                    :items="options"
-                    @cancel-click="graduallyPopup('content')"
-                    )
 </template>
 
 <script>
