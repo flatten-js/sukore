@@ -1,6 +1,6 @@
 <template lang="pug">
   home-layout
-    template(#timeline)
+    template(#timeline-layer)
       timeline-area
         template(#loading)
           template(v-if="loading.likes")

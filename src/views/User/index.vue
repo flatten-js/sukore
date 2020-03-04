@@ -1,6 +1,6 @@
 <template lang="pug">
   user-layout
-    template(#header-area)
+    template(#header-layer)
       header-area
         details-bar(
           :name="user.name"
@@ -10,7 +10,7 @@
           :adjust="isFaveOverlap"
           @fave-click="updateFave"
           )
-    template(#profile-area)
+    template(#profile-layer)
       profile-area
         profile(
           v-bind="user"
@@ -18,7 +18,7 @@
           @menu-click="graduallyPopup('start')"
           @fave-click="updateFave"
           )
-    template(#thumbnail-box-area)
+    template(#thumbnail-box-layer)
       thumbnail-box-mvp
         template(#navigation)
           text-tab-bar(:tab-items="userTabItems")
@@ -33,7 +33,7 @@
             )
             keep-alive
               router-view
-    template(#update-area)
+    template(#update-layer)
       update-area(ref="updateArea")
         template(v-if="!loading.likes && !tabTransition")
           template(v-if="scrollable")
@@ -44,7 +44,7 @@
               text="さらに前のメディアを表示"
               @click.native="updateUserMediaData"
               )
-    template(#option-menu-popup)
+    template(#popup-layer)
       transition(
         name="fade"
         @enter="graduallyPopup('content')"

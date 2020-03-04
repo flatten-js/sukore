@@ -1,5 +1,5 @@
 <template lang="pug">
   .likes-layout
-    .likes-layout__thumbnail-box-grid
-      slot(name="thumbnail-box-grid")
+    .likes-layout__thumbnail-box-layer
+      slot(name="thumbnail-box-layer")
 </template>

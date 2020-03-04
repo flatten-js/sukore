@@ -1,5 +1,5 @@
 <template lang="pug">
   .home-layout
-    .home-layout__timeline
-      slot(name="timeline")
+    .home-layout__timeline-layer
+      slot(name="timeline-layer")
 </template>

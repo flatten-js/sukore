@@ -1,12 +1,12 @@
 <template lang="pug">
   thread-layout
-    template(#header-area)
+    template(#header-layer)
       header-area
         details-bar(
           name="スレッド"
           option="none"
           )
-    template(#pickup-area)
+    template(#pickup-layer)
       pickup-area
         template(#loading)
           template(v-if="loading.likes")
@@ -40,7 +40,7 @@
                   :state="findMedia.state"
                   @like-click="updateLike"
                   )
-    template(#photo-zoomable-content)
+    template(#photo-zoomable-layer)
       router-view
 </template>
 

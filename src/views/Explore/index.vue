@@ -1,6 +1,6 @@
 <template lang="pug">
   explore-layout
-    template(#header-area)
+    template(#header-layer)
       header-area
         details-bar(
           :icon-type="test"
@@ -11,7 +11,7 @@
           @click-custom-back="back"
           custom-event
           )
-    template(#suggest-area)
+    template(#suggest-layer)
       suggest-area(v-show="opened")
         template(#history)
           title-card(v-show="historys.length")

@@ -1,12 +1,12 @@
 <template lang="pug">
   search-layout
-    template(#header-area)
+    template(#header-layer)
       header-area
         details-bar(
           content-type="search"
           v-model="inputText"
           )
-    template(#thumbnail-area)
+    template(#thumbnail-layer)
       thumbnail-area
         template(#loading)
           template(v-if="loading.likes")
@@ -38,7 +38,7 @@
                 :state="media.state"
                 @like-click="updateLike"
                 )
-    template(#update-area)
+    template(#update-layer)
       update-area(ref="updateArea")
         template(v-if="!loading.likes")
           absolute-territory

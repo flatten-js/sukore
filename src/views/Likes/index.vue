@@ -1,6 +1,6 @@
 <template lang="pug">
   likes-layout
-    template(#thumbnail-box-grid)
+    template(#thumbnail-box-layer)
       thumbnail-box-grid
         template(v-for="media in noMediaListDuplicate")
           thumbnail-box(

@@ -1,9 +1,9 @@
 <template lang="pug">
   .search-layout
-    .search-layout__header-area
-      slot(name="header-area")
-    .search-layout__thumbnail-area
-      slot(name="thumbnail-area")
-    .search-layout__update-area
-      slot(name="update-area")
+    .search-layout__header-layer
+      slot(name="header-layer")
+    .search-layout__thumbnail-layer
+      slot(name="thumbnail-layer")
+    .search-layout__update-layer
+      slot(name="update-layer")
 </template>
