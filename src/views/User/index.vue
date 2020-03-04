@@ -19,7 +19,7 @@
           @fave-click="updateFave"
           )
     template(#thumbnail-box-area)
-      thumbnail-box-area
+      thumbnail-box-mvp
         template(#navigation)
           text-tab-bar(:tab-items="userTabItems")
         template(#loading)
@@ -75,7 +75,7 @@ import HeaderArea from '@/components/organisms/HeaderArea.vue'
 import DetailsBar from '@/components/molecules/DetailsBar.vue'
 import ProfileArea from '@/components/organisms/ProfileArea.vue'
 import Profile from '@/components/molecules/Profile.vue'
-import ThumbnailBoxArea from '@/components/organisms/ThumbnailBoxArea.vue'
+import ThumbnailBoxMvp from '@/components/organisms/ThumbnailBoxMvp.vue'
 import TextTabBar from '@/components/molecules/TextTabBar.vue'
 import AbsoluteTerritory from '@/components/molecules/AbsoluteTerritory.vue'
 import UpdateArea from '@/components/organisms/UpdateArea.vue'
@@ -89,7 +89,7 @@ export default {
     DetailsBar,
     ProfileArea,
     Profile,
-    ThumbnailBoxArea,
+    ThumbnailBoxMvp,
     TextTabBar,
     AbsoluteTerritory,
     UpdateArea,
