@@ -1,7 +1,5 @@
-const url = require('url')
 const express = require('express')
 const Twitter = require('twitter')
-const router = express.Router()
 
 const client = new Twitter({
   'consumer_key': process.env.TWITTER_CONSUMER_KEY,
@@ -10,40 +8,34 @@ const client = new Twitter({
   'access_token_secret': process.env.TWITTER_ACCESS_TOKEN_SECRET
 })
 
-let params = null
-
-router.use((req, res, next) => {
-  params = url.parse(req.url, true)
-  next()
-})
+const router = express.Router()
 
 router.get('/statuses/user/timeline', async (req, res) => {
-  await client.get('statuses/user_timeline', params.query)
+  await client.get('statuses/user_timeline', req.query)
   .then(data => res.json(data))
   .catch(err => console.error(err))
 })
 
 router.get('/statuses/home/timeline', async (req , res) => {
-  await client.get('statuses/home_timeline', params.query)
+  await client.get('statuses/home_timeline', req.query)
   .then(data => res.json(data))
   .catch(err => console.error(err))
 })
 
 router.get('statuses/show', async (req , res) => {
-  await client.get('statuses/show', params.query)
+  await client.get('statuses/show', req.query)
   .then(data => res.json(data))
   .catch(err => console.error(err))
 })
 
 router.get('/users/show', async (req, res) => {
-  await client.get('users/show', params.query)
+  await client.get('users/show', req.query)
   .then(data => res.json(data))
   .catch(err => console.error(err))
 })
 
 router.get('/search/tweets', async (req, res) => {
-  console.log('/search/tweets')
-  await client.get('search/tweets', params.query)
+  await client.get('search/tweets', req.query)
   .then(data => res.json(data))
   .catch(err => console.error(err))
 })

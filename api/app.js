@@ -12,8 +12,9 @@ app.use(helmet())
 
 app.use('/api/twitter', require('./routes/twitter'))
 
-app.listen(config)
-consola.ready({
-  message: `API server listening on http://${config.host}:${config.port}`,
-  badge: true
+app.listen(config, () => {
+  consola.ready({
+    message: `API server listening on http://${config.host}:${config.port}`,
+    badge: true
+  })
 })
