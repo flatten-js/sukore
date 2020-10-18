@@ -1,7 +1,7 @@
 <template lang="pug">
   user-layout
     template(#header-layer)
-      header-area
+      head-area
         details-bar(
           :name="user.name"
           :screen-name="user.screenName"
@@ -71,7 +71,7 @@ import { FAVE, LIKE } from '@/apollo/graphql'
 import { shareUpdateFave } from '@/apollo/graphql/used/shares'
 
 import UserLayout from '@/components/templates/UserLayout.vue'
-import HeaderArea from '@/components/organisms/HeaderArea.vue'
+import HeadArea from '@/components/organisms/HeadArea.vue'
 import DetailsBar from '@/components/molecules/DetailsBar.vue'
 import ProfileArea from '@/components/organisms/ProfileArea.vue'
 import Profile from '@/components/molecules/Profile.vue'
@@ -85,7 +85,7 @@ import PopupContent from '@/components/molecules/PopupContent.vue'
 export default {
   components: {
     UserLayout,
-    HeaderArea,
+    HeadArea,
     DetailsBar,
     ProfileArea,
     Profile,

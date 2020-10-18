@@ -1,7 +1,7 @@
 <template lang="pug">
   search-layout
     template(#header-layer)
-      header-area
+      head-area
         details-bar(
           content-type="search"
           v-model="inputText"
@@ -50,7 +50,7 @@ import { LIKE } from '@/apollo/graphql'
 import { shareUpdateLike } from '@/apollo/graphql/used/shares'
 
 import SearchLayout from '@/components/templates/SearchLayout.vue'
-import HeaderArea from '@/components/organisms/HeaderArea.vue'
+import HeadArea from '@/components/organisms/HeadArea.vue'
 import DetailsBar from '@/components/molecules/DetailsBar.vue'
 import AbsoluteTerritory from '@/components/molecules/AbsoluteTerritory.vue'
 import ThumbnailArea from '@/components/organisms/ThumbnailArea.vue'
@@ -62,7 +62,7 @@ import UpdateArea from '@/components/organisms/UpdateArea.vue'
 export default {
   components: {
     SearchLayout,
-    HeaderArea,
+    HeadArea,
     DetailsBar,
     AbsoluteTerritory,
     ThumbnailArea,

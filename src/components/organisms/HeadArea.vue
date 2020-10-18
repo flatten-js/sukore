@@ -1,11 +1,11 @@
 <template lang="pug">
-  header.header-area
-    .header-area__content
+  header.head-area
+    .head-area__content
       slot
 </template>
 
 <style lang="scss" scoped>
-  .header-area {
+  .head-area {
     height: 3.25rem;
 
     &__content {

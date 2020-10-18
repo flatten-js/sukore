@@ -1,7 +1,7 @@
 <template lang="pug">
   explore-layout
     template(#header-layer)
-      header-area
+      head-area
         details-bar(
           :icon-type="test"
           content-type="search"
@@ -41,7 +41,7 @@
 import { mapGetters } from 'vuex'
 
 import ExploreLayout from '@/components/templates/ExploreLayout.vue'
-import HeaderArea from '@/components/organisms/HeaderArea.vue'
+import HeadArea from '@/components/organisms/HeadArea.vue'
 import DetailsBar from '@/components/molecules/DetailsBar.vue'
 import SuggestArea from '@/components/organisms/SuggestArea.vue'
 import TitleCard from '@/components/organisms/TitleCard.vue'
@@ -50,7 +50,7 @@ import TitleLine from '@/components/molecules/TitleLine.vue'
 export default {
   components: {
     ExploreLayout,
-    HeaderArea,
+    HeadArea,
     DetailsBar,
     SuggestArea,
     TitleCard,
