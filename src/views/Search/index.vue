@@ -121,10 +121,10 @@ export default {
   computed: {
     ...mapGetters([
       'oauth',
-      'noMediaListDuplicate'
+      'uniqMediaList'
     ]),
     searchMedia() {
-      const [masthead, ...body] = this.noMediaListDuplicate
+      const [masthead, ...body] = this.uniqMediaList
 
       return {
         masthead,
@@ -209,7 +209,7 @@ export default {
       }
     },
     updateLike(id) {
-      const media = this.noMediaListDuplicate.find(media => media.id === id)
+      const media = this.uniqMediaList.find(media => media.id === id)
       shareUpdateLike(this.$store, this.$apollo, this.oauth.iid, media)
     }
   }

@@ -12,8 +12,8 @@
   .timeline-card {
     background-color: white;
 
-    &__head, &__body {
-      border-bottom: 1px solid #dfdfdf;
+    &__head {
+      border-top: 1px solid #dfdfdf;
     }
 
     &__body {

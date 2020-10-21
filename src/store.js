@@ -185,16 +185,14 @@ export default new Vuex.Store({
     user: ({ user }) => user,
     media: ({ media }) => media,
     stock: ({ stock }) => stock,
-    noMediaListDuplicate: ({ media }) => {
-      return media.list.filter((media, i, self) => {
-        return self.findIndex(findMedia => findMedia.id === media.id) === i
-      })
+    uniqMediaList: ({ media }) => {
+      return media.list.filter((set => v => !set.has(v.id) && set.add(v.id))(new Set))
     },
-    tweetFilter: (state, { noMediaListDuplicate }) => {
-      return noMediaListDuplicate.filter(media => !media.retweeted)
+    tweetFilter: (state, { uniqMediaList }) => {
+      return uniqMediaList.filter(media => !media.retweeted)
     },
-    retweetFilter: (state, { noMediaListDuplicate }) => {
-      return noMediaListDuplicate.filter(media => media.retweeted)
+    retweetFilter: (state, { uniqMediaList }) => {
+      return uniqMediaList.filter(media => media.retweeted)
     },
     stockAllMediaList: ({ stock }) => {
       return stock.flatMap(media => media.list)

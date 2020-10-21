@@ -6,7 +6,7 @@
           template(v-if="loading.likes")
             absolute-territory
         template(#stream)
-          template(v-for="media in noMediaListDuplicate")
+          template(v-for="media in uniqMediaList")
             timeline-card
               template(#head)
                 details-bar(
@@ -95,7 +95,7 @@ export default {
     ...mapGetters([
       'oauth',
       'media',
-      'noMediaListDuplicate'
+      'uniqMediaList'
     ])
   },
   created() {
@@ -115,7 +115,7 @@ export default {
       await this.$store.commit('initMediaListState', { likes })
     },
     updateLike(id) {
-      const media = this.noMediaListDuplicate.find(media => media.id === id)
+      const media = this.uniqMediaList.find(media => media.id === id)
       shareUpdateLike(this.$store, this.$apollo, this.oauth.iid, media)
     },
     queryInitReady(key) {

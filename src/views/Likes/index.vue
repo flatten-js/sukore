@@ -2,7 +2,7 @@
   likes-layout
     template(#thumbnail-box-layer)
       thumbnail-box-grid
-        template(v-for="media in noMediaListDuplicate")
+        template(v-for="media in uniqMediaList")
           thumbnail-box(
             :key="media.id"
             :id="media.id"
@@ -62,7 +62,7 @@ export default {
   computed: {
     ...mapGetters([
       'oauth',
-      'noMediaListDuplicate'
+      'uniqMediaList'
     ])
   },
   created() {
@@ -74,7 +74,7 @@ export default {
       await this.$store.commit('initMediaListState', { likes })
     },
     updateLike(id) {
-      const media = this.noMediaListDuplicate.find(media => media.id === id)
+      const media = this.uniqMediaList.find(media => media.id === id)
       shareUpdateLike(this.$store, this.$apollo, this.oauth.iid, media)
     }
   }

@@ -82,10 +82,10 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'noMediaListDuplicate'
+      'uniqMediaList'
     ]),
     foundMedia() {
-      return this.noMediaListDuplicate.find(media => media.id == this.id)
+      return this.uniqMediaList.find(media => media.id == this.id)
     },
     photo() {
       const { count, foundMedia } = this

@@ -336,9 +336,7 @@ export default {
       this.el = { height: this.$el.clientHeight }
     },
     callTabTransitionHook() {
-      if (!this.tabTransition) {
-        this.fetchElHeight()
-      }
+      if (!this.tabTransition) this.fetchElHeight()
       this.tabTransition = !this.tabTransition
     },
     graduallyPopup(key) {

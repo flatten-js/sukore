@@ -108,12 +108,12 @@ export default {
   computed: {
     ...mapGetters([
       'oauth',
-      'noMediaListDuplicate',
+      'uniqMediaList',
       'stockAllMediaList'
     ]),
     findMedia() {
       const handle = media => media.id == this.id
-      const media = this.noMediaListDuplicate.find(handle)
+      const media = this.uniqMediaList.find(handle)
       const stock = this.stockAllMediaList.find(handle)
       return media || stock
     }
@@ -129,6 +129,7 @@ export default {
   },
   created() {
     if (!this.findMedia) return
+    window.scrollTo(0, 0)
     this.queryInitReady('likes')
     this.queryLoadingReady('likes')
   },
@@ -138,7 +139,7 @@ export default {
       await this.$store.commit('initMediaListState', { likes })
     },
     updateLike(id) {
-      const media = this.noMediaListDuplicate.find(media => media.id === id)
+      const media = this.uniqMediaList.find(media => media.id === id)
       shareUpdateLike(this.$store, this.$apollo, this.oauth.iid, media)
     },
     queryInitReady(key) {
