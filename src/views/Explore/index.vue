@@ -13,6 +13,13 @@
           )
     template(#suggest-layer)
       suggest-area(v-show="opened")
+        template(#message)
+          text-box(
+            v-show="!historys.length"
+            type="multi"
+            text="アカウント、トピック、キーワードで検索してみましょう"
+            align="center"
+            )
         template(#history)
           title-card(v-show="historys.length")
             template(#title)
@@ -44,6 +51,7 @@ import ExploreLayout from '@/components/templates/ExploreLayout.vue'
 import HeadArea from '@/components/organisms/HeadArea.vue'
 import DetailsBar from '@/components/molecules/DetailsBar.vue'
 import SuggestArea from '@/components/organisms/SuggestArea.vue'
+import TextBox from '@/components/molecules/TextBox.vue'
 import TitleCard from '@/components/organisms/TitleCard.vue'
 import TitleLine from '@/components/molecules/TitleLine.vue'
 
@@ -53,6 +61,7 @@ export default {
     HeadArea,
     DetailsBar,
     SuggestArea,
+    TextBox,
     TitleCard,
     TitleLine
   },
@@ -99,3 +108,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  /deep/ .head-area {
+    &__content {
+      border-bottom: none !important;
+    }
+  }
+</style>
