@@ -10,7 +10,7 @@
       thumbnail-area
         template(#loading)
           template(v-if="loading.likes")
-            absolute-territory
+            loading
         template(#masthead)
           //- ToDo: ifを使わず初期化処理
           template(v-if="searchMedia.masthead")
@@ -41,7 +41,7 @@
     template(#update-layer)
       update-area(ref="updateArea")
         template(v-if="!loading.likes")
-          absolute-territory
+          loading
 </template>
 
 <script>
@@ -52,7 +52,7 @@ import { shareUpdateLike } from '@/apollo/graphql/used/shares'
 import SearchLayout from '@/components/templates/SearchLayout.vue'
 import HeadArea from '@/components/organisms/HeadArea.vue'
 import DetailsBar from '@/components/molecules/DetailsBar.vue'
-import AbsoluteTerritory from '@/components/molecules/AbsoluteTerritory.vue'
+import Loading from '@/components/molecules/Loading.vue'
 import ThumbnailArea from '@/components/organisms/ThumbnailArea.vue'
 import ThumbnailHead from '@/components/molecules/ThumbnailHead.vue'
 import ThumbnailBoxGrid from '@/components/organisms/ThumbnailBoxGrid.vue'
@@ -64,7 +64,7 @@ export default {
     SearchLayout,
     HeadArea,
     DetailsBar,
-    AbsoluteTerritory,
+    Loading,
     ThumbnailArea,
     ThumbnailHead,
     ThumbnailBoxGrid,

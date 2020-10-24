@@ -1,6 +1,6 @@
 <template lang="pug">
-  .absolute-territory
-    .absolute-territory__expose
+  .loading
+    .loading__expose
       template(v-if="type === 'button'")
         material-button(
           type="simple"
@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style scoped>
-  .absolute-territory {
+  .loading {
     display: flex;
     height: 96px;
     align-items: center;

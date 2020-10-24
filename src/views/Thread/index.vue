@@ -10,7 +10,7 @@
       pickup-area
         template(#loading)
           template(v-if="loading.likes")
-            absolute-territory
+            loading
         template(#card)
           template(v-if="findMedia")
             pickup-card
@@ -53,7 +53,7 @@ import ThreadLayout from '@/components/templates/ThreadLayout.vue'
 import HeadArea from '@/components/organisms/HeadArea.vue'
 import DetailsBar from '@/components/molecules/DetailsBar.vue'
 import PickupArea from '@/components/organisms/PickupArea.vue'
-import AbsoluteTerritory from '@/components/molecules/AbsoluteTerritory.vue'
+import Loading from '@/components/molecules/Loading.vue'
 import PickupCard from '@/components/organisms/PickupCard.vue'
 import CardDetailsBox from '@/components/molecules/CardDetailsBox.vue'
 import CardDetails from '@/components/molecules/CardDetails.vue'
@@ -64,7 +64,7 @@ export default {
     HeadArea,
     DetailsBar,
     PickupArea,
-    AbsoluteTerritory,
+    Loading,
     PickupCard,
     CardDetailsBox,
     CardDetails

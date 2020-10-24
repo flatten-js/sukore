@@ -24,7 +24,7 @@
           text-tab-bar(:tab-items="userTabItems")
         template(#loading)
           template(v-if="loading.likes")
-            absolute-territory
+            loading
         template(#content)
           transition(
             :name="transitionName"
@@ -37,9 +37,9 @@
       update-area(ref="updateArea")
         template(v-if="!loading.likes && !tabTransition")
           template(v-if="scrollable")
-            absolute-territory
+            loading
           template(v-else)
-            absolute-territory(
+            loading(
               type="button"
               text="さらに前のメディアを表示"
               @click.native="updateUserMediaData"
@@ -77,7 +77,7 @@ import ProfileArea from '@/components/organisms/ProfileArea.vue'
 import Profile from '@/components/molecules/Profile.vue'
 import ThumbnailBoxMvp from '@/components/organisms/ThumbnailBoxMvp.vue'
 import TextTabBar from '@/components/molecules/TextTabBar.vue'
-import AbsoluteTerritory from '@/components/molecules/AbsoluteTerritory.vue'
+import Loading from '@/components/molecules/Loading.vue'
 import UpdateArea from '@/components/organisms/UpdateArea.vue'
 import Popup from '@/components/organisms/Popup.vue'
 import PopupContent from '@/components/molecules/PopupContent.vue'
@@ -91,7 +91,7 @@ export default {
     Profile,
     ThumbnailBoxMvp,
     TextTabBar,
-    AbsoluteTerritory,
+    Loading,
     UpdateArea,
     Popup,
     PopupContent
@@ -209,7 +209,7 @@ export default {
       return this.offset.page > this.offset.fave
     },
     scrollable() {
-      // 96: Height of AbsoluteTerritory
+      // 96: Height of Loading
       return (this.el.height - 96) > window.innerHeight
     }
   },
