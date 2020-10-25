@@ -73,6 +73,7 @@ export default {
     color: #1a1a1a;
     white-space: pre-line;
     word-wrap: break-word;
+    line-height: 1.3125;
 
     &__link {
       color: #1b95e0;
