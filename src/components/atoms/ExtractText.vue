@@ -10,20 +10,19 @@ export default {
   render(h, { props }) {
     const REG = {
       KEYWORD: {
-        HASHTAG: '#(?:[\\w]|[^\\x01-\\x7e])+',
-        SCREEN_NAME: '@[\\w]+?',
-        URL: 'https?:\\/\\/[\\w\\/\\$\\?\\.\\+\\-:%#&~=@]+…?'
-      },
-      FRONT_REAR: '[^\\x01-\\x7e]|[\\x09-\\x0c\\x20\\x21\\x28\\x29\\x2b-\\x2f\\x3a\\x3b\\x3d\\x3f\\x5b-\\x5e\\x60\\x7b-\\x7e]'
+        HASHTAG: '(?<=^|[^&\\p{L}\\p{M}\\p{Nd}_\\u200c\\u200d\\ua67e\\u05be\\u05f3\\u05f4\\u309b\\u309c\\u30a0\\u30fb\\u3003\\u0f0b\\u0f0c\\u00b7])[#|\\uFF03](?!\\uFE0F|\\u20E3)[\\p{L}\\p{M}\\p{Nd}_\\u200c\\u200d\\ua67e\\u05be\\u05f3\\u05f4\\u309b\\u309c\\u30a0\\u30fb\\u3003\\u0f0b\\u0f0c\\u00b7]*[\\p{L}\\p{M}][\\p{L}\\p{M}\\p{Nd}_\\u200c\\u200d\\ua67e\\u05be\\u05f3\\u05f4\\u301c\\u309b\\u309c\\u30a0\\u30fb\\u3003\\u0f0b\\u0f0c\\u00b7]*',
+        SCREEN_NAME: '(?<=^|[^@\\w])@\\w{1,15}\\b',
+        URI: 'https?:\\/\\/[\\w\\/\\$\\?\\.\\+\\-:%#&~=@]+…?'
+      }
     }
 
-    const combineRegExp = new RegExp(`(?<=^|${REG.FRONT_REAR})(${REG.KEYWORD.HASHTAG}|${REG.KEYWORD.SCREEN_NAME}|${REG.KEYWORD.URL})(?=$|&|${REG.FRONT_REAR})`, 'g')
+    const regexp = new RegExp(`(${REG.KEYWORD.HASHTAG}|${REG.KEYWORD.SCREEN_NAME}|${REG.KEYWORD.URI})`, 'u')
 
     return (
       <div class="extract-text">
         {
-          props.text.split(combineRegExp).map(word => {
-            if (word.match(new RegExp(`^${REG.KEYWORD.HASHTAG}`))) {
+          props.text.split(regexp).filter(Boolean).map(word => {
+            if (word.match(/^#/)) {
               const encoded = encodeURIComponent(word)
 
               return (
@@ -35,7 +34,7 @@ export default {
                 </router-link>
               )
             }
-            if (word.match(new RegExp(`^${REG.KEYWORD.SCREEN_NAME}`))) {
+            if (word.match(/^@/)) {
               return (
                 <router-link
                   class="extract-text__link"
@@ -45,7 +44,7 @@ export default {
                 </router-link>
               )
             }
-            if (word.match(new RegExp(`^${REG.KEYWORD.URL}`))) {
+            if (word.match(/^http/)) {
               const [ title, href, display ] = word.split('::')
 
               return (
