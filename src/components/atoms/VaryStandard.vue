@@ -1,5 +1,5 @@
 <template lang="pug">
-  component.vary-standard-component(
+  component.vary-standard(
     :is="tag"
     :src="src"
     :class="propsClassGenerator"
@@ -63,7 +63,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .vary-standard-component {
+  .vary-standard {
     background-color: #dfdfdf;
 
     &.-standard-width {

@@ -3,7 +3,7 @@
     :style="preloadImageHeightStyle"
     )
     template(v-if="type !== 'photo'")
-      vary-standard-component(
+      vary-standard(
         tag="video"
         :type="type"
         :src="src[0]"
@@ -15,7 +15,7 @@
         router-link.card-details-box__link(
           :to="screenName | convertPhotoZoomablePath(id, i)"
           )
-          vary-standard-component(
+          vary-standard(
             :src="src"
             )
     .card-details-box__badge
@@ -38,13 +38,13 @@
 </template>
 
 <script>
-import VaryStandardComponent from '@/components/atoms/VaryStandardComponent.vue'
+import VaryStandard from '@/components/atoms/VaryStandard.vue'
 import TextBadge from '@/components/atoms/TextBadge.vue'
 import MaterialButton from '@/components/atoms/MaterialButton.vue'
 
 export default {
   components: {
-    VaryStandardComponent,
+    VaryStandard,
     TextBadge,
     MaterialButton
   },
