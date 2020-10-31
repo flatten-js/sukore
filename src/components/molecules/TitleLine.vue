@@ -1,31 +1,33 @@
 <template lang="pug">
   .title-line(
-    :class="{ '-trigger': trigger }"
+    :class="{ '-clickable': clickable }"
     @click.self="$emit('click-this', title)"
     )
-    single-line-text(
-      :tag="tag"
-      :text="title"
-      :size="size"
-      weight="bold"
-      @click.native="$emit('click-title', title)"
-      )
+    .title-line__content
+      single-line-text(
+        :tag="tag"
+        :text="title"
+        :size="size"
+        weight="bold"
+        )
     .title-line-option
       template(v-if="option === 'text'")
-        .title-line-option__text
+        .title-line-option__text(
+          @click="clickOptionHandler"
+          )
           material-button(
             :text="text"
             size="small"
             color="twitter"
-            @click.native="$emit('click-option-text')"
             )
       template(v-else)
-        .title-line-option__icon
+        .title-line-option__icon(
+          @click="clickOptionHandler"
+          )
           material-button(
             :name="name"
             color="twitter"
             horizon="short"
-            @click.native="$emit('click-option-icon', title)"
             )
 </template>
 
@@ -46,7 +48,7 @@ export default {
         return ['div', 'h1', 'h2', 'h3'].includes(val)
       }
     },
-    trigger: {
+    clickable: {
       type: Boolean,
       default: false
     },
@@ -76,6 +78,11 @@ export default {
       type: String,
       default: ''
     }
+  },
+  methods: {
+    clickOptionHandler() {
+      this.$emit('click-option', this.title)
+    }
   }
 }
 </script>
@@ -87,17 +94,25 @@ export default {
     align-items: center;
     justify-content: space-between;
 
-    &.-trigger {
+    &.-clickable {
       border-bottom: 1px solid #dfdfdf;
 
       &:active {
-        background-color: #f7f7f7;
+        background-color: #eaeaea;
       }
+    }
+
+    &__content {
+      pointer-events: none;
     }
   }
 
   .title-line-option {
     &__text {
+      margin-right: -1rem;
+    }
+
+    &__icon {
       margin-right: -.5rem;
     }
   }

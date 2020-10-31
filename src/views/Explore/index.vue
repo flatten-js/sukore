@@ -3,13 +3,12 @@
     template(#header-layer)
       head-area
         details-bar(
-          :icon-type="test"
+          :icon-type="iconType"
           content-type="search"
           v-model="inputText"
           :icon="oauth.icon"
           @focus-input-text="focus"
           @click-custom-back="back"
-          custom-event
           )
     template(#suggest-layer)
       suggest-area(v-show="opened")
@@ -29,7 +28,7 @@
                 size="large"
                 option="text"
                 text="すべて消去"
-                @click-option-text="clearSearchHistory"
+                @click-option="clearSearchHistory"
                 )
             template(#content)
               template(v-for="history in historys")
@@ -37,10 +36,9 @@
                   :title="history"
                   size="small"
                   name="clear"
-                  trigger
+                  clickable
                   @click-this="searchFromHistory"
-                  @click-title="searchFromHistory"
-                  @click-option-icon="updateSearchHistory"
+                  @click-option="updateSearchHistory"
                   )
 </template>
 
@@ -76,7 +74,7 @@ export default {
     ...mapGetters([
       'oauth'
     ]),
-    test() {
+    iconType() {
       return this.opened ? 'default' : 'user'
     }
   },
