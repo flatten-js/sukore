@@ -132,6 +132,7 @@ export default {
     text-align: center;
     border: 1px solid currentColor;
     border-radius: 25px;
+    word-break: keep-all;
 
     $color-default: #1a1a1a;
     $color-twitter: #1DA1F2;

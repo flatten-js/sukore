@@ -217,11 +217,10 @@ export default {
       if (!innerInputText) return
 
       let historys = JSON.parse(localStorage.getItem('search_historys')) || []
-      historys = historys.filter(history => history !== innerInputText)
-      historys.unshift(innerInputText)
+      historys = [...new Set([innerInputText, ...historys])].slice(0, 10)
       localStorage.setItem('search_historys', JSON.stringify(historys))
 
-      if (innerInputText.match(/^@.+?/)) {
+      if (innerInputText.match(/^@/)) {
         this.$router.push({ path: `/${innerInputText.replace('@', '')}` })
       } else {
         this.$router.push({ path: `/search/${encodeURIComponent(innerInputText)}` })

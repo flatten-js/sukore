@@ -7,6 +7,7 @@
           content-type="search"
           v-model="inputText"
           :icon="oauth.icon"
+          custom-event
           @focus-input-text="focus"
           @click-custom-back="back"
           )
@@ -23,8 +24,7 @@
           title-card(v-show="historys.length")
             template(#title)
               title-line(
-                tag="h3"
-                title="検索履歴"
+                title="最近の検索"
                 size="large"
                 option="text"
                 text="すべて消去"
@@ -88,12 +88,14 @@ export default {
     back() {
       this.opened = false
     },
-    searchFromHistory(title) {
-      if (title.match(/^@.+?/)) {
-        this.$router.push({ path: `/${title.replace('@', '')}` })
+    async searchFromHistory(title) {
+      if (/^@/.test(title)) {
+        await this.$router.push({ path: `/${title.replace('@', '')}` })
       } else {
-        this.$router.push({ path: `/search/${encodeURIComponent(title)}` })
+        await this.$router.push({ path: `/search/${encodeURIComponent(title)}` })
       }
+      this.historys = [...new Set([title, ...this.historys])]
+      localStorage.setItem('search_historys', JSON.stringify(this.historys))
     },
     clearSearchHistory() {
       this.historys = []

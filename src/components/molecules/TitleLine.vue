@@ -92,7 +92,6 @@ export default {
     display: flex;
     padding: .5rem 1rem;
     align-items: center;
-    justify-content: space-between;
 
     &.-clickable {
       border-bottom: 1px solid #dfdfdf;
@@ -103,6 +102,8 @@ export default {
     }
 
     &__content {
+      flex: 1 1 100%;
+      overflow: hidden;
       pointer-events: none;
     }
   }
