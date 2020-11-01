@@ -16,7 +16,7 @@ export default {
       type: String,
       default: 'default',
       validator(val) {
-        return ['small', 'default'].includes(val)
+        return ['small', 'default', 'large'].includes(val)
       }
     },
     border: {
@@ -50,8 +50,13 @@ export default {
     }
 
     &.-size-default {
-      width: 5.5rem;
-      height: 5.5rem;
+      width: 3.5rem;
+      height: 3.5rem;
+    }
+
+    &.-size-large {
+      width: 5.25rem;
+      height: 5.25rem;
 
       &.-border {
         border: 3px solid #fff;

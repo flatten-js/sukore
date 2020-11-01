@@ -7,6 +7,7 @@
         .profile-details-head__icon
           user-icon(
             :url="icon"
+            size="large"
             border
             )
         .profile-details-head-tools(ref="tools")
