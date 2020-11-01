@@ -15,13 +15,15 @@
       suggest-area(v-show="opened")
         template(#message)
           text-box(
-            v-show="!historys.length"
+            v-show="!(history.users.length || history.words.length)"
             type="multi"
             text="アカウント、トピック、キーワードで検索してみましょう"
             align="center"
             )
         template(#history)
-          title-card(v-show="historys.length")
+          title-card(
+            v-show="history.users.length || history.words.length"
+            )
             template(#title)
               title-line(
                 title="最近の検索"
@@ -31,9 +33,18 @@
                 @click-option="clearSearchHistory"
                 )
             template(#content)
-              template(v-for="history in historys")
+              template(v-if="history.users.length")
+                horizontal-area
+                  template(v-for="user in history.users")
+                    user-box(
+                      :icon="user.icon"
+                      :name="user.name"
+                      :screen-name="user.screenName"
+                      @click-this="searchFromHistory"
+                      )
+              template(v-for="word in history.words")
                 title-line(
-                  :title="history"
+                  :title="word"
                   size="small"
                   name="clear"
                   clickable
@@ -52,6 +63,8 @@ import SuggestArea from '@/components/organisms/SuggestArea.vue'
 import TextBox from '@/components/molecules/TextBox.vue'
 import TitleCard from '@/components/organisms/TitleCard.vue'
 import TitleLine from '@/components/molecules/TitleLine.vue'
+import HorizontalArea from '@/components/organisms/HorizontalArea.vue'
+import UserBox from '@/components/molecules/UserBox.vue'
 
 export default {
   components: {
@@ -61,13 +74,15 @@ export default {
     SuggestArea,
     TextBox,
     TitleCard,
-    TitleLine
+    TitleLine,
+    HorizontalArea,
+    UserBox
   },
   data() {
     return {
       inputText: '',
       opened: false,
-      historys: []
+      history: { users: [], words: [] }
     }
   },
   computed: {
@@ -79,7 +94,7 @@ export default {
     }
   },
   created() {
-    this.historys = JSON.parse(localStorage.getItem('search_historys')) || []
+    this.history = JSON.parse(localStorage.getItem('search_history')) || { users: [], words: [] }
   },
   methods: {
     focus() {
@@ -91,19 +106,32 @@ export default {
     async searchFromHistory(title) {
       if (/^@/.test(title)) {
         await this.$router.push({ path: `/${title.replace('@', '')}` })
+        const user = this.history.users.find(user => user.screenName === title)
+        this.history = {
+          ...this.history,
+          users: [user, ...this.history.users].filter((set => {
+            return v => !set.has(v.screenName) && set.add(v.screenName)
+          })(new Set))
+        }
       } else {
         await this.$router.push({ path: `/search/${encodeURIComponent(title)}` })
+        this.history = {
+          ...this.history,
+          words: [...new Set([title, ...this.history.words])]
+        }
       }
-      this.historys = [...new Set([title, ...this.historys])]
-      localStorage.setItem('search_historys', JSON.stringify(this.historys))
+      localStorage.setItem('search_history', JSON.stringify(this.history))
     },
     clearSearchHistory() {
-      this.historys = []
-      localStorage.removeItem('search_historys')
+      this.history = { users: [], words: [] }
+      localStorage.setItem('search_history', JSON.stringify(this.history))
     },
     updateSearchHistory(title) {
-      this.historys = this.historys.filter(history => history !== title)
-      localStorage.setItem('search_historys', JSON.stringify(this.historys))
+      this.history = {
+        ...this.history,
+        words: this.history.words.filter(history => history !== title)
+      }
+      localStorage.setItem('search_history', JSON.stringify(this.history))
     }
   }
 }

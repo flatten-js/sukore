@@ -133,7 +133,8 @@ export default {
       popup: {
         start: false,
         content: false
-      }
+      },
+      history: false
     }
   },
   apollo: {
@@ -264,6 +265,11 @@ export default {
     this.lifecycle = { created: false }
     this.window = { height: window.innerHeight }
   },
+  beforeRouteEnter(to, from, next) {
+    if (/^(?!.*(\/explore|\/search)).+$/.test(from.path)) return next()
+    if (/^(?!.*(typed_query)).+$/.test(to.query.src)) return next()
+    next(vm => vm.history = true)
+  },
   beforeMount() {
     window.addEventListener('scroll', this.scroll, { passive: true })
   },
@@ -274,6 +280,18 @@ export default {
     async initUserData(screenName, faves) {
       await this.$store.dispatch('userSearch', { screenName })
       await this.$store.commit('initFave', { faves })
+
+      if (!this.history) return
+      let history = JSON.parse(localStorage.getItem('search_history'))
+      history = {
+        ...history,
+        users: [
+          { icon: this.user.icon, name: this.user.name, ...history.users.shift() },
+          ...history.users
+        ]
+      }
+      localStorage.setItem('search_history', JSON.stringify(history))
+      this.history = false
     },
     async initUserMediaData({ type, style, screenName, count, excludeReplies, likes }) {
       await this.$store.dispatch('userTimelineSearch', { type, style, screenName, count, excludeReplies })

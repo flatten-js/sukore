@@ -1,6 +1,6 @@
 <template lang="pug">
-  router-link.user-box(
-    :to="screenName | convertUserPath"
+  .user-box(
+    @click="$emit('click-this', screenName)"
     )
     .user-box__icon
       user-icon(

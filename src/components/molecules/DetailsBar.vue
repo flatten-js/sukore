@@ -216,15 +216,28 @@ export default {
       const { innerInputText } = this
       if (!innerInputText) return
 
-      let historys = JSON.parse(localStorage.getItem('search_historys')) || []
-      historys = [...new Set([innerInputText, ...historys])].slice(0, 10)
-      localStorage.setItem('search_historys', JSON.stringify(historys))
+      let history = JSON.parse(localStorage.getItem('search_history')) || { users: [], words: [] }
 
       if (innerInputText.match(/^@/)) {
-        this.$router.push({ path: `/${innerInputText.replace('@', '')}` })
+        this.$router.push({
+          path: `/${innerInputText.replace('@', '')}`,
+          query: { src: "typed_query" }
+        })
+        history = {
+          ...history,
+          users: [{ screenName: innerInputText }, ...history.users].filter((set => {
+            return v => !set.has(v.screenName) && set.add(v.screenName)
+          })(new Set))
+        }
       } else {
         this.$router.push({ path: `/search/${encodeURIComponent(innerInputText)}` })
+        history = {
+          ...history,
+          words: [...new Set([innerInputText, ...history.words])].slice(0, 10)
+        }
       }
+
+      localStorage.setItem('search_history', JSON.stringify(history))
     },
     clear() {
       this.innerInputText = ''
