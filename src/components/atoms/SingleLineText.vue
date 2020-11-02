@@ -24,7 +24,7 @@ export default {
       type: String,
       default: 'default',
       validator(val) {
-        return ['small', 'default', 'large'].includes(val)
+        return ['xs', 'small', 'default', 'large'].includes(val)
       }
     },
     weight: {
@@ -62,6 +62,10 @@ export default {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+
+    &.-size-xs {
+      font-size: .75rem;
+    }
 
     &.-size-small {
       font-size: .875rem;

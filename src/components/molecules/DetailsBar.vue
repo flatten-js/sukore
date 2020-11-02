@@ -227,13 +227,13 @@ export default {
           ...history,
           users: [{ screenName: innerInputText }, ...history.users].filter((set => {
             return v => !set.has(v.screenName) && set.add(v.screenName)
-          })(new Set))
+          })(new Set)).slice(0, 10)
         }
       } else {
         this.$router.push({ path: `/search/${encodeURIComponent(innerInputText)}` })
         history = {
           ...history,
-          words: [...new Set([innerInputText, ...history.words])].slice(0, 10)
+          words: [...new Set([innerInputText, ...history.words])].slice(0, 5)
         }
       }
 

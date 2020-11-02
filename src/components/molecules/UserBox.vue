@@ -9,13 +9,13 @@
     .user-box__name
       single-line-text(
         :text="name"
-        size="small"
+        size="xs"
         weight="bold"
         )
     .user-box__screen_name
       single-line-text(
         :text="screenName"
-        size="small"
+        size="xs"
         brightness="2"
         )
 </template>
@@ -53,10 +53,9 @@ export default {
 
 <style lang="scss" scoped>
   .user-box {
-    width: 25%;
+    min-width: 25%;
     margin-right: .5rem;
     text-align: center;
-    line-height: 1.3125;
     text-decoration: none;
 
     &__icon {

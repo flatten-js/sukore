@@ -105,7 +105,10 @@ export default {
     },
     async searchFromHistory(title) {
       if (/^@/.test(title)) {
-        await this.$router.push({ path: `/${title.replace('@', '')}` })
+        await this.$router.push({
+          path: `/${title.replace('@', '')}`,
+          query: { src: 'recent_search_click' }
+        })
         const user = this.history.users.find(user => user.screenName === title)
         this.history = {
           ...this.history,

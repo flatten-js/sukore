@@ -267,7 +267,7 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     if (/^(?!.*(\/explore|\/search)).+$/.test(from.path)) return next()
-    if (/^(?!.*(typed_query)).+$/.test(to.query.src)) return next()
+    if (/^(?!.*(typed_query|recent_search_click)).+$/.test(to.query.src)) return next()
     next(vm => vm.history = true)
   },
   beforeMount() {
@@ -286,7 +286,7 @@ export default {
       history = {
         ...history,
         users: [
-          { icon: this.user.icon, name: this.user.name, ...history.users.shift() },
+          { ...history.users.shift(), icon: this.user.icon, name: this.user.name },
           ...history.users
         ]
       }
