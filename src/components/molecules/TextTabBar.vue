@@ -1,8 +1,9 @@
 <template lang="pug">
   nav.text-tab-bar
-    template(v-for="tab in tabItems")
+    template(v-for="tab in items")
       text-tab-item(
         :to="tab.to"
+        :query="tab.query"
         :text="tab.text"
         :match="match"
         )
@@ -16,7 +17,7 @@ export default {
     TextTabItem
   },
   props: {
-    tabItems: {
+    items: {
       type: Array,
       required: true
     },

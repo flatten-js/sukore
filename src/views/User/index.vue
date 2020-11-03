@@ -21,7 +21,7 @@
     template(#thumbnail-box-layer)
       thumbnail-box-mvp
         template(#navigation)
-          text-tab-bar(:tab-items="userTabItems")
+          text-tab-bar(:items="userTabItems")
         template(#loading)
           template(v-if="loading.likes")
             loading
@@ -189,10 +189,12 @@ export default {
       return [
         {
           to: `/${screenName}`,
+          query: this.$route.query,
           text: 'ツイート'
         },
         {
           to: `/${screenName}/retweet`,
+          query: this.$route.query,
           text: 'リツイート'
         }
       ]
@@ -269,8 +271,8 @@ export default {
     this.window = { height: window.innerHeight }
   },
   beforeRouteEnter(to, from, next) {
-    if (/^(?!.*(\/explore|\/search)).+$/.test(from.path)) return next()
     if (/^(?!.*(typed_query|recent_search_click)).+$/.test(to.query.src)) return next()
+    if (/^(?!.*(\/explore|\/search)).+$/.test(from.path)) return next(to.path)
     next(vm => vm.history = true)
   },
   beforeMount() {

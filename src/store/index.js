@@ -188,7 +188,6 @@ export default new Vuex.Store({
         res.data.forEach(obj => {
           const media = mediaTemplate(obj)
           if (!media) return
-          console.log('safe: ', media)
           payload.mediaList.push(media)
         })
       })

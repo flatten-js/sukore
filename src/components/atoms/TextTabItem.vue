@@ -1,7 +1,7 @@
 <template lang="pug">
   router-link.text-tab-item(
     :class="propsClassGenerator"
-    :to="to"
+    :to="{ path: to, query }"
     active-class="-active"
     exact-active-class="-exact-active"
     exact
@@ -16,6 +16,10 @@ export default {
     to: {
       type: String,
       required: true
+    },
+    query: {
+      type: Object,
+      default: () => ({})
     },
     text: {
       type: String,
