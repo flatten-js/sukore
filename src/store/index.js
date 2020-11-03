@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+
 import axios from 'axios'
+
+import user from './modules/user.js'
 
 Vue.use(Vuex)
 
@@ -49,31 +52,11 @@ const mediaTemplate = (data, screenName) => {
 }
 
 export default new Vuex.Store({
+  modules: { user },
   state: {
     oauth: {
       iid: '1035366824412471296',
       icon: 'https://pbs.twimg.com/profile_images/1070549353381560320/a8ubDIpA_400x400.jpg'
-    },
-    user: {
-      id: '',
-      masthead: '',
-      icon: '',
-      name: '',
-      screenName: '',
-      description: '',
-      fave: false,
-      urlObject: {
-        url: [],
-        description: []
-      },
-      status: {
-        following: '',
-        followers: '',
-      },
-      remarks: {
-        location: '',
-        link: ''
-      }
     },
     media: {
       sender: '',
@@ -86,18 +69,6 @@ export default new Vuex.Store({
     stock: []
   },
   mutations: {
-    setUser(state, payload) {
-      state.user = { ...state.user, ...payload.user }
-    },
-    initFave(state, payload) {
-      state.user = {
-        ...state.user,
-        fave: payload.faves.some(fave => fave.uid === state.user.id)
-      }
-    },
-    updateFave(state) {
-      state.user = { ...state.user, fave: !state.user.fave }
-    },
     initMedia(state) {
       state.media = {
         sender: '',
@@ -182,7 +153,6 @@ export default new Vuex.Store({
   },
   getters: {
     oauth: ({ oauth }) => oauth,
-    user: ({ user }) => user,
     media: ({ media }) => media,
     stock: ({ stock }) => stock,
     uniqMediaList: ({ media }) => {
@@ -199,6 +169,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    initialize({ commit }) {
+      commit('user/init')
+    },
     async homeTimelineSearch({ commit }, { count, excludeReplies }) {
       const payload = {
         sender: 'home',
@@ -215,48 +188,12 @@ export default new Vuex.Store({
         res.data.forEach(obj => {
           const media = mediaTemplate(obj)
           if (!media) return
+          console.log('safe: ', media)
           payload.mediaList.push(media)
         })
       })
 
       commit('addMedia', payload)
-    },
-    async userSearch({ commit }, { screenName }) {
-      const payload = {
-        user: {}
-      }
-
-      await axios.get('/api/twitter/users/show', {
-        params: {
-          screen_name: screenName
-        }
-      })
-      .then(res => {
-        const user = res.data
-
-        payload.user = {
-          id: user.id_str,
-          head: user.profile_banner_url,
-          icon: user.profile_image_url_https.replace('normal', '400x400'),
-          name: user.name,
-          screenName: user.screen_name,
-          description: user.description,
-          urlObject: Object.keys(user.entities).reduce((acc, cur) => {
-            acc[cur] = user.entities[cur].urls
-            return acc
-          }, {}),
-          status: {
-            following: user.friends_count,
-            followers: user.followers_count,
-          },
-          remarks: {
-            location: user.location,
-            link: user.url
-          }
-        }
-      })
-
-      commit('setUser', payload)
     },
     async userTimelineSearch({ commit, getters }, { type = 'add', style, screenName, count, excludeReplies = true }) {
       const payload = {

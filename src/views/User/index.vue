@@ -168,7 +168,7 @@ export default {
         await this.initUserMediaData({
           style: this.style,
           screenName: this.screenName,
-          count: 100,
+          count: 200,
           likes: data.likes
         })
         this.readyQueryLoading(key)
@@ -176,9 +176,11 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      user: 'user/get'
+    }),
     ...mapGetters([
       'oauth',
-      'user',
       'media'
     ]),
     userTabItems() {
@@ -237,6 +239,7 @@ export default {
           await this.$nextTick()
           this.fetchElHeight()
         } else {
+          this.$store.commit('user/init')
           this.$store.commit('initMedia')
         }
 
@@ -246,7 +249,7 @@ export default {
           await this.initUserMediaData({
             style: this.style,
             screenName: this.screenName,
-            count: 100,
+            count: 200,
             likes: this.likes
           })
           this.readyQueryLoading('likes')
@@ -278,8 +281,8 @@ export default {
   },
   methods: {
     async initUserData(screenName, faves) {
-      await this.$store.dispatch('userSearch', { screenName })
-      await this.$store.commit('initFave', { faves })
+      await this.$store.dispatch('user/search', { screenName })
+      await this.$store.commit('user/initFave', { faves })
 
       if (!this.history) return
       let history = JSON.parse(localStorage.getItem('search_history'))

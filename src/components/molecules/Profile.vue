@@ -43,7 +43,7 @@
           )
       .profile-details__description
         extract-text(
-          :text="description | convertCustomUrlText(urlObject.description)"
+          :text="description | convertCustomUrlText(entities.descriptions)"
           )
       .profile-details-remarks
         template(v-if="remarks.location")
@@ -60,7 +60,7 @@
             inline-icon-text(
               type="link"
               name="link"
-              :url-text="remarks.link | convertCustomUrlText(urlObject.url)"
+              :url-text="remarks.link | convertCustomUrlText(entities.urls)"
               size="small"
               color="twitter"
               space="small"
@@ -141,7 +141,7 @@ export default {
       type: Boolean,
       required: true
     },
-    urlObject: {
+    entities: {
       type: Object,
       default: () => {}
     },

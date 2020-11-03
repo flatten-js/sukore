@@ -28,9 +28,31 @@ router.get('/statuses/show', async (req , res) => {
   .catch(err => console.error(err))
 })
 
+const userTemplate = user => ({
+  id: user.id_str,
+  head: user.profile_banner_url,
+  icon: user.profile_image_url_https.replace('normal', '400x400'),
+  name: user.name,
+  screenName: user.screen_name,
+  description: user.description,
+  entities: Object.keys(user.entities).reduce((acc, cur) => {
+    const plural = singular => `${singular}s`
+    acc[plural(cur)] = user.entities[cur].urls
+    return acc
+  }, {}),
+  status: {
+    following: user.friends_count,
+    followers: user.followers_count,
+  },
+  remarks: {
+    location: user.location,
+    link: user.url
+  }
+})
+
 router.get('/users/show', async (req, res) => {
   await client.get('users/show', req.query)
-  .then(data => res.json(data))
+  .then(data => res.json(userTemplate(data)))
   .catch(err => console.error(err))
 })
 
