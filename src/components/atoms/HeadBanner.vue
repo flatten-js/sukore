@@ -41,7 +41,7 @@ export default {
     }
 
     &.-type-thumbnail {
-      height: 150px;
+      height: 200px;
       background-size: cover;
       background-position: center;
     }

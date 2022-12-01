@@ -5,6 +5,7 @@
         :to="item.to"
         active-class="-active"
         exact-active-class="-exact-active"
+        @click.native="scrollToTop"
         )
         svg-sprite(
           :name="item.name"
@@ -24,6 +25,14 @@ export default {
       type: Array,
       default: () => []
     }
+  },
+  methods: {
+    scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      })
+    }
   }
 }
 </script>
@@ -32,6 +41,7 @@ export default {
 .navigation {
   display: flex;
   justify-content: center;
+  padding-bottom: env(safe-area-inset-bottom);
 
   &__tab {
     flex-grow: 1;

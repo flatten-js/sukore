@@ -27,19 +27,23 @@ export const LIKE = {
         where: {
           tid: $tid
         }
-        create: {
-          tid: $tid
-          data: $data
-          usrs: {
-            connect: {
-              iid: $iid
+        upsert: {
+          create: {
+            tid: $tid
+            data: $data
+            usrs: {
+              connect: {
+                iid: $iid
+              }
             }
           }
-        }
-        update: {
-          usrs: {
-            connect: {
-              iid: $iid
+          update: {
+            usrs: {
+              connect: {
+                where: {
+                  iid: $iid
+                }
+              }
             }
           }
         }
@@ -98,18 +102,22 @@ export const FAVE = {
         where: {
           uid: $uid
         }
-        create: {
-          uid: $uid
-          usrs: {
-            connect: {
-              iid: $iid
+        upsert: {
+          create: {
+            uid: $uid
+            usrs: {
+              connect: {
+                iid: $iid
+              }
             }
           }
-        }
-        update: {
-          usrs: {
-            connect: {
-              iid: $iid
+          update: {
+            usrs: {
+              connect: {
+                where: {
+                  iid: $iid
+                }
+              }
             }
           }
         }

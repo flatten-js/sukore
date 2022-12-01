@@ -48,7 +48,6 @@ export default {
       const { type } = this
 
       return {
-        'autoplay': type !== 'photo',
         'controls': type === 'video',
         'loop': type === 'animated_gif'
       }

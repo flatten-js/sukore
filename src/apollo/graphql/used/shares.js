@@ -60,7 +60,7 @@ export const shareUpdateLike = ($store, $apollo, iid, media) => {
 export const shareUpdateFave = ($store, $apollo, iid, user) => {
   const querys = { query: FAVE.ALL, variables: { iid } }
 
-  $store.commit('updateFave')
+  $store.commit('user/updateFave')
 
   if (user.fave) {
     $apollo.mutate({
@@ -83,7 +83,7 @@ export const shareUpdateFave = ($store, $apollo, iid, user) => {
       }
     })
     .catch(() => {
-      $store.commit('updateFave')
+      $store.commit('user/updateFave')
     })
   } else {
     $apollo.mutate({
@@ -106,7 +106,7 @@ export const shareUpdateFave = ($store, $apollo, iid, user) => {
       }
     })
     .catch(() => {
-      $store.commit('updateFave')
+      $store.commit('user/updateFave')
     })
   }
 }
