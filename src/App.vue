@@ -1,29 +1,50 @@
-<template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+<template lang="pug">
+  #app
+    router-view
+    foot-area
+      navigation(
+        :items="navs"
+        size="large"
+        )
 </template>
 
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+import FootArea from '@/components/organisms/FootArea.vue'
+import Navigation from '@/components/molecules/Navigation.vue'
+
+export default {
+  components: {
+    FootArea,
+    Navigation
+  },
+  data() {
+    return {
+      navs: [
+        {
+          to: '/',
+          name: 'home'
+        },
+        {
+          to: '/explore',
+          name: 'search'
+        },
+        {
+          to: '/i/likes',
+          name: 'like'
+        }
+      ]
     }
+  },
+  created() {
+    this.$store.dispatch('initialize')
   }
 }
+</script>
+
+<style scoped>
+  #app {
+    min-height: 100vh;
+    background-color: #f7f7f7;
+    overflow-x: hidden;
+  }
 </style>
